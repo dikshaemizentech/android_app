@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/itemView">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_60sdp"
+        android:layout_marginStart="@dimen/_7sdp"
+        android:layout_marginLeft="@dimen/_7sdp"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginEnd="@dimen/_4sdp"
+        android:layout_marginRight="@dimen/_4sdp"
+        android:layout_marginBottom="@dimen/_7sdp"
+        android:background="@drawable/round_chips_home"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:weightSum="10">
+
+
+        <ImageView
+            android:id="@+id/serviceIconIV"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:src="@drawable/light" />
+
+
+        <TextView
+            android:id="@+id/serviceNameTV"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="2"
+            android:text="GAS (AFRICEASSE)"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/_9ssp" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>

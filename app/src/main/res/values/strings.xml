@@ -1,0 +1,70 @@
+<resources>
+    <string name="app_name">VendTech</string>
+    <string name="please_sign_in_to_continue">Please sign in to continue.</string>
+    <string name="terms_conditions"><![CDATA[Terms & Conditions]]></string>
+    <string name="notification_channel_id">com.vendtech.app</string>
+    <string name="channel_name">Vendtech app</string>
+    <string name="channel_description">Vendtech app notifications</string>
+    <string name="terms_condition">I agree to the Terms &amp; Conditions and Privacy Policy</string>
+    <string name="pass_length">Password should be at least 6 characters</string>
+    <string name="address_length">Please enter valid address</string>
+    <string name="first_name_length">First name should be at least 3 characters</string>
+    <string name="last_name_length">Last name should be at least 3 characters</string>
+    <string name="user_name_length">Username should be at least 3 characters</string>
+    <string name="old_pass_length">Old password should be at least 6 characters</string>
+    <string name="new_pass_length">New password should be at least 6 characters</string>
+    <string name="contact_vendtech">Please contact VENDTECH on +232 79 990 990</string>
+    <string name="account_under_approval">Account under approval process</string>
+    <string name="service_not_assigned">Service not assigned</string>
+
+    <string name="saved_meters">SAVED METERS</string>
+    <string name="manage_wallet">MANAGE WALLET</string>
+
+    <string name="total_balance">Total</string>
+
+    <string name="sales_report_filters">SALES REPORT FILTERS</string>
+    <string name="deposite_report_filters">DEPOSITES REPORT FILTERS</string>
+
+    <string name="enter_otp_message">Please type the verification code sent to your registered email.</string>
+    <string-array name="list_test">
+        <item>test1</item>
+        <item>test1</item>
+        <item>test1</item>
+        <item>test1</item>
+    </string-array>
+
+    <string name="dummy_text">What is Lorem Ipsum?
+Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
+    <string name="save_meter">Save Meter</string>
+    <string name="manage_reports">MANAGE REPORTS</string>
+    <string name="reset_password">RESET PASSWORD</string>
+    <string name="add_bill_payment">ADD BILL PAYMENT </string>
+    <string name="date">Date</string>
+    <string name="meter">Meter #</string>
+    <string name="amount">Amount</string>
+    <string name="select_saved_meter">SELECT SAVED METER</string>
+    <string name="recharge">Recharge</string>
+    <string name="seleted_pos_ids">Selected POS ID</string>
+    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+    the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of
+    type and scrambled it to make a type specimen book. It has survived not only five centuries, but
+    also the leap into electronic typesetting, remaining essentially unchanged. It was popularised
+    in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more
+    recently with desktop publishing software like Aldus PageMaker including versions of Lorem
+    Ipsum.
+    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+    the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of
+    type and scrambled it to make a type specimen book. It has survived not only five centuries, but
+    also the leap into electronic typesetting, remaining essentially unchanged. It was popularised
+    in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more
+    recently with desktop publishing software like Aldus PageMaker including versions of Lorem
+    Ipsum.
+    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+    the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of
+    type and scrambled it to make a type specimen book. It has survived not only five centuries, but
+    also the leap into electronic typesetting, remaining essentially unchanged. It was popularised
+    in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more
+    recently with desktop publishing software like Aldus PageMaker including versions of Lorem
+    Ipsum.
+
+</resources>
