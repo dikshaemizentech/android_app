@@ -7,6 +7,7 @@ import com.vendtech.app.models.referral.ReferralCodeModel
 import com.vendtech.app.models.termspolicies.ContactUsModel
 import com.vendtech.app.models.termspolicies.TermsPoliciesModel
 import com.vendtech.app.models.transaction.*
+import com.vendtech.app.ui.activity.home.NavigationListModel
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -15,100 +16,121 @@ import retrofit2.http.*
 interface ApiInterface {
 
     @GET("Account/GetCountries")
-    fun get_countries():Call<GetCountriesModel>
+    fun get_countries(): Call<GetCountriesModel>
 
     @GET("Account/GetAppUserTypes")
-    fun get_usertypes():Call<GetUserTypesModel>
+    fun get_usertypes(): Call<GetUserTypesModel>
 
     @GET("Account/GetCities")
-    fun get_cities(@Query("countryId") countryId: String):Call<GetCitiesModel>
+    fun get_cities(@Query("countryId") countryId: String): Call<GetCitiesModel>
 
     @GET("Account/IsUserNameExists")
-    fun check_username(@Query("userName") countryId: String):Call<CheckUsernameModel>
+    fun check_username(@Query("userName") countryId: String): Call<CheckUsernameModel>
 
     @FormUrlEncoded
     @POST("Account/SignUp")
-    fun sign_up(@Field("Email") Email: String, @Field("Password") Password: String, @Field("FirstName") FirstName: String, @Field("LastName") LastName: String, @Field("UserName") UserName: String, @Field("UserType") UserType: String,@Field("CompanyName") CompanyName: String, @Field("Country") Country: String, @Field("City") City: String, @Field("Address") Address: String, @Field("Phone") Phone: String,@Field("ReferralCode") ReferralCode:String): Call<SignUpResponse>
+    fun sign_up(@Field("Email") Email: String, @Field("Password") Password: String, @Field("FirstName") FirstName: String, @Field("LastName") LastName: String,
+                @Field("UserName") UserName: String, @Field("UserType") UserType: String, @Field("CompanyName") CompanyName: String, @Field("Country") Country: String,
+                @Field("City") City: String, @Field("Address") Address: String, @Field("Phone") Phone: String, @Field("ReferralCode") ReferralCode: String,
+                @Field("DeviceType") DeviceType: String, @Field("AppType") AppType: String, @Field("DeviceToken") DeviceToken: String, @Field("AppUserType") AppUserType: String
+    ): Call<SignUpResponse>
 
     @FormUrlEncoded
     @POST("Account/VerifyAccountVerificationCode")
-    fun verify_otp(@Field("Code") Code: String,@Field("UserId") UserId:String):Call<VerifyOTPModel>
+    fun verify_otp(@Field("Code") Code: String, @Field("UserId") UserId: String): Call<VerifyOTPModel>
 
     @POST("Account/ResendAccountVerificationOtp")
-    fun resend_otp(@Query("userId") userId: String):Call<ResendOTPModel>
+    fun resend_otp(@Query("userId") userId: String): Call<ResendOTPModel>
+
+//    @FormUrlEncoded
+//    @POST("Account/SignIn")
+//    fun sign_in(@Field("Email") email: String,@Field("Password") password:String,@Field("DeviceToken") device_token:String,@Field("AppType") AppType:String):Call<SignInResponse>
 
     @FormUrlEncoded
     @POST("Account/SignIn")
-    fun sign_in(@Field("Email") email: String,@Field("Password") password:String,@Field("DeviceToken") device_token:String,@Field("AppType") AppType:String):Call<SignInResponse>
+    fun sign_in(@Field("passCode") password: String, @Field("DeviceToken") device_token: String, @Field("AppType") AppType: String): Call<SignInResponse>
+
 
     @FormUrlEncoded
     @POST("Meter/SaveMeter")
-    fun add_meter(@Header("token") Token: String, @Field("Name") Name: String, @Field("MeterMake") MeterMake:String, @Field("Address") Address:String, @Field("Number") Number:String):Call<AddMeterModel>
+    fun add_meter(@Header("token") Token: String, @Field("Name") Name: String, @Field("MeterMake") MeterMake: String, @Field("Address") Address: String, @Field("Number") Number: String): Call<AddMeterModel>
 
     @FormUrlEncoded
     @POST("Meter/SaveMeter")
-    fun update_meter(@Header("token") Token: String, @Field("Name") Name: String, @Field("MeterMake") MeterMake:String, @Field("Address") Address:String, @Field("Number") Number:String,@Field("meterId") meterId: String):Call<AddMeterModel>
+    fun update_meter(@Header("token") Token: String, @Field("Name") Name: String, @Field("MeterMake") MeterMake: String, @Field("Address") Address: String, @Field("Number") Number: String, @Field("meterId") meterId: String): Call<AddMeterModel>
 
     @GET("Meter/GetMeters")
-    fun get_meters(@Header("token") Token: String, @Query("pageNo") pageNo: String, @Query("pageSize") pageSize:String):Call<GetMetersModel>
+    fun get_meters(@Header("token") Token: String, @Query("pageNo") pageNo: String, @Query("pageSize") pageSize: String): Call<GetMetersModel>
 
     @POST("Meter/DeleteMeter")
-    fun delete_meter(@Header("token") Token: String, @Query("meterId") meterId: String):Call<DeleteMeterModel>
+    fun delete_meter(@Header("token") Token: String, @Query("meterId") meterId: String): Call<DeleteMeterModel>
 
-    @POST("Account/ForgotPassword")
-    fun forgot_password(@Header("token") Token: String, @Query("email") email: String):Call<ForgotPasswordModel>
+//    @POST("Account/ForgotPassword")
+//    fun forgot_password(@Header("token") Token: String, @Query("email") email: String):Call<ForgotPasswordModel>
+
+    //    VendorId(UserId)
+//    Email
+//    Abhi ke liye other wise Phone Or CountryCode bhi jayega
+    //@Header("token") Token: String,
+    @FormUrlEncoded
+    @POST("Account/ForgotPasscode")
+    fun forgot_passcode(@Field("Email") email: String, @Field("Phone") phone: String): Call<ForgotPasswordModel>
+
 
     @GET("User/GetUserProfile")
-    fun get_user_profile(@Header("token") Token: String):Call<GetProfileModel>
+    fun get_user_profile(@Header("token") Token: String): Call<GetProfileModel>
+
+    @GET("User/GetUserAssignedPlatforms")
+    fun get_user_GetUserAssignedPlatforms(@Header("token") Token: String): Call<GetProfileModel>
 
     @Multipart
     @POST("User/UpdateUserProfile")
-    fun update_profile(@Header("token") Token: String,@Part("Name") Name: RequestBody,@Part("SurName") SurName: RequestBody,@Part("Phone") Phone: RequestBody,@Part("City") City: RequestBody,@Part("Country") Country: RequestBody, @Part("Address") Address: RequestBody,@Part() file: MultipartBody.Part?):Call<UpdateProfileModel>;
+    fun update_profile(@Header("token") Token: String, @Part("Name") Name: RequestBody, @Part("SurName") SurName: RequestBody, @Part("Phone") Phone: RequestBody, @Part("City") City: RequestBody, @Part("Country") Country: RequestBody, @Part("Address") Address: RequestBody, @Part() file: MultipartBody.Part?): Call<UpdateProfileModel>;
 
     @FormUrlEncoded
     @POST("User/ChangePassword")
-    fun change_password(@Header("token") Token: String, @Field("OldPassword") OldPassword: String, @Field("Password") Password:String, @Field("ConfirmPassword") ConfirmPassword:String):Call<ChangePasswordModel>
+    fun change_password(@Header("token") Token: String, @Field("OldPassword") OldPassword: String, @Field("Password") Password: String, @Field("ConfirmPassword") ConfirmPassword: String): Call<ChangePasswordModel>
 
     @FormUrlEncoded
     @POST("User/VerifyChangePasswordOTP")
-    fun change_password_OTP_verification(@Header("token") Token: String, @Field("OldPassword") OldPassword: String, @Field("Password") Password:String, @Field("ConfirmPassword") ConfirmPassword:String, @Field("Otp") OTP:String):Call<ChangePasswordOTPModel>
+    fun change_password_OTP_verification(@Header("token") Token: String, @Field("OldPassword") OldPassword: String, @Field("Password") Password: String, @Field("ConfirmPassword") ConfirmPassword: String, @Field("Otp") OTP: String): Call<ChangePasswordOTPModel>
 
     @GET("User/GetWalletBalance")
-    fun get_wallet_balance(@Header("token") Token: String):Call<GetWalletModel>
+    fun get_wallet_balance(@Header("token") Token: String): Call<GetWalletModel>
 
     @GET("Account/GetBankAccountsSelectList")
-    fun getBankDetail(@Header("token") Token: String):Call<BankResponseModel>
+    fun getBankDetail(@Header("token") Token: String): Call<BankResponseModel>
 
     @GET("Account/GetBankNamesForCheque")
-    fun getBankNames(@Header("token") Token: String):Call<BankNameModel>
+    fun getBankNames(@Header("token") Token: String): Call<BankNameModel>
 
     @GET("User/GetUserPosPagingList")
-    fun getPosList(@Header("token") Token: String,@Query("pageNo")pageNo:Int,@Query("pageSize")pageSize: Int):Call<PosListModel>
+    fun getPosList(@Header("token") Token: String, @Query("pageNo") pageNo: Int, @Query("pageSize") pageSize: Int): Call<PosListModel>
 
     @FormUrlEncoded
     @POST("Report/GetSalesReport")
-    fun getSalesReport(@Header("token")token:String,
-                       @Field("PosId")posId: Int,
-                       @Field("From")from:String,
-                       @Field("To")to:String,
-                       @Field("Meter")meter:String,
-                       @Field("TransactionId")transactionId:String,
-                       @Field("PageNo")pageNo: Int,
-                       @Field("RecordsPerPage")recordsPerPage:Int):Call<RechargeTransactionNewListModel>
+    fun getSalesReport(@Header("token") token: String,
+                       @Field("PosId") posId: Int,
+                       @Field("From") from: String,
+                       @Field("To") to: String,
+                       @Field("Meter") meter: String,
+                       @Field("TransactionId") transactionId: String,
+                       @Field("PageNo") pageNo: Int,
+                       @Field("RecordsPerPage") recordsPerPage: Int): Call<RechargeTransactionNewListModel>
 
     @FormUrlEncoded
     @POST("Report/GetDepositReport")
-    fun getDepositReports(@Header("token")token:String,
-                       @Field("PosId")posId: Int,
-                       @Field("From")from:String,
-                       @Field("To")to:String,
-                       @Field("Meter")meter:String,
-                       @Field("RefNumber")refNumber:String,
-                       @Field("TransactionId")transactionId:String,
-                       @Field("Bank")bank:String,
-                       @Field("DepositType")depositType:Int,
-                       @Field("PageNo")pageNo: Int,
-                       @Field("RecordsPerPage")recordsPerPage:Int):Call<DepositTransactionNewListModel>
+    fun getDepositReports(@Header("token") token: String,
+                          @Field("PosId") posId: Int,
+                          @Field("From") from: String,
+                          @Field("To") to: String,
+                          @Field("Meter") meter: String,
+                          @Field("RefNumber") refNumber: String,
+                          @Field("TransactionId") transactionId: String,
+                          @Field("Bank") bank: String,
+                          @Field("DepositType") depositType: Int,
+                          @Field("PageNo") pageNo: Int,
+                          @Field("RecordsPerPage") recordsPerPage: Int): Call<DepositTransactionNewListModel>
 
 
     @FormUrlEncoded
@@ -116,59 +138,62 @@ interface ApiInterface {
     fun deposit_request(@Header("token") Token: String,
                         @Field("PosId") posId: Int,
                         @Field("BankAccountId") bankAccountId: String,
-                        @Field("DepositType") depositType:String,
-                        @Field("ChkOrSlipNo") ChkOrSlipNo:String,
+                        @Field("DepositType") depositType: String,
+                        @Field("ChkOrSlipNo") ChkOrSlipNo: String,
                         @Field("ChkBankName") bankName: String?,
                         @Field("NameOnCheque") nameOnCheque: String?,
-                        @Field("Amount") amount:String,
-                        @Field("TotalAmountWithPercentage") totalAmountWithPercentage:String
-                        ):Call<DepositRequestModel>
+                        @Field("Amount") amount: String,
+                        @Field("TotalAmountWithPercentage") totalAmountWithPercentage: String
+    ): Call<DepositRequestModel>
 
     @FormUrlEncoded
     @POST("Meter/RechargeMeter")
-    fun recharge_meter(@Header("token") Token: String, @Field("MeterId") MeterId: String?, @Field("Amount") Amount:String, @Field("MeterNumber") MeterNumber: String?,@Field("POSId")posId:Int):Call<RechargeMeterModel>
+    fun recharge_meter(@Header("token") Token: String, @Field("MeterId") MeterId: String?, @Field("Amount") Amount: String, @Field("MeterNumber") MeterNumber: String?, @Field("POSId") posId: Int): Call<RechargeMeterModel>
 
     @GET("User/GetUserPos")
-    fun getPosList(@Header("token")Token: String):Call<PosResultModel>
+    fun getPosList(@Header("token") Token: String): Call<PosResultModel>
 
     @GET("Account/GetTermsAndConditions")
-    fun get_terms():Call<TermsPoliciesModel>
+    fun get_terms(): Call<TermsPoliciesModel>
 
     @GET("Account/GetPrivacyPolicy")
-    fun get_policies():Call<TermsPoliciesModel>
+    fun get_policies(): Call<TermsPoliciesModel>
 
     @FormUrlEncoded
     @POST("ContactUs/SaveRequest")
-    fun contact_us(@Header("token") Token: String, @Field("Subject") subject: String, @Field("Message") message:String):Call<ContactUsModel>
+    fun contact_us(@Header("token") Token: String, @Field("Subject") subject: String, @Field("Message") message: String): Call<ContactUsModel>
 
     @GET("Meter/GetUserMeterRecharges")
-    fun get_meter_recharges(@Header("token") Token: String,@Query("pageNo") pageNo:String,@Query("pageSize") pageSize:String):Call<RechargeTransactionNewListModel>
+    fun get_meter_recharges(@Header("token") Token: String, @Query("pageNo") pageNo: String, @Query("pageSize") pageSize: String): Call<RechargeTransactionNewListModel>
 
     @GET("Deposit/GetDeposits")
-    fun get_deposits(@Header("token") Token: String,@Query("pageNo") pageNo:String,@Query("pageSize") pageSize:String):Call<DepositTransactionNewListModel>
+    fun get_deposits(@Header("token") Token: String, @Query("pageNo") pageNo: String, @Query("pageSize") pageSize: String): Call<DepositTransactionNewListModel>
 
     @GET("Meter/GetMeterRechargePdf")
-    fun get_rechargedetail_pdf(@Header("token") Token: String,@Query("rechargeId") rechargeId:String):Call<RechargeTransactionInvoiceModel>
+    fun get_rechargedetail_pdf(@Header("token") Token: String, @Query("rechargeId") rechargeId: String): Call<RechargeTransactionInvoiceModel>
 
     @GET("Meter/GetRechargeDetail")
-    fun get_rechargedetail(@Header("token") Token: String,@Query("rechargeId") rechargeId:String):Call<RechargeTransactionDetails>
+    fun get_rechargedetail(@Header("token") Token: String, @Query("rechargeId") rechargeId: String): Call<RechargeTransactionDetails>
 
     @GET("Deposit/GetDepositPdf")
-    fun get_depositdetail_pdf(@Header("token") Token: String,@Query("depositId") rechargeId:String):Call<DepositTransactionInvoiceModel>
+    fun get_depositdetail_pdf(@Header("token") Token: String, @Query("depositId") rechargeId: String): Call<DepositTransactionInvoiceModel>
 
     @GET("Deposit/GetDepositDetail")
-    fun get_depositdetail(@Header("token") Token: String,@Query("depositId") rechargeId:String):Call<DepositTransactionDetails>
+    fun get_depositdetail(@Header("token") Token: String, @Query("depositId") rechargeId: String): Call<DepositTransactionDetails>
+
+    @GET("Dashboard/GetNavigations")
+    fun get_navigation(@Header("token") Token: String, @Query("userId") usrid: String): Call<NavigationListModel>
 
     @POST("User/GenerateReferralCode")
-    fun generate_referral_code(@Header("token") Token: String):Call<ReferralCodeModel>
+    fun generate_referral_code(@Header("token") Token: String): Call<ReferralCodeModel>
 
     @GET("User/GetUserAssignedPlatforms")
-    fun user_assigned_services(@Header("token") Token: String):Call<UserAssignedServicesModel>
+    fun user_assigned_services(@Header("token") Token: String): Call<UserAssignedServicesModel>
 
     @GET("Account/GetBankAccounts")
-    fun bank_details(@Header("token") Token: String):Call<BankDetailsModel>
+    fun bank_details(@Header("token") Token: String): Call<BankDetailsModel>
 
     @GET("User/GetNotifications")
-    fun get_notifications(@Header("token") Token: String,@Query("pageNo") pageNo:String,@Query("pageSize") pageSize:String):Call<NotificationListModel>
+    fun get_notifications(@Header("token") Token: String, @Query("pageNo") pageNo: String, @Query("pageSize") pageSize: String): Call<NotificationListModel>
 
 }

@@ -47,6 +47,7 @@ class SignUpActivity : AppCompatActivity() {
     lateinit var CITY_ID:String
     lateinit var COUNTRY_ID:String
     lateinit var USER_TYPE_ID:String
+    lateinit var AppUserType:String
     var USER_NAME = ""
     lateinit var mainLayout:NestedScrollView
     lateinit var errorLayout:LinearLayout
@@ -239,14 +240,17 @@ class SignUpActivity : AppCompatActivity() {
 
         var companyName=""
 
-        if(USER_TYPE_ID.contentEquals("20")){
-            companyName=companynameET.text.toString().trim()
-        }else{
-            companyName=""
-        }
+//        if(USER_TYPE_ID.contentEquals("20")){
+//            companyName=companynameET.text.toString().trim()
+//        }else{
+//            companyName=""
+//        }
 
-
+        USER_TYPE_ID="AppUser"
+      var  DeviceType="ABC"
+      var  AppType=Constants.DEVICE_TYPE
         customDialog.show()
+
 
         val call: Call<SignUpResponse> = Uten.FetchServerData().sign_up(emailET.text.toString().trim(),PASSWORD,
                 fnameET.text.toString().trim(),
@@ -257,7 +261,10 @@ class SignUpActivity : AppCompatActivity() {
                 COUNTRY_ID,
                 CITY_ID,
                 addressET.text.toString().trim(),
-                phoneET.text.toString().trim(),referralcodeET.text.toString().trim())
+                phoneET.text.toString().trim(),
+                referralcodeET.text.toString().trim(),
+                DeviceType,AppType,SharedHelper.getString(this,Constants.TOKEN),
+                AppUserType )
 
 
 
@@ -555,6 +562,7 @@ class SignUpActivity : AppCompatActivity() {
                 // Toast.makeText(this@SignUpActivity, "City ID: " + data[position].cityId, Toast.LENGTH_SHORT).show()
                 try {
                     USER_TYPE_ID=data[position].value
+                    AppUserType=data[position].value
 
                     //Show company name field if User type is company
                     if(data[position].value.contentEquals("20")){

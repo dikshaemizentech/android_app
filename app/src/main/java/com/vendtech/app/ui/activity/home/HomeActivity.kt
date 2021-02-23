@@ -14,6 +14,8 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -158,7 +160,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
 
         reportLL.setOnClickListener(this)
 
-posLL.setOnClickListener(this)
+        posLL.setOnClickListener(this)
         dashboardLL.setOnClickListener(this)
         walletLL.setOnClickListener(this)
         meterLL.setOnClickListener(this)
@@ -187,6 +189,8 @@ posLL.setOnClickListener(this)
     }
 
     fun SetUpMenuOptions() {
+        getNavigationList()
+
 
         //Check whether user account status is Active or Pending
         if (SharedHelper.getString(this, Constants.USER_ACCOUNT_STATUS).equals(Constants.STATUS_ACTIVE)) {
@@ -224,12 +228,12 @@ posLL.setOnClickListener(this)
 
                 Handler().postDelayed({ LoadDashboardFragment() }, 400)
             }
-R.id.posLL ->{
-    if (drawerLayout!!.isDrawerOpen(Gravity.START))
-        drawerLayout!!.closeDrawer(Gravity.START)
+            R.id.posLL -> {
+                if (drawerLayout!!.isDrawerOpen(Gravity.START))
+                    drawerLayout!!.closeDrawer(Gravity.START)
 
-    Handler().postDelayed({ LoadPosListFragment() }, 400)
-}
+                Handler().postDelayed({ LoadPosListFragment() }, 400)
+            }
             R.id.walletLL -> {
                 if (drawerLayout!!.isDrawerOpen(Gravity.START))
                     drawerLayout!!.closeDrawer(Gravity.START)
@@ -244,8 +248,8 @@ R.id.posLL ->{
 
 
             R.id.meterLL -> {
-               /* if (drawerLayout!!.isDrawerOpen(Gravity.START))
-                    drawerLayout!!.closeDrawer(Gravity.START)*/
+                /* if (drawerLayout!!.isDrawerOpen(Gravity.START))
+                     drawerLayout!!.closeDrawer(Gravity.START)*/
 
                 Handler().postDelayed({
                     val i = Intent(this@HomeActivity, MeterListActivity::class.java)
@@ -256,8 +260,8 @@ R.id.posLL ->{
 
 
             R.id.changepassLL -> {
-               /* if (drawerLayout!!.isDrawerOpen(Gravity.START))
-                    drawerLayout!!.closeDrawer(Gravity.START)*/
+                /* if (drawerLayout!!.isDrawerOpen(Gravity.START))
+                     drawerLayout!!.closeDrawer(Gravity.START)*/
 
                 Handler().postDelayed({
                     val i = Intent(this@HomeActivity, ChangePasswordActivity::class.java)
@@ -268,8 +272,8 @@ R.id.posLL ->{
 
 
             R.id.tcLL -> {
-               /* if (drawerLayout!!.isDrawerOpen(Gravity.START))
-                    drawerLayout!!.closeDrawer(Gravity.START)*/
+                /* if (drawerLayout!!.isDrawerOpen(Gravity.START))
+                     drawerLayout!!.closeDrawer(Gravity.START)*/
 
                 Handler().postDelayed({
                     val i = Intent(this@HomeActivity, TermsPoliciesActivity::class.java)
@@ -309,9 +313,9 @@ R.id.posLL ->{
 
 
             R.id.contactusLL -> {
-              /*  if (drawerLayout!!.isDrawerOpen(Gravity.START))
-                    drawerLayout!!.closeDrawer(Gravity.START)
-*/
+                /*  if (drawerLayout!!.isDrawerOpen(Gravity.START))
+                      drawerLayout!!.closeDrawer(Gravity.START)
+  */
                 Handler().postDelayed({
                     val i = Intent(this@HomeActivity, ContactUsActivity::class.java)
                     startActivity(i)
@@ -320,8 +324,8 @@ R.id.posLL ->{
             }
 
             R.id.logoutLL -> {
-              /*  if (drawerLayout!!.isDrawerOpen(Gravity.START))
-                    drawerLayout!!.closeDrawer(Gravity.START)*/
+                /*  if (drawerLayout!!.isDrawerOpen(Gravity.START))
+                      drawerLayout!!.closeDrawer(Gravity.START)*/
 
                 Handler().postDelayed({
 
@@ -331,8 +335,8 @@ R.id.posLL ->{
             }
 
             R.id.editUserProfile -> {
-               /* if (drawerLayout!!.isDrawerOpen(Gravity.START))
-                    drawerLayout!!.closeDrawer(Gravity.START)*/
+                /* if (drawerLayout!!.isDrawerOpen(Gravity.START))
+                     drawerLayout!!.closeDrawer(Gravity.START)*/
 
                 Handler().postDelayed({
                     val i = Intent(this@HomeActivity, EditProfileActivity::class.java)
@@ -342,9 +346,9 @@ R.id.posLL ->{
             }
 
             R.id.editprofileTV -> {
-               /* if (drawerLayout!!.isDrawerOpen(Gravity.START))
-                    drawerLayout!!.closeDrawer(Gravity.START)
-*/
+                /* if (drawerLayout!!.isDrawerOpen(Gravity.START))
+                     drawerLayout!!.closeDrawer(Gravity.START)
+ */
                 Handler().postDelayed({
                     val i = Intent(this@HomeActivity, EditProfileActivity::class.java)
                     startActivity(i)
@@ -353,7 +357,6 @@ R.id.posLL ->{
             }
         }
     }
-
 
 
     fun GenerateRefferalCode() {
@@ -480,6 +483,7 @@ R.id.posLL ->{
         ft.replace(R.id.fragment_frame, fragment)
         ft.commit()
     }
+
     fun LoadPosListFragment() {
         ShowTitle()
         headerTitle.text = "POS"
@@ -488,5 +492,72 @@ R.id.posLL ->{
         val ft = supportFragmentManager.beginTransaction()
         ft.replace(R.id.fragment_frame, fragment)
         ft.commit()
+    }
+
+    fun getNavigationList() {
+
+        var customDialog: CustomDialog
+        customDialog = CustomDialog(this)
+        customDialog.show()
+
+        val call: Call<NavigationListModel> = Uten.FetchServerData().get_navigation(SharedHelper.getString(this, Constants.TOKEN), SharedHelper.getString(this, Constants.USER_ID))
+        call.enqueue(object : Callback<NavigationListModel> {
+            override fun onResponse(call: Call<NavigationListModel>, response: Response<NavigationListModel>) {
+
+                if (customDialog.isShowing) {
+                    customDialog.dismiss()
+                }
+
+                var data = response.body()
+                if (data != null) {
+                    if (data.status.equals("true")) {
+                        //DO CODE
+                        Log.e("", "");
+                        if (data.result.size > 0) {
+                            meterLL.visibility = GONE
+                            walletLL.visibility = GONE
+                            reportLL.visibility = GONE
+                            changepassLL.visibility = GONE
+                            dashboard_add_bill_payment.visibility = GONE
+                            var listMenu = ArrayList<String>()
+                            listMenu.add(Constants.NAV5_Saved_Meters)
+                            listMenu.add(Constants.NAV3_Manage_Wallet)
+                            listMenu.add(Constants.NAV6_MANAGE_REPORTS)
+                            listMenu.add(Constants.NAV7_RESET_PASSCODE)
+                            listMenu.add(Constants.NAV4_Bill_Payment)
+                            for (i in 0 until listMenu.size) {
+                                for (j in 0 until data.result.size) {
+                                    if (listMenu[i].equals(data.result[j].modules, ignoreCase = true)) {
+                                        if (i == 0)
+                                            meterLL.visibility = VISIBLE
+                                        else if (i == 1)
+                                            walletLL.visibility = VISIBLE
+                                        else if (i == 2)
+                                            reportLL.visibility = VISIBLE
+                                        else if (i == 3)
+                                            changepassLL.visibility = VISIBLE
+                                        else if (i == 4)
+                                            dashboard_add_bill_payment.visibility = VISIBLE
+                                        break
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        Utilities.CheckSessionValid(data.message, this@HomeActivity, this@HomeActivity)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<NavigationListModel>, t: Throwable) {
+                val gs = Gson()
+                gs.toJson(t.localizedMessage)
+                Utilities.shortToast("Something went wrong", this@HomeActivity)
+                if (customDialog.isShowing) {
+                    customDialog.dismiss()
+                }
+            }
+        })
+
     }
 }

@@ -312,9 +312,9 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
                    Utilities.shortToast("This service will be available soon.",requireActivity())
                }*/
 
-            /*   R.id.electricityLL -> {
+               R.id.electricityLL -> {
                    GetMeterList()
-               }*/
+               }
 
             R.id.showListmeterIV -> {
                 showMeterListDialog(meterListModels)
@@ -462,7 +462,7 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
         var customDialog: CustomDialog
         customDialog = CustomDialog(requireActivity())
         customDialog.show()
-
+        var vv=(SharedHelper.getString(requireActivity(), Constants.TOKEN))
         val call: Call<GetMetersModel> = Uten.FetchServerData().get_meters(SharedHelper.getString(requireActivity(), Constants.TOKEN), "1", "50")
         call.enqueue(object : Callback<GetMetersModel> {
 

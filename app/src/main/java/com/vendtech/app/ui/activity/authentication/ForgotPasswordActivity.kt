@@ -35,16 +35,20 @@ class ForgotPasswordActivity : BaseActivity() {
 
         txtSubmit.setOnClickListener { v ->
 
-            if(TextUtils.isEmpty(emailET.text.toString().trim())){
-                Utilities.shortToast("Enter your Email address",this)
-            }else if(!emailET.text.matches(Patterns.EMAIL_ADDRESS.toRegex())){
-                Utilities.shortToast("Enter a valid Email",this);
-            }else {
-
-                if(Uten.isInternetAvailable(this)){
-                    ForgotPassApi(emailET.text.toString().trim())
-                }else{
-                    Utilities.shortToast("No internet connection. Please check your network connectivity.",this)
+            if (TextUtils.isEmpty(frgtPwdPhoneET.text.toString().trim())) {
+                Utilities.shortToast("Enter phone number", this)
+            } else if (frgtPwdPhoneET.text.toString().trim().length != 10) {
+                Utilities.shortToast("Enter a valid phone number", this)
+            } else if (TextUtils.isEmpty(emailET.text.toString().trim())) {
+                Utilities.shortToast("Enter your Email address", this)
+            } else if (!emailET.text.matches(Patterns.EMAIL_ADDRESS.toRegex())) {
+                Utilities.shortToast("Enter a valid Email", this);
+            } else {
+                if (Uten.isInternetAvailable(this)) {
+                    // ForgotPassApi(emailET.text.toString().trim())
+                    resetPasscodeApi(emailET.text.toString().trim(), frgtPwdPhoneET.text.toString())
+                } else {
+                    Utilities.shortToast("No internet connection. Please check your network connectivity.", this)
                 }
             }
         }
@@ -54,9 +58,45 @@ class ForgotPasswordActivity : BaseActivity() {
         })
     }
 
+    fun resetPasscodeApi(email: String, phno: String) {
 
+        var customDialog: CustomDialog
+        customDialog = CustomDialog(this)
+        customDialog.show()
 
-    fun ForgotPassApi(email:String){
+        var vvv=SharedHelper.getString(this, Constants.TOKEN)
+        //SharedHelper.getString(this, Constants.TOKEN),
+        val call: Call<ForgotPasswordModel> = Uten.FetchServerData().forgot_passcode( email, phno)
+        call.enqueue(object : Callback<ForgotPasswordModel> {
+            override fun onResponse(call: Call<ForgotPasswordModel>, response: Response<ForgotPasswordModel>) {
+
+                if (customDialog.isShowing) {
+                    customDialog.dismiss()
+                }
+
+                var data = response.body()
+                if (data != null) {
+                   // Utilities.shortToast(data.message, this@ForgotPasswordActivity)
+                    if (data.status.equals("true")) {
+                        GotoLogin()
+                    } else {
+                        Utilities.CheckSessionValid(data.message, this@ForgotPasswordActivity, this@ForgotPasswordActivity)
+
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ForgotPasswordModel>, t: Throwable) {
+                val gs = Gson()
+                gs.toJson(t.localizedMessage)
+                if (customDialog.isShowing) {
+                    customDialog.dismiss()
+                }
+            }
+        })
+    }
+
+    /*fun ForgotPassApi(email:String){
 
         var customDialog: CustomDialog
         customDialog= CustomDialog(this)
@@ -90,9 +130,9 @@ class ForgotPasswordActivity : BaseActivity() {
                 }
             }
         })
-    }
+    }*/
 
-    fun GotoLogin(){
+    fun GotoLogin() {
 
         val intent = Intent(this@ForgotPasswordActivity, LoginActivity::class.java)
         startActivity(intent)

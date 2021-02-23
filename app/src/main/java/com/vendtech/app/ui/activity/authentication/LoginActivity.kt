@@ -33,6 +33,7 @@ class LoginActivity : BaseActivity() {
 
     lateinit var layoutSignUp: LinearLayout
     lateinit var txtForgotPassword: TextView
+    lateinit var loginResetPasscode: TextView
     lateinit var txtLogin: TextView
 
 
@@ -42,6 +43,7 @@ class LoginActivity : BaseActivity() {
         layoutSignUp = findViewById(R.id.layoutSignUp)
         txtLogin = findViewById(R.id.txtLogin)
         txtForgotPassword = findViewById(R.id.txtForgotPassword)
+        loginResetPasscode = findViewById(R.id.loginResetPasscode)
 
 
         layoutSignUp.setOnClickListener { v ->
@@ -53,6 +55,11 @@ class LoginActivity : BaseActivity() {
         }
 
         txtForgotPassword.setOnClickListener { v ->
+
+            //launchActivity(ForgotPasswordActivity::class.java)
+            GotoForgotPassword()
+        }
+        loginResetPasscode.setOnClickListener { v ->
 
             //launchActivity(ForgotPasswordActivity::class.java)
             GotoForgotPassword()
@@ -73,20 +80,32 @@ class LoginActivity : BaseActivity() {
 
     fun processLogin() {
 
-        if (TextUtils.isEmpty(emailET.text)) {
-            Utilities.shortToast("Enter your email address or username", this);
-        } else if (TextUtils.isEmpty(passwordET.text)) {
-            Utilities.shortToast("Enter your password", this);
-        } else if (passwordET.text.toString().trim().length < 6) {
-            Utilities.shortToast(resources.getString(R.string.pass_length), this)
-        } else {
-            if (Uten.isInternetAvailable(this)) {
-                performLogin()
-            } else {
-                Utilities.shortToast("No internet connection. Please check your network connectivity.", this)
-            }
+//        if (TextUtils.isEmpty(emailET.text)) {
+//            Utilities.shortToast("Enter your email address or username", this);
+//        } else if (TextUtils.isEmpty(passwordET.text)) {
+//            Utilities.shortToast("Enter your password", this);
+//        } else if (passwordET.text.toString().trim().length < 6) {
+//            Utilities.shortToast(resources.getString(R.string.pass_length), this)
+//        } else {
+//            if (Uten.isInternetAvailable(this)) {
+//                performLogin()
+//            } else {
+//                Utilities.shortToast("No internet connection. Please check your network connectivity.", this)
+//            }
+//        }
+
+        if(TextUtils.isEmpty(loginFirstPinView.text.toString().trim())){
+            Utilities.shortToast("Please enter PASSCODE",this)
+        }else if (loginFirstPinView.text.toString().trim().length<4){
+            Utilities.shortToast("Please enter complete PASSCODE",this)
+        }else{
+            performLoginNew(loginFirstPinView.text.toString().trim())
+
         }
+
     }
+
+
 
 
     fun GotoForgotPassword() {
@@ -97,7 +116,59 @@ class LoginActivity : BaseActivity() {
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
     }
 
-    fun performLogin() {
+    private fun performLoginNew(pscode: String) {
+        var customDialog = CustomDialog(this)
+        customDialog.setCancelable(false)
+        customDialog.show()
+
+
+         val call: Call<SignInResponse> = Uten.FetchServerData().sign_in( pscode, SharedHelper.getString(this, Constants.DEVICE_TOKEN), Constants.DEVICE_TYPE)
+
+        call.enqueue(object : Callback<SignInResponse> {
+            override fun onResponse(call: Call<SignInResponse>, response: Response<SignInResponse>) {
+                customDialog.dismiss()
+                var data = response.body()
+                Log.d("dasffsdafasdf", "onResponse: $data")
+                if (data != null) {
+                    Utilities.shortToast(data.message, this@LoginActivity)
+                    if (data.status.equals("true")) {
+                        SharedHelper.putBoolean(this@LoginActivity, Constants.IS_LOGGEDIN, true)
+                        SharedHelper.putString(this@LoginActivity, Constants.TOKEN, data.result.token)
+                        SharedHelper.putString(this@LoginActivity, Constants.USER_FNAME, data.result.firstName)
+                        SharedHelper.putString(this@LoginActivity, Constants.USER_LNAME, data.result.lastName)
+                        SharedHelper.putString(this@LoginActivity, Constants.USER_ID, data.result.userId)
+                        SharedHelper.putString(this@LoginActivity, Constants.USER_EMAIL, data.result.email)
+                        SharedHelper.putString(this@LoginActivity, Constants.USER_ACCOUNT_STATUS, data.result.accountStatus)
+                        SharedHelper.putString(this@LoginActivity, Constants.POS_NUMBER, data.result.posNumber)
+                        SharedHelper.putString(this@LoginActivity, Constants.COMMISSION_PERCENTAGE, data.result.percentage)
+                        if (data.result.phone != null || data.result.phone == "null") {
+                            SharedHelper.putString(this@LoginActivity, Constants.USER_PHONE, data.result.phone)
+                        } else {
+                            SharedHelper.putString(this@LoginActivity, Constants.USER_PHONE, "")
+                        }
+                        SharedHelper.putString(this@LoginActivity, Constants.USER_TYPE, data.result.userType)
+                        if (rememberMeCB.isChecked) {
+                            SharedHelper.putBoolean(this@LoginActivity, Constants.IS_REMEMBER_ME, true)
+                            SharedHelper.putString(this@LoginActivity, Constants.REMEMBER_EMAIL, emailET.text.toString().trim())
+                            SharedHelper.putString(this@LoginActivity, Constants.REMEMBER_PASS, passwordET.text.toString().trim())
+                        } else {
+                            SharedHelper.putBoolean(this@LoginActivity, Constants.IS_REMEMBER_ME, false)
+                        }
+                        GetProfile()
+                    }
+                } else {
+                    Utilities.shortToast("Something went wrong!", this@LoginActivity)
+                }
+            }
+            override fun onFailure(call: Call<SignInResponse>, t: Throwable) {
+                Log.d("LoginError","---"+t.localizedMessage)
+                customDialog.dismiss()
+                Utilities.shortToast("Something went wrong!", this@LoginActivity)
+            }
+        })
+    }
+
+    /*fun performLogin() {
 
         var customDialog = CustomDialog(this)
         customDialog.setCancelable(false)
@@ -147,7 +218,7 @@ class LoginActivity : BaseActivity() {
                 Utilities.shortToast("Something went wrong!", this@LoginActivity)
             }
         })
-    }
+    }*/
 
     fun GetProfile() {
 
