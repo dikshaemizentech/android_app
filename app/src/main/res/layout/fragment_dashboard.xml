@@ -80,7 +80,7 @@
 
             <include layout="@layout/layout_services_recylerview" />
 
-            <include layout="@layout/layout_service_menu" />
+            <!--<include layout="@layout/layout_service_menu" />-->
         </RelativeLayout>
 
 

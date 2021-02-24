@@ -312,9 +312,9 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
                    Utilities.shortToast("This service will be available soon.",requireActivity())
                }*/
 
-               R.id.electricityLL -> {
-                   GetMeterList()
-               }
+            R.id.electricityLL -> {
+               GetMeterList()
+            }
 
             R.id.showListmeterIV -> {
                 showMeterListDialog(meterListModels)
@@ -623,7 +623,7 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
 
         servicesAdapter = UserServicesAdapter(context!!, data, this)
         servicesRecyclerview.adapter = servicesAdapter
-        servicesRecyclerview.layoutManager = GridLayoutManager(requireContext(), 3)
+        servicesRecyclerview.layoutManager = GridLayoutManager(requireContext(), 2)
         servicesRecyclerview.setHasFixedSize(true)
         servicesAdapter.notifyDataSetChanged()
 

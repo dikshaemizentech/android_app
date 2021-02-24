@@ -46,55 +46,10 @@
                 android:layout_height="2dp"
                 android:background="@color/colorYellow"/>
 
-            <LinearLayout android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorYellow"
-                android:weightSum="3"
-                android:orientation="horizontal"
-                android:padding="@dimen/_5sdp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/date"
-                    android:textColor="@color/colorWhite"
-                    android:id="@+id/tv_date"
-                    android:textSize="@dimen/_10sdp"
-                    android:fontFamily="@font/roboto_bold"
-                    android:padding="5dp"
-                    android:gravity="center"/>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/meter"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/_10sdp"
-                    android:fontFamily="@font/roboto_bold"
-                    android:padding="5dp"
-                    android:gravity="center"
-                    android:id="@+id/tv_meter_id"/>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/amount"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/_10sdp"
-                    android:fontFamily="@font/roboto_bold"
-                    android:padding="5dp"
-                    android:gravity="center"
-                    android:id="@+id/tv_amount"/>
-
-            </LinearLayout>
-
-
 
             <android.support.v7.widget.RecyclerView android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:padding="20dp"
                 android:visibility="visible"
                 tools:listitem="@layout/item_notifications_list"
                 android:id="@+id/recyclerviewNotificationsList"/>

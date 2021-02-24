@@ -53,7 +53,7 @@ class RechargeTransactionDetails : Activity(){
     var timeTransaction=""
 
 
-    //Download Details
+    //Download DetailsL
     var downloadID = 0
     internal var INVOICE_URL = ""
 
@@ -69,6 +69,12 @@ class RechargeTransactionDetails : Activity(){
         Log.v("DEPOSITID","Activity rechargeId: "+rechargeID)
 
         GetRechargeDetail()
+
+
+        imgBack.setOnClickListener(View.OnClickListener {
+            finish();
+            overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
+        });
 
     }
 
@@ -107,10 +113,7 @@ class RechargeTransactionDetails : Activity(){
             }
 
 
-        imgBack.setOnClickListener(View.OnClickListener {
-            finish()
-            overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out)
-        })
+
 
 
         downloadInvoicePDF.setOnClickListener(View.OnClickListener {

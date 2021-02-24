@@ -96,7 +96,7 @@ class PosListFragment :Fragment(){
                 if(data!=null){
                     if(data.status.equals("true")){
                         if(data.result.size>0){
-                            setPosList(data.result)
+                            setPosList(data)
                         }
                         else isLastPage=true
                     }
@@ -106,17 +106,23 @@ class PosListFragment :Fragment(){
         })
     }
 
-    private fun setPosList(result: List<PosListModel.Result>) {
-       posList.addAll(result)
+    private fun setPosList(result: PosListModel) {
+       posList.addAll(result.result)
        posListAdapter.notifyDataSetChanged()
 
-       for (i in result.indices) {
+      /* for (i in result.indices) {
            var temp=NumberFormat.getNumberInstance(Locale.US).format(result[i].balance.toLong());
            temp=temp.replace(",","");
            totalBalance=(2147483647+16988000);
            Log.d("TotalBalance","---"+totalBalance+"***********"+temp);
-       }
-       tv_total.setText(resources.getString(R.string.total_balance)+" "+totalBalance.toString());
+       }*/
+       tv_total.setText(resources.getString(R.string.total_balance)+" "+NumberFormat.getNumberInstance(Locale.US).format(result.totalCount));
+
+        if (result.totalCount.equals("0"))
+        {
+            ll_total.visibility=View.GONE
+        }
+
 
     }
 }

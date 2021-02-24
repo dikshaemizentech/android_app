@@ -256,6 +256,15 @@
                         android:layout_alignParentRight="true" />
                 </RelativeLayout>
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:id="@+id/ll_vt_transaction_id">
             <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -263,9 +272,7 @@
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/_8sdp"
 
-            android:layout_marginTop="@dimen/_8sdp"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:layout_marginLeft="@dimen/_8sdp" />
+             />
 
             <EditText
                 android:id="@+id/reportFilterTransId"
@@ -279,6 +286,7 @@
                 android:gravity="center_vertical"
                 android:background="@drawable/boarder_lightprimary"
                 />
+            </LinearLayout>
             <Button
                 android:id="@+id/reportFilterSearch"
                 android:layout_width="match_parent"

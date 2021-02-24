@@ -66,7 +66,7 @@ class ForgotPasswordActivity : BaseActivity() {
 
         var vvv=SharedHelper.getString(this, Constants.TOKEN)
         //SharedHelper.getString(this, Constants.TOKEN),
-        val call: Call<ForgotPasswordModel> = Uten.FetchServerData().forgot_passcode( email, phno)
+        val call: Call<ForgotPasswordModel> = Uten.FetchServerData().forgot_passcode( email, phno,SharedHelper.getString(this,Constants.PASS_CODE_VALUE))
         call.enqueue(object : Callback<ForgotPasswordModel> {
             override fun onResponse(call: Call<ForgotPasswordModel>, response: Response<ForgotPasswordModel>) {
 

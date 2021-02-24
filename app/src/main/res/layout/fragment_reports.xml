@@ -529,7 +529,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
                             android:fontFamily="@font/regular"
-                            android:text="Recharge"
+                            android:text="SALES REPORT "
                             android:textColor="@color/colorWhite" />
 
 
@@ -564,7 +564,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
                             android:fontFamily="@font/regular"
-                            android:text="Deposit"
+                            android:text="DEPOSITS REPORT"
                             android:textColor="@color/colorWhite" />
 
 

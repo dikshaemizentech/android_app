@@ -20,22 +20,24 @@ import com.vendtech.app.utils.Utilities
 class NotificationListAdapter (internal var context: Context, internal var serviceList:MutableList<NotificationListResult>): RecyclerView.Adapter<NotificationListAdapter.ViewHolder>(), View.OnClickListener {
 
 
-  private  lateinit var itemClickListener: ItemClickListener
-  private  var itemEditables = false
+    lateinit var itemClickListener: ItemClickListener
+    var itemEditables = false
 
-  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-      val view = LayoutInflater.from(parent.context).inflate(R.layout.item_notifications_list, parent, false);
-      return ViewHolder(view)
-  }
 
-  override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        @SuppressLint("InflateParams") val view = LayoutInflater.from(parent.context).inflate(R.layout.item_notifications_list, null)
 
-     /* holder.notificationMessage.text=serviceList.get(position).message
+        return ViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+        holder.notificationMessage.text=serviceList.get(position).message
         holder.notificationTitle.text=serviceList.get(position).title
         holder.dateNotificationTV.text=Utilities.DateFormatNotificationList(serviceList.get(position).sentOn)
 
 
-        holder.itemView.setOnClickListener(View.OnClickListener {
+        holder.listItem.setOnClickListener(View.OnClickListener {
 
             if(serviceList.get(position).type.equals("1")){
 
@@ -50,13 +52,12 @@ class NotificationListAdapter (internal var context: Context, internal var servi
                 context.startActivity(intent)
 
             }
-        })*/
-  }
+        })
+    }
 
-  override fun getItemCount(): Int {
-       // return serviceList.size
-      return 10
-  }
+    override fun getItemCount(): Int {
+        return serviceList.size
+    }
 
     override fun onClick(v: View) {
 
@@ -70,16 +71,19 @@ class NotificationListAdapter (internal var context: Context, internal var servi
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        lateinit var tv_date: TextView
-        lateinit var tv_meter_id: TextView
-        lateinit var tv_amount: TextView
+
+        lateinit var notificationTitle: TextView
+        lateinit var notificationMessage: TextView
+        lateinit var listItem:RelativeLayout
+        lateinit var dateNotificationTV:TextView
 
         init {
 
-            tv_date = itemView.findViewById<View>(R.id.tv_date) as TextView
-            tv_meter_id = itemView.findViewById<View>(R.id.tv_meter_id) as TextView
-            tv_amount = itemView.findViewById<View>(R.id.tv_amount) as TextView
 
+            notificationMessage = itemView.findViewById<View>(R.id.notificationMessageTV) as TextView
+            notificationTitle = itemView.findViewById<View>(R.id.notificationTitleTV) as TextView
+            listItem=itemView.findViewById<View>(R.id.listItem)as RelativeLayout
+            dateNotificationTV=itemView.findViewById<View>(R.id.dateNotificationTV)as TextView
 
 
         }

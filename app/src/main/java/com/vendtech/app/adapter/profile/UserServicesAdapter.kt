@@ -86,15 +86,10 @@ class UserServicesAdapter(internal var context: Context,internal var serviceList
         internal var serviceIcon: ImageView
         lateinit var itemViews:RelativeLayout
 
-
         init {
-
-
             serviceName = itemView.findViewById<View>(R.id.serviceNameTV) as TextView
             serviceIcon = itemView.findViewById<View>(R.id.serviceIconIV) as ImageView
             itemViews=itemView.findViewById<View>(R.id.itemView)as RelativeLayout
-
-
         }
 
     }

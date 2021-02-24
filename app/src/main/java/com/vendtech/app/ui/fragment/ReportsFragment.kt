@@ -15,8 +15,10 @@ import android.widget.*
 import com.google.gson.Gson
 
 import com.vendtech.app.R
+import com.vendtech.app.adapter.transactions.DepositReportAdapter
 import com.vendtech.app.adapter.transactions.DepositTransactionAdapter
 import com.vendtech.app.adapter.transactions.RechargeTransactionAdapter
+import com.vendtech.app.adapter.transactions.SalesReportAdapter
 import com.vendtech.app.helper.SharedHelper
 import com.vendtech.app.models.transaction.*
 import com.vendtech.app.network.Uten
@@ -34,7 +36,7 @@ class ReportsFragment : android.support.v4.app.Fragment(), View.OnClickListener 
     lateinit var tranhistoryTV: TextView
     internal var isFirstLaunch = true
 
-var isFilter=false
+    var isFilter=false
     var recharge=false
     //ADD BALANCE LAYOUT
     lateinit var addBalanceLayout: ScrollView
@@ -49,7 +51,7 @@ var isFilter=false
     lateinit var rechargeText: TextView
     lateinit var linerecharge: View
     lateinit var rechargeTRL: RelativeLayout
-lateinit var filterReport:FloatingActionButton
+    lateinit var filterReport:FloatingActionButton
 
     //ANIMATION
     lateinit var slide_in: Animation
@@ -78,8 +80,10 @@ lateinit var filterReport:FloatingActionButton
     lateinit var nodataDeposit: TextView
     internal var rechargeListModel: MutableList<RechargeTransactionNewListModel.Result> = java.util.ArrayList()
     internal var depositListModel: MutableList<DepositTransactionNewListModel.Result> = java.util.ArrayList()
-    lateinit var rechargetransAdapter: RechargeTransactionAdapter
-    lateinit var deposittransAdapter: DepositTransactionAdapter
+   // lateinit var rechargetransAdapter: RechargeTransactionAdapter
+    lateinit var salesReportAdapter: SalesReportAdapter
+    //lateinit var deposittransAdapter: DepositTransactionAdapter
+    lateinit var deposittransAdapter: DepositReportAdapter
     var pageRecharge = 1
     public var pageDeposit = 1
     var totalItemsNo = 10
@@ -421,7 +425,7 @@ recharge=true
         this.refId=""
         this.depositType=0
         isFilter=false
-recharge=false
+        recharge=false
         pageRecharge = 1
         linerecharge.setBackgroundColor(ContextCompat.getColor(requireActivity(), R.color.colorWhite))
         rechargeText.setTextColor(ContextCompat.getColor(requireActivity(), R.color.colorWhite))
@@ -469,7 +473,7 @@ filterDepositData(0,"","","","","","",0)
                             if (pageRecharge == 1) {
                                 ShowRechargeTransactionFlow()
                             } else {
-                                rechargetransAdapter.notifyDataSetChanged()
+                                salesReportAdapter.notifyDataSetChanged()
                             }
 
                         } else {
@@ -579,11 +583,11 @@ filterDepositData(0,"","","","","","",0)
 
         val mLayoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
 
-        rechargetransAdapter = RechargeTransactionAdapter(rechargeListModel, requireActivity(), requireActivity())
-        recyclerviewRecharge.adapter = rechargetransAdapter
+        salesReportAdapter = SalesReportAdapter(rechargeListModel, requireActivity(), requireActivity())
+        recyclerviewRecharge.adapter = salesReportAdapter
         recyclerviewRecharge.layoutManager = mLayoutManager
         recyclerviewRecharge.setHasFixedSize(true)
-        rechargetransAdapter.notifyDataSetChanged()
+        salesReportAdapter.notifyDataSetChanged()
 
         nodataRecharge.visibility = View.GONE
         nodataDeposit.visibility = View.GONE
@@ -685,7 +689,7 @@ filterDepositData(0,"","","","","","",0)
 
         val mLayoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
 
-        deposittransAdapter = DepositTransactionAdapter(depositListModel, requireActivity(), requireActivity())
+        deposittransAdapter = DepositReportAdapter(depositListModel, requireActivity(), requireActivity())
         recyclerviewDeposit.adapter = deposittransAdapter
         recyclerviewDeposit.layoutManager = mLayoutManager
         recyclerviewDeposit.setHasFixedSize(true)
@@ -734,7 +738,7 @@ filterDepositData(0,"","","","","","",0)
     }
 
     fun filterRechargeData(posId: Int, from: String, to: String, meterNumber: String, transId: String) {
-this.posId=posId
+        this.posId=posId
         this.from=from
         this.to=to
         this.meterNumber=meterNumber
@@ -774,7 +778,7 @@ this.posId=posId
                             if (pageRecharge == 1) {
                                 ShowRechargeTransactionFlow()
                             } else {
-                                rechargetransAdapter.notifyDataSetChanged()
+                                salesReportAdapter.notifyDataSetChanged()
                             }
 
                         } else {

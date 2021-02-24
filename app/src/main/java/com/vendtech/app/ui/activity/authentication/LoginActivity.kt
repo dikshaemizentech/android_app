@@ -141,6 +141,8 @@ class LoginActivity : BaseActivity() {
                         SharedHelper.putString(this@LoginActivity, Constants.USER_ACCOUNT_STATUS, data.result.accountStatus)
                         SharedHelper.putString(this@LoginActivity, Constants.POS_NUMBER, data.result.posNumber)
                         SharedHelper.putString(this@LoginActivity, Constants.COMMISSION_PERCENTAGE, data.result.percentage)
+                        SharedHelper.putString(this@LoginActivity, Constants.PASS_CODE_VALUE, data.result.posNumber)
+
                         if (data.result.phone != null || data.result.phone == "null") {
                             SharedHelper.putString(this@LoginActivity, Constants.USER_PHONE, data.result.phone)
                         } else {
@@ -154,7 +156,7 @@ class LoginActivity : BaseActivity() {
                         } else {
                             SharedHelper.putBoolean(this@LoginActivity, Constants.IS_REMEMBER_ME, false)
                         }
-                        GetProfile()
+                        GetProfile();
                     }
                 } else {
                     Utilities.shortToast("Something went wrong!", this@LoginActivity)

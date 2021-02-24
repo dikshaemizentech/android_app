@@ -104,20 +104,20 @@
         android:layout_height="@dimen/_32sdp"
         android:gravity="center"
         android:background="@color/colorYellow"
-        android:orientation="horizontal">
-
+        android:orientation="horizontal"
+        android:id="@+id/ll_total">
         <TextView
             android:id="@+id/tv_total"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/_12sdp"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorblack"
             android:textAllCaps="true"
             android:gravity="right"
             android:paddingRight="@dimen/_10sdp"
             android:text=""/>
-
-
     </LinearLayout>
+
+
 
 </LinearLayout>

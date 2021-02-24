@@ -1,499 +1,511 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/mainlayout"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusableInTouchMode="true"
-        android:id="@+id/mainlayout"
         android:orientation="vertical">
 
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:padding="10dp"
+            android:layout_height="wrap_content"
             android:background="@color/colorPrimaryDark"
-            android:layout_height="wrap_content">
+            android:padding="10dp">
+
             <ImageView
-                android:layout_width="wrap_content"
-                android:src="@drawable/left_arrow"
                 android:id="@+id/imgBack"
-            android:padding="@dimen/_8sdp"
-                android:layout_margin="@dimen/margin8"
-                android:layout_height="wrap_content" />
-
-
-            <TextView android:layout_width="wrap_content"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TRANSACTION DETAILS"
-                android:textColor="@color/colorWhite"
+                android:layout_margin="@dimen/margin8"
+                android:padding="@dimen/_8sdp"
+                android:src="@drawable/left_arrow" />
+
+
+            <TextView
+                android:id="@+id/menuTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:fontFamily="@font/roboto_bold"
+                android:text="TRANSACTION DETAILS"
+                android:textColor="@color/colorWhite"
                 android:textSize="16sp"
-                android:visibility="visible"
-                android:id="@+id/menuTitle"/>
+                android:visibility="visible" />
         </RelativeLayout>
 
-        <View android:layout_width="match_parent"
+        <View
+            android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="@color/colorYellow"/>
+            android:background="@color/colorYellow" />
 
-        <ScrollView android:layout_width="match_parent"
+        <ScrollView
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true">
 
-            <RelativeLayout android:layout_width="match_parent"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/colorPrimary"
                 android:orientation="vertical"
-                android:padding="30dp"
-                android:background="@color/colorPrimary">
+                android:padding="30dp">
 
 
-                <LinearLayout android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/round_chips_home"
                     android:orientation="vertical">
 
 
-
-
-
-                    <ImageView android:layout_width="80dp"
+                    <ImageView
+                        android:id="@+id/rechargeLogoIV"
+                        android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="30dp"
-                        android:src="@drawable/light"
+                        android:background="@drawable/circle_dark_primary"
                         android:padding="15dp"
-                        android:id="@+id/rechargeLogoIV"
-                        android:background="@drawable/circle_dark_primary"/>
+                        android:src="@drawable/light" />
 
 
-                    <TextView android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/rechargeTypeTV"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/roboto_medium"
                         android:text="Electricity Recharge"
                         android:textColor="@color/colorWhite"
-                        android:id="@+id/rechargeTypeTV"
-                        android:fontFamily="@font/roboto_medium"
-                        android:textSize="18sp"
-                        android:layout_marginTop="10dp"/>
+                        android:textSize="18sp" />
 
 
-
-
-                    <LinearLayout android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
                         android:layout_marginTop="30dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginRight="20dp"
                         android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
+                        android:orientation="horizontal"
                         android:weightSum="2">
 
 
-                        <TextView android:layout_width="match_parent"
+                        <TextView
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:gravity="start"
                             android:text="Transaction ID"
-                            android:textSize="13sp"
-                            android:gravity="start"
-                            android:textColor="@color/colorlightgrey"/>
+                            android:textColor="@color/colorlightgrey"
+                            android:textSize="13sp" />
 
-                        <TextView android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="#24556334"
-                            android:textSize="13sp"
-                            android:gravity="end"
+                        <TextView
                             android:id="@+id/transID"
-                            android:textColor="@color/colorYellow"/>
-
-                    </LinearLayout>
-
-
-                    <LinearLayout android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginRight="20dp"
-                        android:id="@+id/meternoLL"
-                        android:layout_marginEnd="20dp"
-                        android:weightSum="2">
-
-
-                        <TextView android:layout_width="match_parent"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Meter No."
-                            android:textSize="13sp"
-                            android:gravity="start"
-                            android:textColor="@color/colorlightgrey"/>
-
-                        <TextView android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:gravity="end"
                             android:text=""
-                            android:textSize="13sp"
-                            android:gravity="end"
+                            android:textColor="@color/colorYellow"
+                            android:textSize="13sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/meternoLL"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="start"
+                            android:text="Meter No."
+                            android:textColor="@color/colorlightgrey"
+                            android:textSize="13sp" />
+
+                        <TextView
                             android:id="@+id/meternoTrans"
-                            android:textColor="@color/colorYellow"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text=""
+                            android:textColor="@color/colorYellow"
+                            android:textSize="13sp" />
 
                     </LinearLayout>
 
-
-
-
-
-                    <LinearLayout android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="20dp"
                         android:layout_marginStart="20dp"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
+                        android:orientation="horizontal"
                         android:weightSum="2">
 
 
-                        <TextView android:layout_width="match_parent"
+                        <TextView
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:gravity="start"
                             android:text="Amount"
-                            android:textSize="13sp"
-                            android:gravity="start"
-                            android:textColor="@color/colorlightgrey"/>
+                            android:textColor="@color/colorlightgrey"
+                            android:textSize="13sp" />
 
-                        <TextView android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="SLL 32"
-                            android:textSize="13sp"
-                            android:gravity="end"
+                        <TextView
                             android:id="@+id/amntTrans"
-                            android:textColor="@color/colorYellow"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text=""
+                            android:textColor="@color/colorYellow"
+                            android:textSize="13sp" />
 
                     </LinearLayout>
 
-
-
-
-
-
-                    <LinearLayout android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="20dp"
                         android:layout_marginStart="20dp"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
+                        android:orientation="horizontal"
                         android:weightSum="2">
 
 
-                        <TextView android:layout_width="match_parent"
+                        <TextView
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:gravity="start"
                             android:text="Date"
-                            android:textSize="13sp"
-                            android:gravity="start"
-                            android:textColor="@color/colorlightgrey"/>
+                            android:textColor="@color/colorlightgrey"
+                            android:textSize="13sp" />
 
-                        <TextView android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="June 14, 2019"
-                            android:textSize="13sp"
-                            android:gravity="end"
+                        <TextView
                             android:id="@+id/dateTrans"
-                            android:textColor="@color/colorWhite"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text=""
+                            android:textColor="@color/colorWhite"
+                            android:textSize="13sp" />
 
                     </LinearLayout>
 
-                    <LinearLayout android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="20dp"
                         android:layout_marginStart="20dp"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
+                        android:orientation="horizontal"
                         android:weightSum="2">
 
 
-                        <TextView android:layout_width="match_parent"
+                        <TextView
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:gravity="start"
                             android:text="Time"
-                            android:textSize="13sp"
-                            android:gravity="start"
-                            android:textColor="@color/colorlightgrey"/>
+                            android:textColor="@color/colorlightgrey"
+                            android:textSize="13sp" />
 
-                        <TextView android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="12:10 PM"
-                            android:textSize="13sp"
-                            android:gravity="end"
+                        <TextView
                             android:id="@+id/timeTrans"
-                            android:textColor="@color/colorWhite"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text=""
+                            android:textColor="@color/colorWhite"
+                            android:textSize="13sp" />
 
                     </LinearLayout>
 
-
-
-
-                    <LinearLayout android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="20dp"
                         android:layout_marginStart="20dp"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
+                        android:orientation="horizontal"
                         android:weightSum="2">
 
 
-                        <TextView android:layout_width="match_parent"
+                        <TextView
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:gravity="start"
                             android:text="Status"
-                            android:textSize="13sp"
-                            android:gravity="start"
-                            android:textColor="@color/colorlightgrey"/>
+                            android:textColor="@color/colorlightgrey"
+                            android:textSize="13sp" />
 
-                        <TextView android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Completed"
-                            android:textSize="13sp"
-                            android:gravity="end"
+                        <TextView
                             android:id="@+id/statusTrans"
-                            android:textColor="@color/colorgreen"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text=""
+                            android:textColor="@color/colorgreen"
+                            android:textSize="13sp" />
 
                     </LinearLayout>
 
-                    <LinearLayout android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginEnd="20dp"
+                    <LinearLayout
                         android:id="@+id/paymodeLL"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
+                        android:orientation="horizontal"
                         android:weightSum="2">
 
 
-                        <TextView android:layout_width="match_parent"
+                        <TextView
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:gravity="start"
                             android:text="Payment Mode"
-                            android:textSize="13sp"
-                            android:gravity="start"
-                            android:textColor="@color/colorlightgrey"/>
+                            android:textColor="@color/colorlightgrey"
+                            android:textSize="13sp" />
 
-                        <TextView android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Cash"
-                            android:textSize="13sp"
-                            android:gravity="end"
+                        <TextView
                             android:id="@+id/paymodeTrans"
-                            android:textColor="@color/colorWhite"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text=""
+                            android:textColor="@color/colorWhite"
+                            android:textSize="13sp" />
 
                     </LinearLayout>
 
-
-
-                    <LinearLayout android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginEnd="20dp"
+                    <LinearLayout
                         android:id="@+id/vendorIdLL"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
+                        android:orientation="horizontal"
                         android:weightSum="2">
 
 
-                        <TextView android:layout_width="match_parent"
+                        <TextView
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:gravity="start"
                             android:text="Vender Id"
-                            android:textSize="13sp"
-                            android:gravity="start"
-                            android:textColor="@color/colorlightgrey"/>
+                            android:textColor="@color/colorlightgrey"
+                            android:textSize="13sp" />
 
-                        <TextView android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="#VT3322"
-                            android:textSize="13sp"
-                            android:gravity="end"
+                        <TextView
                             android:id="@+id/vendorIdTrans"
-                            android:textColor="@color/colorWhite"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text=""
+                            android:textColor="@color/colorWhite"
+                            android:textSize="13sp" />
 
                     </LinearLayout>
 
-
-
-                    <LinearLayout android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginEnd="20dp"
+                    <LinearLayout
                         android:id="@+id/vendorNameLL"
-                        android:weightSum="2">
-
-
-                        <TextView android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Vendor Name"
-                            android:textSize="13sp"
-                            android:gravity="start"
-                            android:textColor="@color/colorlightgrey"/>
-
-                        <TextView android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="John Michael"
-                            android:textSize="13sp"
-                            android:gravity="end"
-                            android:id="@+id/vendornameTrans"
-                            android:textColor="@color/colorWhite"/>
-
-                    </LinearLayout>
-
-
-
-                    <LinearLayout android:layout_width="match_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
                         android:layout_marginTop="10dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginRight="20dp"
                         android:layout_marginEnd="20dp"
-                        android:id="@+id/chequeslipLL"
+                        android:layout_marginRight="20dp"
+                        android:orientation="horizontal"
                         android:weightSum="2">
 
 
-                        <TextView android:layout_width="match_parent"
+                        <TextView
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="CHX/Slip No."
-                            android:textSize="13sp"
                             android:gravity="start"
-                            android:textColor="@color/colorlightgrey"/>
+                            android:text="Vendor Name"
+                            android:textColor="@color/colorlightgrey"
+                            android:textSize="13sp" />
 
-                        <TextView android:layout_width="match_parent"
+                        <TextView
+                            android:id="@+id/vendornameTrans"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="2121212121"
-                            android:textSize="13sp"
                             android:gravity="end"
-                            android:id="@+id/checknoTrans"
-                            android:textColor="@color/colorWhite"/>
+                            android:text=""
+                            android:textColor="@color/colorWhite"
+                            android:textSize="13sp" />
 
                     </LinearLayout>
 
-
-
-
-                    <LinearLayout android:layout_width="match_parent"
+                    <LinearLayout
+                        android:id="@+id/chequeslipLL"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginLeft="20dp"
                         android:layout_marginStart="20dp"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="@dimen/_20"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="start"
+                            android:text="CHX/Slip No."
+                            android:textColor="@color/colorlightgrey"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/checknoTrans"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text=""
+                            android:textColor="@color/colorWhite"
+                            android:textSize="13sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:id="@+id/commentBoxLL"
-                        android:visibility="gone"
-                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="@dimen/_20"
                         android:background="@drawable/dashed_border"
-                        >
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
-                        <TextView android:layout_width="wrap_content"
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Comment:"
-                            android:padding="3dp"
-                            android:textSize="13sp"
-                            android:layout_marginLeft="5dp"
                             android:layout_marginStart="5dp"
+                            android:layout_marginLeft="5dp"
                             android:layout_marginTop="5dp"
-                            android:textColor="@color/colorWhite"
-                            android:fontFamily="@font/roboto_medium"/>
-
-                        <TextView android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/commentTV"
+                            android:fontFamily="@font/roboto_medium"
                             android:padding="3dp"
+                            android:text="Comment:"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/commentTV"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
                             android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp"
                             android:layout_marginEnd="5dp"
+                            android:layout_marginRight="5dp"
                             android:layout_marginBottom="5dp"
-                            android:textSize="13sp"
-                            android:textColor="@color/colorWhite"
                             android:fontFamily="@font/roboto_regular"
-                            />
+                            android:padding="3dp"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="13sp" />
 
 
                     </LinearLayout>
 
-
-
-                    <LinearLayout android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/downloadInvoice"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginTop="40dp"
                         android:layout_marginBottom="30dp"
-                        android:orientation="horizontal"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:id="@+id/downloadInvoice"
                         android:background="@drawable/corner_yello"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
-                        >
-
-
-                        <ImageView android:layout_width="20dp"
+                        <ImageView
+                            android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:layout_marginLeft="@dimen/_25dp"
                             android:layout_marginStart="@dimen/_25dp"
+                            android:layout_marginLeft="@dimen/_25dp"
                             android:layout_marginTop="7dp"
                             android:layout_marginBottom="7dp"
-                            android:src="@drawable/downloadpdfbutton"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:text="DOWNLOAD INVOICE"
-                        android:fontFamily="@font/roboto_regular"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginStart="10dp"
-                        android:textStyle="bold"
-                        android:textSize="13sp"
-                        android:id="@+id/getInvoiceTV"
-                        android:layout_marginTop="7dp"
-                        android:layout_marginBottom="7dp"
-                        android:gravity="center"
-                        android:layout_gravity="center"
-                        android:layout_marginRight="@dimen/_25dp"
-                        android:layout_marginEnd="@dimen/_25dp"
-                        android:textColor="@color/colorblack"
-                        android:textAlignment="center"
-                        android:textAllCaps="true"
-                        android:layout_height="wrap_content" />
+                            android:src="@drawable/downloadpdfbutton" />
 
+                        <TextView
+                            android:id="@+id/getInvoiceTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="7dp"
+                            android:layout_marginEnd="@dimen/_25dp"
+                            android:layout_marginRight="@dimen/_25dp"
+                            android:layout_marginBottom="7dp"
+                            android:fontFamily="@font/roboto_regular"
+                            android:gravity="center"
+                            android:text="DOWNLOAD INVOICE"
+                            android:textAlignment="center"
+                            android:textAllCaps="true"
+                            android:textColor="@color/colorblack"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
-
                 </LinearLayout>
 
 
@@ -502,14 +514,14 @@
 
     </LinearLayout>
 
-    <LinearLayout android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <LinearLayout
         android:id="@+id/error_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:visibility="gone">
 
-        <include layout="@layout/layout_error"/>
+        <include layout="@layout/layout_error" />
     </LinearLayout>
-
 
 
 </RelativeLayout>

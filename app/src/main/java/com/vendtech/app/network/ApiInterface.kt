@@ -72,9 +72,14 @@ interface ApiInterface {
 //    Email
 //    Abhi ke liye other wise Phone Or CountryCode bhi jayega
     //@Header("token") Token: String,
+    /*@FormUrlEncoded
+    @POST("Account/ForgotPasscode")
+    fun forgot_passcode(@Field("Email") email: String, @Field("Phone") phone: String): Call<ForgotPasswordModel>*/
+
+
     @FormUrlEncoded
     @POST("Account/ForgotPasscode")
-    fun forgot_passcode(@Field("Email") email: String, @Field("Phone") phone: String): Call<ForgotPasswordModel>
+    fun forgot_passcode(@Field("Email") email: String, @Field("Phone") phone: String,@Field("PosNumber") pos: String): Call<ForgotPasswordModel>
 
 
     @GET("User/GetUserProfile")

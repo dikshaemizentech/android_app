@@ -57,13 +57,13 @@ setStyle(DialogFragment.STYLE_NO_TITLE,android.R.style.ThemeOverlay_Material)
             if(isRecharge){
                 depositLayout.visibility=View.GONE;
                 meterLayout.visibility=View.VISIBLE;
-
                 tv_title.setText(resources.getString(R.string.sales_report_filters))
             }
             else {
                 tv_title.setText(resources.getString(R.string.deposite_report_filters))
                 depositLayout.visibility=View.VISIBLE;
                 meterLayout.visibility=View.GONE;
+                ll_vt_transaction_id.visibility=View.GONE;
 
                 GetBankDetails();
                 SetSpinnerData();
