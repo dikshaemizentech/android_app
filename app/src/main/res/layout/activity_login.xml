@@ -141,6 +141,8 @@
         android:id="@+id/loginFirstPinView"
         style="@style/PinWidget.PinView"
         android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_20sdp"
         android:cursorVisible="true"
@@ -162,7 +164,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/medium"
-
+       android:layout_marginRight="@dimen/_15ssp"
         android:gravity="end"
         android:padding="@dimen/padding8"
         android:text="Reset Passcode?"

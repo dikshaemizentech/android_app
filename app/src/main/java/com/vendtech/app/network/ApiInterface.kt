@@ -78,8 +78,12 @@ interface ApiInterface {
 
 
     @FormUrlEncoded
+    @POST("Account/GetPOSUserDetails")
+    fun getPosUserDetails(@Field("PosNumber") PosNumber: String): Call<SignInResponse>
+
+    @FormUrlEncoded
     @POST("Account/ForgotPasscode")
-    fun forgot_passcode(@Field("Email") email: String, @Field("Phone") phone: String,@Field("PosNumber") pos: String): Call<ForgotPasswordModel>
+    fun forgot_passcode(@Field("Email") email: String, @Field("Phone") phone: String,@Field("PosNumber") PosNumber: String): Call<ForgotPasswordModel>
 
 
     @GET("User/GetUserProfile")

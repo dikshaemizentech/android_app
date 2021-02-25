@@ -13,7 +13,9 @@ import com.vendtech.app.R
 import com.vendtech.app.base.BaseActivity
 import com.vendtech.app.helper.SharedHelper
 import com.vendtech.app.models.authentications.ForgotPasswordModel
+import com.vendtech.app.models.authentications.SignInResponse
 import com.vendtech.app.models.authentications.VerifyOTPModel
+import com.vendtech.app.models.profile.GetWalletModel
 import com.vendtech.app.network.Uten
 import com.vendtech.app.utils.Constants
 import com.vendtech.app.utils.CustomDialog
@@ -24,6 +26,8 @@ import kotlinx.android.synthetic.main.activity_sign_up.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.NumberFormat
+import java.util.*
 
 class ForgotPasswordActivity : BaseActivity() {
 
@@ -33,28 +37,92 @@ class ForgotPasswordActivity : BaseActivity() {
         setContentView(R.layout.activity_forgot_password)
         txtSubmit = findViewById(R.id.txtSubmit)
 
-        txtSubmit.setOnClickListener { v ->
 
+        //disable email and phno
+        frgtPwdPhoneET.isEnabled=false
+        emailET.isEnabled=false
+
+
+        txtSubmit.setOnClickListener { v ->
             if (TextUtils.isEmpty(frgtPwdPhoneET.text.toString().trim())) {
-                Utilities.shortToast("Enter phone number", this)
-            } else if (frgtPwdPhoneET.text.toString().trim().length != 10) {
-                Utilities.shortToast("Enter a valid phone number", this)
+                Utilities.shortToast("Enter phone number", this);
+            } else if (frgtPwdPhoneET.text.toString().trim().length > 10) {
+                Utilities.shortToast("Enter a valid phone number", this);
             } else if (TextUtils.isEmpty(emailET.text.toString().trim())) {
-                Utilities.shortToast("Enter your Email address", this)
+                Utilities.shortToast("Enter your Email address", this);
             } else if (!emailET.text.matches(Patterns.EMAIL_ADDRESS.toRegex())) {
                 Utilities.shortToast("Enter a valid Email", this);
             } else {
                 if (Uten.isInternetAvailable(this)) {
                     // ForgotPassApi(emailET.text.toString().trim())
-                    resetPasscodeApi(emailET.text.toString().trim(), frgtPwdPhoneET.text.toString())
+                    resetPasscodeApi(emailET.text.toString().trim(), frgtPwdPhoneET.text.toString());
                 } else {
-                    Utilities.shortToast("No internet connection. Please check your network connectivity.", this)
+                    Utilities.shortToast("No internet connection. Please check your network connectivity.", this);
                 }
             }
+
         }
 
         layoutSignIn.setOnClickListener(View.OnClickListener {
             GotoLogin()
+        })
+
+        getPosUserDetails();
+    }
+
+    fun getPosUserDetails() {
+
+        var customDialog: CustomDialog
+        customDialog = CustomDialog(this)
+        customDialog.show()
+        var vv=SharedHelper.getString(this, Constants.POS_NUMBER)
+
+        val call: Call<SignInResponse> = Uten.FetchServerData().getPosUserDetails(SharedHelper.getString(this, Constants.POS_NUMBER))
+        call.enqueue(object : Callback<SignInResponse> {
+            override fun onResponse(call: Call<SignInResponse>, response: Response<SignInResponse>) {
+
+                if (customDialog.isShowing) {
+                    customDialog.dismiss()
+                }
+                var data = response.body()
+                if (data != null) {
+
+                    if (data.status.equals("true")) {
+
+                        /* totalBalanceTV.setText("SLL : " + data.result.balance)
+                        tickerViewBalance.setText("SLL : " + data.result.balance)
+                        tickerViewBalance.setText(NumberFormat.getNumberInstance(Locale.US).format(data.result.balance.toDouble().toInt()))
+                        //tickerViewBalance.setText(Utilities.formatCurrencyValue(data.result.balance))
+                        totalAvlblBalance = data.result.balance.toDouble()
+                        countInterface?.CountIs(data.result.unReadNotifications)*/
+
+                        if (data.result!=null) {
+                            ll_et.visibility = View.VISIBLE
+                            frgtPwdPhoneET.setText(data.result.phone)
+                            emailET.setText(data.result.email)
+
+
+                        }else{
+                            ll_et.visibility = View.INVISIBLE
+                            Utilities.CheckSessionValid(data.message, this@ForgotPasswordActivity, this@ForgotPasswordActivity)
+                        }
+
+                    } else {
+                        Utilities.CheckSessionValid(data.message, this@ForgotPasswordActivity, this@ForgotPasswordActivity)
+                        ll_et.visibility=View.INVISIBLE;
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<SignInResponse>, t: Throwable) {
+                val gs = Gson()
+                gs.toJson(t.localizedMessage)
+                if (customDialog.isShowing) {
+                    customDialog.dismiss()
+                }
+                ll_et.visibility=View.INVISIBLE;
+            }
+
         })
     }
 
@@ -66,7 +134,7 @@ class ForgotPasswordActivity : BaseActivity() {
 
         var vvv=SharedHelper.getString(this, Constants.TOKEN)
         //SharedHelper.getString(this, Constants.TOKEN),
-        val call: Call<ForgotPasswordModel> = Uten.FetchServerData().forgot_passcode( email, phno,SharedHelper.getString(this,Constants.PASS_CODE_VALUE))
+        val call: Call<ForgotPasswordModel> = Uten.FetchServerData().forgot_passcode( email, phno,SharedHelper.getString(this, Constants.POS_NUMBER))
         call.enqueue(object : Callback<ForgotPasswordModel> {
             override fun onResponse(call: Call<ForgotPasswordModel>, response: Response<ForgotPasswordModel>) {
 
@@ -76,7 +144,7 @@ class ForgotPasswordActivity : BaseActivity() {
 
                 var data = response.body()
                 if (data != null) {
-                   // Utilities.shortToast(data.message, this@ForgotPasswordActivity)
+                    // Utilities.shortToast(data.message, this@ForgotPasswordActivity)
                     if (data.status.equals("true")) {
                         GotoLogin()
                     } else {

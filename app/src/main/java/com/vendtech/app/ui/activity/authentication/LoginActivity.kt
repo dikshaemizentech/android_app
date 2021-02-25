@@ -112,7 +112,7 @@ class LoginActivity : BaseActivity() {
 
         val intent = Intent(this@LoginActivity, ForgotPasswordActivity::class.java)
         startActivity(intent)
-        finish()
+
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
     }
 
@@ -142,7 +142,7 @@ class LoginActivity : BaseActivity() {
                         SharedHelper.putString(this@LoginActivity, Constants.POS_NUMBER, data.result.posNumber)
                         SharedHelper.putString(this@LoginActivity, Constants.COMMISSION_PERCENTAGE, data.result.percentage)
                         SharedHelper.putString(this@LoginActivity, Constants.PASS_CODE_VALUE, data.result.posNumber)
-
+                        var vv=SharedHelper.getString(this@LoginActivity, Constants.PASS_CODE_VALUE)
                         if (data.result.phone != null || data.result.phone == "null") {
                             SharedHelper.putString(this@LoginActivity, Constants.USER_PHONE, data.result.phone)
                         } else {

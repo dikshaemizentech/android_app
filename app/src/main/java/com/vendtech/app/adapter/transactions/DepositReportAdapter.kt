@@ -52,6 +52,7 @@ class DepositReportAdapter(internal var depositListModels: MutableList<DepositTr
         holder.tv_date.text=("Date: "+Utilities.formatToUtc(depositListModels[position].createdAt));
         holder.tv_new_balance.text=("New Balance: "+depositListModels[position].newBalance);
         holder.tv_deposite.text=("Deposite: "+depositListModels[position].percentageAmount);
+        holder.tv_bank_deposite_ref.text=("Deposite Ref#: "+depositListModels[position].depositId);
 
 
         holder.rootView.setOnClickListener(View.OnClickListener {

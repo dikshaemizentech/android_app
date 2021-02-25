@@ -53,6 +53,7 @@ import org.greenrobot.eventbus.ThreadMode
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.StringBuilder
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.util.*
@@ -189,7 +190,10 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
                         originalString = originalString.replace(",", "")
                     }
                     longval = originalString.toLong()
-                    if (longval <= totalAvlblBalance) {
+                    var waletBalCrnt=tickerViewBalance.text.toString()
+                    if(waletBalCrnt.contains(","))
+                        waletBalCrnt=waletBalCrnt.replace(",","")
+                    if (longval <= waletBalCrnt.toLong()) {
                         var formatter: DecimalFormat = NumberFormat.getInstance(Locale.US) as DecimalFormat
                         formatter.applyPattern("#,###,###,###")
                         var formattedString = formatter.format(longval)
@@ -197,6 +201,10 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
                         moneyET.setSelection(moneyET.text.length)
                     } else {
                         Toast.makeText(requireContext(), "Amount is greater then Wallet Balance", Toast.LENGTH_SHORT).show()
+                        var getEnterValue=moneyET.text.toString()
+                       var op: String = getEnterValue.dropLast(1)
+                        moneyET.setText(""+op)
+                        moneyET.setSelection(moneyET.text.length)
                     }
                 } catch (nfe: NumberFormatException) {
                     nfe.printStackTrace();

@@ -702,8 +702,8 @@
                         android:id="@+id/plusPercentET"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
-                        android:background="@drawable/border_lightgrey"
+                        android:layout_marginTop="3dp"
+
                         android:drawablePadding="3dp"
                         android:fontFamily="@font/roboto_bold"
                         android:gravity="start"
@@ -716,7 +716,7 @@
                         android:paddingBottom="13dp"
                         android:textColor="@color/colorWhite"
                         android:textColorHint="@color/colorlightgrey"
-                        android:textSize="15sp">
+                        android:textSize="22sp">
 
                     </TextView>
                 </LinearLayout>
@@ -789,7 +789,7 @@
                         android:background="@drawable/button_yellow"
                         android:fontFamily="@font/roboto_medium"
                         android:gravity="center"
-                        android:text="SUBMIT"
+                        android:text="ADD FUND TO WALLET"
                         android:textColor="@color/colorblack" />
 
 
