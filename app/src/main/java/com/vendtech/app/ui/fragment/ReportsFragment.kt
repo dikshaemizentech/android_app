@@ -557,6 +557,7 @@ filterDepositData(0,"","","","","","",0)
                                 recyclerviewRecharge.visibility = View.GONE
 
                             }
+
                         }
                     } else {
                         Utilities.CheckSessionValid(data.message, requireContext(), requireActivity())
@@ -791,6 +792,7 @@ filterDepositData(0,"","","","","","",0)
                                 recyclerviewRecharge.visibility = View.GONE
 
                             }
+                            Utilities.shortToast("No Record Found!", requireContext())
                         }
                     } else {
                         Utilities.CheckSessionValid(data.message, requireContext(), requireActivity())
@@ -873,6 +875,7 @@ filterDepositData(0,"","","","","","",0)
                                 recyclerviewRecharge.visibility = View.GONE
 
                             }
+                            Utilities.shortToast("No Record Found!",requireContext())
                         }
                     } else {
                         Utilities.CheckSessionValid(data.message, requireContext(), requireActivity())
