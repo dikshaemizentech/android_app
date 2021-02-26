@@ -19,6 +19,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.Window
 import android.view.animation.Animation
@@ -41,12 +42,14 @@ import com.vendtech.app.models.profile.GetWalletModel
 import com.vendtech.app.models.profile.UserAssignedServicesModel
 import com.vendtech.app.models.profile.UserServicesResult
 import com.vendtech.app.network.Uten
+import com.vendtech.app.ui.Print.PrintScreenActivity
 import com.vendtech.app.ui.activity.meter.AddMeterActivity
 import com.vendtech.app.utils.Constants
 import com.vendtech.app.utils.CustomDialog
 import com.vendtech.app.utils.MessageEvent
 import com.vendtech.app.utils.Utilities
 import kotlinx.android.synthetic.main.fragment_dashboard.*
+import kotlinx.android.synthetic.main.layout_confirm_pay.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -78,11 +81,16 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
     lateinit var serviceLayout: RelativeLayout
     lateinit var servicesRecyclerview: RecyclerView
     lateinit var servicesAdapter: UserServicesAdapter
+//confirmpay
+    lateinit var confirmPayCancel:TextView
+    lateinit var confirmPayPayBtn:TextView
+
 
     //SERVICE PAY LAYOUT
     lateinit var payBillTV: TextView
     lateinit var moneyET: EditText
     lateinit var fabBack: FloatingActionButton
+    lateinit var confirmFabBack: FloatingActionButton
     lateinit var payLayout: RelativeLayout
     lateinit var autoCompleteTV: AutoCompleteTextView
     internal var meterListModels: MutableList<MeterListResults> = ArrayList()
@@ -141,14 +149,20 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
         cbSaveMeter = view.findViewById(R.id.cbSaveMeter) as CheckBox
         moneyET = view.findViewById<View>(R.id.moneypayET) as EditText
         fabBack = view.findViewById<View>(R.id.fabBack) as FloatingActionButton
+        confirmFabBack = view.findViewById<View>(R.id.confirmFabBack) as FloatingActionButton
         serviceLayout = view.findViewById<View>(R.id.serviceLayout) as RelativeLayout
         payLayout = view.findViewById<View>(R.id.payLayout) as RelativeLayout
         autoCompleteTV = view.findViewById<View>(R.id.autoCompleteTextView) as AutoCompleteTextView
         showListmeterIV = view.findViewById<View>(R.id.showListmeterIV) as ImageView
         posSpinner = view.findViewById<View>(R.id.posIdSpinner) as Spinner
+        confirmPayCancel = view.findViewById<View>(R.id.confirmPayCancel) as TextView
+        confirmPayPayBtn = view.findViewById<View>(R.id.confirmPayPayBtn) as TextView
 
         payBillTV.setOnClickListener(this)
         fabBack.setOnClickListener(this)
+        confirmFabBack.setOnClickListener(this)
+        confirmPayCancel.setOnClickListener(this)
+        confirmPayPayBtn.setOnClickListener(this)
         showListmeterIV.setOnClickListener(this)
 
         payLayout.visibility = View.GONE
@@ -190,9 +204,9 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
                         originalString = originalString.replace(",", "")
                     }
                     longval = originalString.toLong()
-                    var waletBalCrnt=tickerViewBalance.text.toString()
-                    if(waletBalCrnt.contains(","))
-                        waletBalCrnt=waletBalCrnt.replace(",","")
+                    var waletBalCrnt = tickerViewBalance.text.toString()
+                    if (waletBalCrnt.contains(","))
+                        waletBalCrnt = waletBalCrnt.replace(",", "")
                     if (longval <= waletBalCrnt.toLong()) {
                         var formatter: DecimalFormat = NumberFormat.getInstance(Locale.US) as DecimalFormat
                         formatter.applyPattern("#,###,###,###")
@@ -201,9 +215,9 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
                         moneyET.setSelection(moneyET.text.length)
                     } else {
                         Toast.makeText(requireContext(), "Amount is greater then Wallet Balance", Toast.LENGTH_SHORT).show()
-                        var getEnterValue=moneyET.text.toString()
-                       var op: String = getEnterValue.dropLast(1)
-                        moneyET.setText(""+op)
+                        var getEnterValue = moneyET.text.toString()
+                        var op: String = getEnterValue.dropLast(1)
+                        moneyET.setText("" + op)
                         moneyET.setSelection(moneyET.text.length)
                     }
                 } catch (nfe: NumberFormatException) {
@@ -291,9 +305,9 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
 
                 if (TextUtils.isEmpty(autoCompleteTV.text.toString().trim())) {
                     Utilities.shortToast("Please select a meter number.", requireActivity())
-                }/*else if(autoCompleteTV.text.toString().length<11){
+                } else if (autoCompleteTV.text.toString().length < 11) {
                     Utilities.shortToast("Please enter correct meter number.", requireActivity())
-                }*/
+                }
                 /*else if (TextUtils.isEmpty(selectedMeterID)) {
                     Utilities.shortToast("Please select a correct meter number.", requireActivity())
                 } */ else if (TextUtils.isEmpty(moneyET.text.toString().trim())) {
@@ -303,13 +317,24 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
                 } else if (moneyValue.toDouble() > totalAvlblBalance) {
                     Utilities.shortToast("Recharge amount is greater than the available balance.", requireActivity())
                 } else {
-                    ShowAlertForRecharge(moneyValue)
+                    //  ShowAlertForRecharge(moneyValue)  //show alertPopUp
+                    showPayCoinfrmLayout()
                 }
             }
 
 
             R.id.fabBack -> {
                 HidePayLayout()
+            }
+
+            R.id.confirmFabBack -> {
+                HideConfirmLayout()
+            }
+            R.id.confirmPayCancel->{
+                HideConfirmLayout()
+            } R.id.confirmPayPayBtn->{
+            startActivity(Intent(activity, PrintScreenActivity::class.java))
+                HideConfirmLayout()
             }
 
             /*   R.id.waterLL->{
@@ -321,13 +346,38 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
                }*/
 
             R.id.electricityLL -> {
-               GetMeterList()
+                GetMeterList()
             }
 
             R.id.showListmeterIV -> {
                 showMeterListDialog(meterListModels)
             }
         }
+    }
+
+    private fun showPayCoinfrmLayout() {
+
+        confirmPayPosID.text="POS ID - "+ posSpinner.selectedItem.toString()
+        confirmPayMeterValue.text=autoCompleteTV.text.toString()
+
+
+         confirmPayAmtValue.text=moneyET.text.toString()
+
+        autoCompleteTV.setText("")
+        moneyET.setText("")
+
+
+        if (payLayout.visibility == View.VISIBLE) {
+            payLayout.startAnimation(slide_down)
+        }
+        payLayout.visibility = View.GONE
+
+        if (payConfirm.visibility == View.GONE) {
+            payConfirm.startAnimation(slide_up)
+        }
+        payConfirm.visibility = VISIBLE
+
+
     }
 
     companion object {
@@ -417,6 +467,22 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
 
     }
 
+    fun HideConfirmLayout() {
+
+        if (payConfirm.visibility == View.VISIBLE) {
+            payConfirm.startAnimation(slide_down)
+        }
+        payConfirm.visibility = View.GONE
+
+        //showPayLayout
+        ShowPayLayout()
+//        if (serviceLayout.visibility == View.GONE) {
+//            serviceLayout.startAnimation(slide_up)
+//        }
+//        serviceLayout.visibility = View.VISIBLE
+
+    }
+
     fun GetPosIdList() {
         val call = Uten.FetchServerData().getPosList(SharedHelper.getString(requireActivity(), Constants.TOKEN))
         call.enqueue(object : Callback<PosResultModel> {
@@ -455,6 +521,7 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
             override fun onNothingSelected(p0: AdapterView<*>?) {
 
             }
+
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 balance = posList.get(p2).balance;
                 posId = posList.get(p2).posId;
@@ -470,7 +537,7 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
         var customDialog: CustomDialog
         customDialog = CustomDialog(requireActivity())
         customDialog.show()
-        var vv=(SharedHelper.getString(requireActivity(), Constants.TOKEN))
+        var vv = (SharedHelper.getString(requireActivity(), Constants.TOKEN))
         val call: Call<GetMetersModel> = Uten.FetchServerData().get_meters(SharedHelper.getString(requireActivity(), Constants.TOKEN), "1", "50")
         call.enqueue(object : Callback<GetMetersModel> {
 
@@ -543,13 +610,13 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
                         moneyET.setText("")
                         HidePayLayout()
                         GetWalletBalance()
-                        if (activity != null && cbSaveMeter.isChecked) {
-                            val bundle = Bundle();
-                            bundle.putString(Constants.METER_NAME, temp)
-                            val intent = Intent(activity, AddMeterActivity::class.java)
-                            intent.putExtras(bundle)
-                            startActivity(intent)
-                        }
+                                if (activity != null && cbSaveMeter.isChecked) {
+                                    val bundle = Bundle();
+                                    bundle.putString(Constants.METER_NAME, temp)
+                                    val intent = Intent(activity, AddMeterActivity::class.java)
+                                    intent.putExtras(bundle)
+                                    startActivity(intent)
+                                }
 
                     } else {
 

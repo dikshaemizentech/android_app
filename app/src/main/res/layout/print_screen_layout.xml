@@ -1,0 +1,638 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/_10ssp"
+    android:layout_marginEnd="@dimen/_10ssp"
+
+    android:orientation="vertical"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20"
+
+        android:orientation="vertical">
+
+
+        <TextView
+            style="@style/text_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Vendtech"
+            android:textAllCaps="true"
+
+            android:textSize="@dimen/_26ssp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:text="@string/Electricity_purchace"
+            android:textAllCaps="true"
+            android:textSize="@dimen/_24ssp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+
+            android:layout_marginTop="@dimen/_20sdp"
+
+            android:background="@color/colorlightPrimary" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10ssp">
+
+            <TextView
+                style="@style/text_bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="date: 1/24/2021 10:53:58 AM "
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/text_bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="Vender"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2ssp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+
+                android:textAllCaps="true"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/text_normal"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+
+                android:gravity="right"
+                android:text="Afro international"
+                android:textAllCaps="true"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2ssp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+
+                android:textAllCaps="true"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/text_bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="pos id"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2ssp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+
+                android:textAllCaps="true"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/text_normal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="10001"
+                android:textAllCaps="true"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/_10ssp"
+                android:layout_toLeftOf="@+id/tv_custInfo"
+                android:background="@color/colorlightPrimary" />
+
+            <TextView
+                android:id="@+id/tv_custInfo"
+                style="@style/text_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/cust_info" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/_10ssp"
+                android:layout_toRightOf="@+id/tv_custInfo"
+                android:background="@color/colorlightPrimary" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10ssp">
+
+            <TextView
+                style="@style/text_normal_nocaps"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Customer:"
+                android:textAllCaps="false" />
+
+            <TextView
+                style="@style/text_normal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+
+                android:text="aliota vinod" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2ssp">
+
+            <TextView
+                style="@style/text_normal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Account #:" />
+
+            <TextView
+                style="@style/text_normal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="40177" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2ssp">
+
+            <TextView
+                style="@style/text_normal_nocaps"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Address:" />
+
+            <TextView
+                style="@style/text_normal_nocaps"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="right"
+                android:text="90 kr00 Town Rd" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2ssp">
+
+            <TextView
+                style="@style/text_normal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Mete r#:" />
+
+            <TextView
+                style="@style/text_bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="right"
+                android:text="22222222222"
+                android:textSize="@dimen/_26ssp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2ssp">
+
+            <TextView
+                style="@style/text_normal_nocaps"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Tariff:" />
+
+            <TextView
+                style="@style/text_normal_nocaps"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="right"
+                android:text="1080" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2ssp">
+
+            <TextView
+                style="@style/text_normal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Amount Tendered" />
+
+            <TextView
+                style="@style/text_bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="20,000"
+                android:textSize="@dimen/_26ssp" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/_10ssp"
+                android:layout_toLeftOf="@+id/tv_deduct"
+                android:background="@color/colorlightPrimary" />
+
+            <TextView
+                android:id="@+id/tv_deduct"
+                style="@style/text_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/dedution" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/_10ssp"
+                android:layout_toRightOf="@+id/tv_deduct"
+                android:background="@color/colorlightPrimary" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10ssp">
+
+            <TextView
+                style="@style/text_normal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Gst:" />
+
+            <TextView
+                style="@style/text_bold_nocaps"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+
+                android:text="le:0.00" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2ssp">
+
+            <TextView
+                style="@style/text_normal_nocaps"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Service charge:" />
+
+            <TextView
+                style="@style/text_bold_nocaps"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+
+                android:text="le:0" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2ssp">
+
+            <TextView
+                style="@style/text_normal_nocaps"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Debit recovery:" />
+
+            <TextView
+                style="@style/text_bold_nocaps"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+
+                android:text="le:0.00" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/_10ssp"
+                android:layout_toLeftOf="@+id/tv_tottext"
+                android:background="@color/colorlightPrimary" />
+
+            <TextView
+                android:id="@+id/tv_tottext"
+                style="@style/text_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/total" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/_10ssp"
+                android:layout_toRightOf="@+id/tv_tottext"
+                android:background="@color/colorlightPrimary" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10ssp">
+
+            <TextView
+                style="@style/text_normal_nocaps"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Cost of units:" />
+
+            <TextView
+                style="@style/text_bold_nocaps"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+
+                android:text="le:100" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2ssp">
+
+            <TextView
+                style="@style/text_normal_nocaps"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Units:" />
+
+            <TextView
+                style="@style/text_bold_nocaps"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+
+                android:text="56" />
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="@dimen/_10ssp"
+            android:background="@drawable/hori_line_dash" />
+
+        <TextView
+            style="@style/text_bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5ssp"
+            android:gravity="center"
+            android:text="4596 8596 2563 4145 7895"
+            android:textSize="@dimen/_22ssp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="@dimen/_5ssp"
+            android:background="@drawable/hori_line_dash" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10ssp">
+
+            <TextView
+                style="@style/text_bold_nocaps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="EDSA Serial #:"
+
+                android:textStyle="italic" />
+
+            <TextView
+                style="@style/text_bold_nocaps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:gravity="right"
+                android:text="123456"
+                android:textStyle="italic" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10ssp">
+
+            <TextView
+                style="@style/text_bold_nocaps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="VENDTECH Serial #:"
+
+                android:textStyle="italic" />
+
+            <TextView
+                style="@style/text_bold_nocaps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:gravity="right"
+                android:text="00000000165"
+                android:textStyle="italic" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/_10ssp"
+            android:layout_marginRight="@dimen/_10ssp"
+            android:layout_toLeftOf="@+id/tv_tottext"
+            android:background="@color/darkgreycolor" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp">
+
+
+            <TextView
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:gravity="center"
+                android:text="BARCODE IMAGE"
+                android:textColor="@color/colorPrimary" />
+
+
+            <TextView
+                android:id="@+id/tv_print"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/button_yellow_prnt"
+                android:padding="@dimen/_7sdp"
+                android:text="PRINT"
+                android:textSize="@dimen/_14sdp" />
+
+            <TextView
+                android:id="@+id/tv_sms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/_10ssp"
+                android:layout_toLeftOf="@+id/tv_print"
+
+                android:background="@drawable/button_gray_prnt"
+                android:padding="@dimen/_7sdp"
+                android:text="SMS"
+                android:textSize="@dimen/_14sdp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                style="@style/text_bold_nocaps"
+                android:layout_width="0dp"
+                android:textStyle="italic"
+                android:text="www.vendtechsl.com"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                style="@style/text_bold_nocaps"
+                android:layout_width="0dp"
+                android:text="Call +232 76 990 990"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+</ScrollView>

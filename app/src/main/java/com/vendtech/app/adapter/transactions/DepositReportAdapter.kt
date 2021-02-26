@@ -15,6 +15,7 @@ import com.vendtech.app.R
 import com.vendtech.app.models.transaction.DepositTransactionNewListModel
 import com.vendtech.app.ui.activity.transaction.DepositTransactionDetails
 import com.vendtech.app.utils.Utilities
+import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.util.*
 
@@ -50,9 +51,16 @@ class DepositReportAdapter(internal var depositListModels: MutableList<DepositTr
         holder.date.text = Utilities.formatToUtc(depositListModels[position].createdAt)*/
 
         holder.tv_date.text=("Date: "+Utilities.formatToUtc(depositListModels[position].createdAt));
-        holder.tv_new_balance.text=("New Balance: "+depositListModels[position].newBalance);
-        holder.tv_deposite.text=("Deposite: "+depositListModels[position].percentageAmount);
-        holder.tv_bank_deposite_ref.text=("Deposite Ref#: "+depositListModels[position].depositId);
+        var formatter: DecimalFormat = NumberFormat.getInstance(Locale.US) as DecimalFormat
+        formatter.applyPattern("#,###,###,###")
+        var formattedString = formatter.format(depositListModels[position].newBalance.toLong())
+
+        holder.tv_new_balance.text=("New Balance: "+formattedString);
+
+
+
+        holder.tv_deposite.text=("Deposit: "+depositListModels[position].percentageAmount.toInt());
+        holder.tv_bank_deposite_ref.text=("Deposit Ref#: "+depositListModels[position].depositId);
 
 
         holder.rootView.setOnClickListener(View.OnClickListener {

@@ -84,6 +84,8 @@
             android:name=".ui.activity.authentication.SignUpActivityUsername"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.profile.NotificationsListActivity" />
+        <activity android:name=".ui.Print.PrintScreenActivity"
+            android:screenOrientation="portrait"/>
 
         <service android:name=".fcm.MyFirebaseMessagingService">
             <intent-filter>

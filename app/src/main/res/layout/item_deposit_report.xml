@@ -68,11 +68,12 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ellipsize="end"
-                    android:fontFamily="@font/roboto_regular"
+                    android:fontFamily="@font/roboto_bold"
+
                     android:maxLines="1"
                     android:text=""
                     android:paddingRight="10dp"
-                    android:textColor="@color/colorlightgrey"
+                    android:textColor="@color/colorWhite"
                     android:textSize="12sp" />
                 <TextView
                     android:id="@+id/tv_new_balance"

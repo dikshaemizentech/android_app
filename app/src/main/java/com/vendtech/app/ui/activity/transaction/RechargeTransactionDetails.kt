@@ -17,6 +17,7 @@ import android.support.v4.content.ContextCompat
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import android.view.View.VISIBLE
 import android.widget.LinearLayout
 import com.bumptech.glide.Glide
 import com.downloader.*
@@ -27,6 +28,7 @@ import com.vendtech.app.models.transaction.RechargeTransactionDetailResult
 import com.vendtech.app.models.transaction.RechargeTransactionDetails
 import com.vendtech.app.models.transaction.RechargeTransactionInvoiceModel
 import com.vendtech.app.network.Uten
+import com.vendtech.app.ui.Print.PrintScreenActivity
 import com.vendtech.app.utils.Constants
 import com.vendtech.app.utils.CustomDialog
 import com.vendtech.app.utils.Utilities
@@ -65,7 +67,7 @@ class RechargeTransactionDetails : Activity(){
         StrictMode.setVmPolicy(builder.build());
         downloadInvoicePDF=findViewById(R.id.downloadInvoice)
         rechargeID=intent.getIntExtra("rechargeId",0).toString()
-
+        transctinDetailReprint.visibility=VISIBLE
         Log.v("DEPOSITID","Activity rechargeId: "+rechargeID)
 
         GetRechargeDetail()
@@ -75,7 +77,9 @@ class RechargeTransactionDetails : Activity(){
             finish();
             overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
         });
-
+        transctinDetailReprint.setOnClickListener{
+            startActivity(Intent(this@RechargeTransactionDetails,PrintScreenActivity::class.java))
+        }
     }
 
 

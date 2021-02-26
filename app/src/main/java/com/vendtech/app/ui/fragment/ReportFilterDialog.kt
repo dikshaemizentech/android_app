@@ -125,7 +125,7 @@ setUpClick()
             }
             if(isRecharge) {
                 reportFragment.pageRecharge=1
-                reportFragment.filterRechargeData(posId, from, to, meterNumber, transId)
+                reportFragment.filterRechargeData(posId, from, to, meterNumber, transId)//now call salesRepot TAB
             }
             else {
                 reportFragment.pageDeposit=1
@@ -253,7 +253,7 @@ if(textView==reportFilterTo){
             list.add(it.serialNumber)
         }
         val adapter= ArrayAdapter<String>(context, R.layout.item_pos,list)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        adapter.setDropDownViewResource(R.layout.sppiner_layout_item)
         reportFilterPosSP.adapter=adapter
         reportFilterPosSP.onItemSelectedListener=object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(p0: AdapterView<*>?) {

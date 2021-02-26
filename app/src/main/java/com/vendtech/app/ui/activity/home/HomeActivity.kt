@@ -466,7 +466,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
     fun LoadWalletFragment() {
 
         ShowTitle()
-        headerTitle.text = "WALLET"
+        headerTitle.text = "MANAGE WALLET"
 
         val fragment = WalletFragment.newInstance()
         val ft = supportFragmentManager.beginTransaction()

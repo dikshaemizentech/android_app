@@ -324,11 +324,11 @@ SetDepositTextChangeListener()
                 try {
                     var originalString = s.toString();
                     var plusPercent=s.toString()
-                    var longval:Int;
+                    var longval:Long;
                     if (originalString.contains(",")) {
                         originalString = originalString.replace(",", "");
                     }
-                    longval = originalString.toInt()
+                    longval = originalString.toLong()
                     var formatter = NumberFormat.getNumberInstance(Locale.US);
                    // formatter.applyPattern("#,###,###,###");
                     var formattedString = formatter.format(longval);
@@ -338,7 +338,7 @@ SetDepositTextChangeListener()
                         if(plusPercentET.text.toString().contains(",")){
                             plusPercent=plusPercent.replace(",","")
                         }
-                        plusPercentET.setText(getPercentage(plusPercent?.toInt()!!))
+                        plusPercentET.setText(getPercentage(plusPercent?.toLong()!!))
                     }
                     else plusPercentET.setText("")
 
@@ -368,11 +368,11 @@ if(p0?.length!!>0){
         })
     }
 
-    private fun getPercentage(p0: Int): String {
+    private fun getPercentage(p0: Long): String {
         val percent=(p0*percentage)/100
 
         Log.e("percent",percent.toString())
-        val number=p0+percent.toInt()
+        val number=p0+percent.toLong()
 
         return NumberFormat.getNumberInstance(Locale.US).format(number)
     }
@@ -602,8 +602,8 @@ if(p0?.length!!>0){
         result.forEach {
             list.add(it.serialNumber)
         }
-        val adapter = ArrayAdapter<String>(requireActivity(), R.layout.spinner_text_second, list)
-        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown)
+        val adapter = ArrayAdapter<String>(requireActivity(), R.layout.item_pos, list)
+        adapter.setDropDownViewResource(R.layout.sppiner_layout_item)
         spPosId.adapter=adapter
           spPosId.onItemSelectedListener=object :AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(p0: AdapterView<*>?) {

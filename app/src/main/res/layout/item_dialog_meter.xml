@@ -12,6 +12,7 @@
         android:padding="10dp"
         app:fontFamily="@font/roboto_regular"
         android:text="Home meter"
+        android:textSize="@dimen/_24ssp"
         android:textColor="@color/colorblack"
         android:id="@+id/meterDetailTV"/>
 

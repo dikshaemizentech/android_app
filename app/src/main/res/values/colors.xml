@@ -13,4 +13,6 @@
     <color name="darkgreycolor">#a9a9a9</color>
     <color name="colorgreen">#32CD32</color>
     <color name="colororange">#ffa500</color>
+    <color name="gray_clr">#6e6e6e</color>
+    <color name="gray_drk_clr">#71675e</color>
 </resources>

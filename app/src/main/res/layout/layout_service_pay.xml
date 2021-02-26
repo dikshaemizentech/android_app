@@ -1,194 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorBlue"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-<RelativeLayout android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="40dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-<LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:id="@+id/posLayout">
-    <TextView android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorlightgrey"
-        android:fontFamily="@font/roboto_regular"
-        android:text="Select POS ID"/>
-    <RelativeLayout android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/pay_layout_border"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal">
-        <Spinner
-            android:id="@+id/posIdSpinner"
+    android:layout_height="match_parent"
+    android:background="@color/colorBlue">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="40dp">
+
+        <LinearLayout
+            android:id="@+id/posLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/sadf"
-            android:background="@android:color/transparent"
-            android:layout_toStartOf="@+id/sadf" />
-        <ImageView
-            android:id="@+id/sadf"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_arrow_drop_down_black_24dp"
-            android:layout_alignParentRight="true" />
-    </RelativeLayout>
+            android:orientation="vertical">
 
-</LinearLayout>
-    <LinearLayout android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/rechargemeter"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/posLayout"
-        android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Select POS ID"
+                android:textColor="@color/colorlightgrey" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/pay_layout_border"
+                android:orientation="horizontal">
 
+                <Spinner
+                    android:id="@+id/posIdSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toStartOf="@+id/sadf"
+                    android:layout_toLeftOf="@+id/sadf"
+                    android:background="@android:color/transparent" />
 
-        <TextView android:layout_width="wrap_content"
+                <ImageView
+                    android:id="@+id/sadf"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_arrow_drop_down_black_24dp" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rechargemeter"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorlightgrey"
-            android:fontFamily="@font/roboto_regular"
-            android:text="Meter Number"/>
+            android:layout_below="@id/posLayout"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
 
 
-        <LinearLayout android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/pay_layout_border"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
-        <AutoCompleteTextView
-            android:layout_width="0dp" android:layout_height="wrap_content"
-            android:id="@+id/autoCompleteTextView"
-            android:paddingTop="7dp"
-            android:paddingBottom="7dp"
-            android:paddingLeft="10dp"
-            android:gravity="end"
-            android:maxLength="11"
-            android:maxLines="1"
-            android:layout_weight="1"
-            android:imeOptions="actionNext"
-            android:paddingRight="10dp"
-            android:paddingEnd="10dp"
-            android:inputType="number"
-            android:text=""
-            android:fontFamily="@font/roboto_bold"
-            android:paddingStart="10dp"
-            android:textColor="@color/colorWhite"
-            android:background="@android:color/transparent"
-            android:textSize="22sp"
-            />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Meter Number"
+                android:textColor="@color/colorlightgrey" />
 
-            <ImageView android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:id="@+id/showListmeterIV"
-                android:visibility="visible"
-                android:src="@drawable/ic_arrow_drop_down_black_24dp"
-                android:layout_gravity="center"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/pay_layout_border"
+                android:orientation="horizontal">
+
+                <AutoCompleteTextView
+                    android:id="@+id/autoCompleteTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="end"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:maxLength="11"
+                    android:maxLines="1"
+                    android:paddingStart="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="7dp"
+                    android:paddingEnd="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="7dp"
+                    android:text=""
+                    android:textColor="@color/colorWhite"
+                    android:textSize="26sp" />
+
+                <ImageView
+                    android:id="@+id/showListmeterIV"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_arrow_drop_down_black_24dp"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+
         </LinearLayout>
 
 
-    </LinearLayout>
-
-
-    <LinearLayout android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:id="@+id/money"
-        android:layout_below="@+id/rechargemeter"
-        android:orientation="vertical">
-
-
-
-        <TextView android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/money"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_regular"
-            android:textColor="@color/colorlightgrey"
-            android:text="Amount"/>
+            android:layout_below="@+id/rechargemeter"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
 
 
-        <EditText android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Amount"
+                android:textColor="@color/colorlightgrey" />
+
+
+            <EditText
+                android:id="@+id/moneypayET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/pay_layout_border"
+                android:fontFamily="@font/roboto_bold"
+                android:gravity="end"
+                android:imeOptions="actionDone"
+                android:inputType="numberDecimal|numberSigned"
+                android:maxLength="10"
+                android:maxLines="1"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="7dp"
+                android:paddingEnd="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="7dp"
+                android:text=""
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorlightgrey"
+                android:textSize="26sp"
+                android:visibility="visible">
+
+
+            </EditText>
+
+
+        </LinearLayout>
+
+
+        <CheckBox
+            android:id="@+id/cbSaveMeter"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="7dp"
-            android:paddingBottom="7dp"
-            android:paddingLeft="10dp"
-            android:gravity="end"
-            android:textSize="22sp"
-            android:inputType="numberDecimal|numberSigned"
-            android:text=""
-            android:maxLength="8"
-            android:id="@+id/moneypayET"
-            android:maxLines="1"
-            android:imeOptions="actionDone"
-            android:fontFamily="@font/roboto_bold"
-            android:paddingStart="10dp"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorlightgrey"
-            android:paddingRight="10dp"
-            android:layout_marginTop="5dp"
-            android:visibility="visible"
-            android:paddingEnd="10dp"
-            android:background="@drawable/pay_layout_border">
+            android:layout_below="@+id/money"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:buttonTint="@color/colorWhite"
+            android:text="@string/save_meter"
+            android:textColor="@color/colorWhite" />
 
 
-        </EditText>
+        <TextView
+            android:id="@+id/paynowTV"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/cbSaveMeter"
+            android:layout_marginStart="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/button_yellow"
+            android:fontFamily="@font/roboto_medium"
+            android:gravity="center"
+            android:text="PAY NOW"
+            android:textColor="@color/colorblack" />
 
 
+    </RelativeLayout>
 
-    </LinearLayout>
 
-
-    <CheckBox
-        android:buttonTint="@color/colorWhite"
-        android:textColor="@color/colorWhite"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/money"
-        android:text="@string/save_meter"
-        android:id="@+id/cbSaveMeter"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabBack"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-
-    <TextView android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/button_yellow"
-        android:layout_marginLeft="50dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_below="@+id/cbSaveMeter"
-        android:id="@+id/paynowTV"
-        android:text="PAY NOW"
-        android:textColor="@color/colorblack"
-        android:fontFamily="@font/roboto_medium"
-        android:gravity="center"
-        android:layout_marginTop="40dp"/>
-
-
-
-</RelativeLayout>
-
-
-
-    <android.support.design.widget.FloatingActionButton android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_margin="30dp"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="30dp"
         android:src="@drawable/back_arrow"
         app:backgroundTint="@color/colorYellow"
         app:borderWidth="0dp"
-        app:fabCustomSize="45dp"
-        android:id="@+id/fabBack"
         app:elevation="6dp"
-        app:fabSize="mini"/>
+        app:fabCustomSize="45dp"
+        app:fabSize="mini" />
 
 
 </RelativeLayout>

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:textSize="@dimen/_17ssp"
+    android:textSize="@dimen/_24ssp"
     android:padding="@dimen/_10sdp"
     android:textStyle="bold"
     tools:text="5000">

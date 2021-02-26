@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textSize="@dimen/_17ssp"
+    android:textSize="@dimen/_22ssp"
     android:paddingStart="@dimen/_8sdp"
     android:paddingVertical="@dimen/_10sdp"
     android:textColor="@color/colorWhite"

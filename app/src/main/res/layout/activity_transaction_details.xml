@@ -465,6 +465,25 @@
 
                     </LinearLayout>
 
+
+
+                    <TextView
+                        android:id="@+id/transctinDetailReprint"
+                        android:layout_width="match_parent"
+                        android:text="REPRINT"
+                        android:visibility="gone"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="@dimen/_10ssp"
+                        android:textSize="@dimen/_14ssp"
+                        android:padding="@dimen/_10ssp"
+                        android:layout_marginLeft="@dimen/_30sdp"
+                        android:layout_marginRight="@dimen/_30sdp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:textColor="@color/colorWhite"
+                        android:background="@drawable/corner_yello"
+                        android:layout_height="wrap_content"/>
+
                     <LinearLayout
                         android:id="@+id/downloadInvoice"
                         android:layout_width="wrap_content"
