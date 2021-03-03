@@ -72,8 +72,8 @@ class LoginActivity : BaseActivity() {
             passwordET.setText(SharedHelper.getString(this, Constants.REMEMBER_PASS))
         }
 
-        emailET.setText("vblell@gmail.com")
-        passwordET.setText("lauratu1")
+        //emailET.setText("vblell@gmail.com")
+        //passwordET.setText("lauratu1")
 
     }
 

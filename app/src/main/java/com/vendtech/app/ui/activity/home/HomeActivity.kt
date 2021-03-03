@@ -228,6 +228,12 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
 
                 Handler().postDelayed({ LoadDashboardFragment() }, 400)
             }
+            R.id.dashboard_add_bill_payment -> {
+                if (drawerLayout!!.isDrawerOpen(Gravity.START))
+                    drawerLayout!!.closeDrawer(Gravity.START)
+
+                Handler().postDelayed({ LoadDashboardFragment() }, 400)
+            }
             R.id.posLL -> {
                 if (drawerLayout!!.isDrawerOpen(Gravity.START))
                     drawerLayout!!.closeDrawer(Gravity.START)
@@ -239,14 +245,11 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
                     drawerLayout!!.closeDrawer(Gravity.START)
                 Handler().postDelayed({ LoadWalletFragment() }, 400)
             }
-
             R.id.reportLL -> {
                 if (drawerLayout!!.isDrawerOpen(Gravity.START))
                     drawerLayout!!.closeDrawer(Gravity.START)
                 Handler().postDelayed({ LoadReportsFragment() }, 400)
             }
-
-
             R.id.meterLL -> {
                 /* if (drawerLayout!!.isDrawerOpen(Gravity.START))
                      drawerLayout!!.closeDrawer(Gravity.START)*/
@@ -257,8 +260,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
                     overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                 }, 400)
             }
-
-
             R.id.changepassLL -> {
                 /* if (drawerLayout!!.isDrawerOpen(Gravity.START))
                      drawerLayout!!.closeDrawer(Gravity.START)*/
@@ -269,8 +270,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
                     overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                 }, 400)
             }
-
-
             R.id.tcLL -> {
                 /* if (drawerLayout!!.isDrawerOpen(Gravity.START))
                      drawerLayout!!.closeDrawer(Gravity.START)*/
@@ -283,8 +282,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
                     overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                 }, 400)
             }
-
-
             R.id.shareappLL -> {
 
                 if (drawerLayout!!.isDrawerOpen(Gravity.START))
@@ -296,7 +293,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
                 }, 400)
 
             }
-
             R.id.notificationsLL -> {
 
 //                if (drawerLayout!!.isDrawerOpen(Gravity.START))
@@ -310,8 +306,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
 
                 }, 400)
             }
-
-
             R.id.contactusLL -> {
                 /*  if (drawerLayout!!.isDrawerOpen(Gravity.START))
                       drawerLayout!!.closeDrawer(Gravity.START)
@@ -322,7 +316,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
                     overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                 }, 400)
             }
-
             R.id.logoutLL -> {
                 /*  if (drawerLayout!!.isDrawerOpen(Gravity.START))
                       drawerLayout!!.closeDrawer(Gravity.START)*/
@@ -333,7 +326,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
 
                 }, 400)
             }
-
             R.id.editUserProfile -> {
                 /* if (drawerLayout!!.isDrawerOpen(Gravity.START))
                      drawerLayout!!.closeDrawer(Gravity.START)*/
@@ -344,7 +336,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
                     overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                 }, 400)
             }
-
             R.id.editprofileTV -> {
                 /* if (drawerLayout!!.isDrawerOpen(Gravity.START))
                      drawerLayout!!.closeDrawer(Gravity.START)

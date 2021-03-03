@@ -38,7 +38,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
     <string name="save_meter">Save Meters</string>
     <string name="manage_reports">MANAGE REPORTS</string>
     <string name="reset_password">RESET PASSCODE</string>
-    <string name="add_bill_payment">ADD BILL PAYMENT </string>
+    <string name="add_bill_payment">BILL PAYMENT </string>
     <string name="date">Date</string>
     <string name="meter">Meter #</string>
     <string name="meter2">Meter #:</string>
