@@ -62,6 +62,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
 
     //NAVIGATION MENU AND HEADER
 
+    lateinit var dashboard_add_bill_payment: LinearLayout
     lateinit var dashboardLL: LinearLayout
     lateinit var posLL: LinearLayout
     lateinit var walletLL: LinearLayout
@@ -140,6 +141,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
 
 
         dashboardLL = navigationView.findViewById<View>(R.id.dashboardLL) as LinearLayout
+        dashboard_add_bill_payment = navigationView.findViewById<View>(R.id.dashboard_add_bill_payment) as LinearLayout
         posLL = navigationView.findViewById<View>(R.id.posLL) as LinearLayout
         walletLL = navigationView.findViewById<View>(R.id.walletLL) as LinearLayout
         reportLL = navigationView.findViewById<View>(R.id.reportLL) as LinearLayout
@@ -161,6 +163,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
         reportLL.setOnClickListener(this)
 
         posLL.setOnClickListener(this)
+        dashboard_add_bill_payment.setOnClickListener(this)
         dashboardLL.setOnClickListener(this)
         walletLL.setOnClickListener(this)
         meterLL.setOnClickListener(this)
