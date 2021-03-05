@@ -56,8 +56,11 @@ setStyle(DialogFragment.STYLE_NO_TITLE,android.R.style.ThemeOverlay_Material)
 
             if(isRecharge){
                 depositLayout.visibility=View.GONE;
+                liner_depostText.visibility=View.GONE;
+                linerDepostValue.visibility=View.GONE;
                 meterLayout.visibility=View.VISIBLE;
                 tv_title.setText(resources.getString(R.string.sales_report_filters))
+
             }
             else {
                 tv_title.setText(resources.getString(R.string.deposite_report_filters))
@@ -248,11 +251,11 @@ if(textView==reportFilterTo){
     private fun SetOnSpinner(result: List<PosResultModel.Result>) {
         posList.addAll(result)
         val list=ArrayList<String>()
-        list.add("Select Pos Id")
+       // list.add("Select Pos Id")
         result.forEach {
             list.add(it.serialNumber)
         }
-        val adapter= ArrayAdapter<String>(context, R.layout.item_pos,list)
+        val adapter= ArrayAdapter<String>(context, R.layout.item_pos_large,list)
         adapter.setDropDownViewResource(R.layout.sppiner_layout_item)
         reportFilterPosSP.adapter=adapter
         reportFilterPosSP.onItemSelectedListener=object : AdapterView.OnItemSelectedListener{

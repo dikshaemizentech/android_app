@@ -52,7 +52,7 @@ class MeterListNewAdapter(internal var meterListModels: MutableList<MeterListRes
              }
 
 
-             holder.meterNo.text = meterListModels[position].number;
+             holder.meterNo.text = "Meter #: "+meterListModels[position].number;
              //holder.meterName.text = meterListModels[position].name
              holder.meterAddress.text = meterListModels[position].address;
              holder.meterDate.text = meterListModels[position].meterMake;

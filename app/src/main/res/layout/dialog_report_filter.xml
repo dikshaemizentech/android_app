@@ -130,7 +130,7 @@
                     android:id="@+id/reportFilterFrom"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/_24sdp"
-                    android:layout_margin="@dimen/_8sdp"
+                    android:layout_margin="@dimen/_5sdp"
                     android:layout_weight="1"
                     android:background="@drawable/boarder_lightprimary"
                     android:drawableRight="@drawable/ic_date_range_black_24dp"
@@ -146,7 +146,7 @@
                     android:id="@+id/reportFilterTo"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/_24sdp"
-                    android:layout_margin="@dimen/_8sdp"
+                    android:layout_margin="@dimen/_5sdp"
                     android:layout_weight="1"
                     android:background="@drawable/boarder_lightprimary"
                     android:drawableRight="@drawable/ic_date_range_black_24dp"
@@ -160,6 +160,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/liner_depostText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -192,6 +193,8 @@
 
 
             <LinearLayout
+                android:id="@+id/linerDepostValue"
+                android:layout_marginTop="@dimen/_10ssp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -199,35 +202,41 @@
                 <EditText
                     android:id="@+id/reportFilterRefNumber"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/_24sdp"
-                    android:layout_margin="@dimen/_8sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_6sdp"
                     android:layout_weight="1"
+                    android:layout_marginRight="@dimen/_5sdp"
                     android:background="@drawable/boarder_lightprimary"
                     android:gravity="center_vertical"
                     android:inputType="text"
-                    android:paddingLeft="@dimen/_8sdp"
-                    android:paddingRight="@dimen/_8sdp"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:paddingRight="@dimen/_5sdp"
+                    android:paddingTop="@dimen/_6sdp"
+                    android:paddingBottom="@dimen/_6sdp"
+                    android:singleLine="true"
                     android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/_14ssp" />
+                    android:textSize="@dimen/_9ssp" />
 
 
                 <RelativeLayout
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/_24sdp"
-                    android:layout_margin="@dimen/_8sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
                     android:layout_weight="1"
                     android:background="@drawable/boarder_lightprimary">
 
                     <Spinner
                         android:id="@+id/reportFilterDepositSP"
+
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent" />
 
                     <ImageView
-                        android:layout_width="@dimen/_28sdp"
-                        android:layout_height="@dimen/_28sdp"
-                        android:layout_alignParentEnd="true"
+                        android:id="@+id/img_r1"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:src="@drawable/ic_arrow_drop_down_black_24dp" />
@@ -241,6 +250,7 @@
                 android:id="@+id/meterLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
                 android:orientation="vertical">
 
                 <TextView
@@ -248,7 +258,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_8sdp"
                     android:layout_marginLeft="@dimen/_8sdp"
-                    android:layout_marginTop="@dimen/_12sdp"
+
                     android:text="Meter # :"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/_8sdp" />
@@ -257,7 +267,7 @@
                     android:id="@+id/reportFilterMeterNumber"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_24sdp"
-                    android:layout_margin="@dimen/_8sdp"
+                    android:layout_margin="@dimen/_7sdp"
                     android:background="@drawable/boarder_lightprimary"
                     android:gravity="center_vertical"
                     android:inputType="text"
@@ -271,6 +281,7 @@
                 android:id="@+id/depositLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_18sdp"
                 android:orientation="vertical">
 
 
@@ -279,21 +290,22 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_8sdp"
                     android:layout_marginLeft="@dimen/_8sdp"
-                    android:layout_marginTop="@dimen/_12sdp"
+
                     android:text="Bank :"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/_8sdp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:weightSum="2"
+
                     android:layout_height="wrap_content">
 
                     <RelativeLayout
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:layout_height="@dimen/_24sdp"
-                        android:layout_margin="@dimen/_8sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginLeft="@dimen/_6sdp"
                         android:background="@drawable/boarder_lightprimary">
 
                         <Spinner
@@ -304,8 +316,8 @@
                             android:background="@android:color/transparent" />
 
                         <ImageView
-                            android:layout_width="@dimen/_28sdp"
-                            android:layout_height="@dimen/_28sdp"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"

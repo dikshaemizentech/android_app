@@ -24,7 +24,7 @@
             android:text="Vendtech"
             android:textAllCaps="true"
 
-            android:textSize="@dimen/_26ssp"
+            android:textSize="@dimen/_24ssp"
             android:textStyle="bold" />
 
         <TextView
@@ -34,13 +34,13 @@
 
             android:text="@string/Electricity_purchace"
             android:textAllCaps="true"
-            android:textSize="@dimen/_24ssp" />
+            android:textSize="@dimen/_20ssp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
 
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_5sdp"
 
             android:background="@color/colorlightPrimary" />
 
@@ -52,105 +52,90 @@
 
             <TextView
                 style="@style/text_bold"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="date: 1/24/2021 10:53:58 AM "
+
+                android:text="date:  "
                 android:textAllCaps="true"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold" />
 
             <TextView
                 style="@style/text_bold"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+
                 android:gravity="right"
-                android:text="Vender"
+                android:text="1/24/2021 10:53:58 AM"
                 android:textAllCaps="true"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_2ssp">
+            android:layout_marginTop="@dimen/_10ssp">
 
             <TextView
-                android:layout_width="0dp"
+                style="@style/text_bold"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
 
+                android:text="Vender:"
                 android:textAllCaps="true"
+                android:textColor="@color/colorPrimary"
                 android:textStyle="bold" />
 
             <TextView
-                style="@style/text_normal"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-
+                style="@style/text_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_5sdp"
                 android:gravity="right"
                 android:text="Afro international"
                 android:textAllCaps="true"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_2ssp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-
-                android:textAllCaps="true"
-                android:textStyle="bold" />
-
-            <TextView
-                style="@style/text_bold"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:text="pos id"
-                android:textAllCaps="true"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_2ssp">
 
             <TextView
-                android:layout_width="0dp"
+                style="@style/text_bold"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
 
+
+                android:text="pos id:"
                 android:textAllCaps="true"
+                android:textColor="@color/colorPrimary"
                 android:textStyle="bold" />
-
             <TextView
-                style="@style/text_normal"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:text="10001"
+               android:layout_marginLeft="@dimen/_5sdp"
+                android:text="1001"
                 android:textAllCaps="true"
                 android:textStyle="bold" />
+
+
 
         </LinearLayout>
 
+
+
         <RelativeLayout
             android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/_5sdp"
             android:layout_height="wrap_content">
 
             <View
@@ -164,6 +149,7 @@
             <TextView
                 android:id="@+id/tv_custInfo"
                 style="@style/text_bold"
+                android:textAllCaps="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -182,7 +168,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10ssp">
+            android:layout_marginTop="@dimen/_2ssp">
 
             <TextView
                 style="@style/text_normal_nocaps"
@@ -266,7 +252,7 @@
                 android:layout_weight="2"
                 android:gravity="right"
                 android:text="22222222222"
-                android:textSize="@dimen/_26ssp" />
+                android:textSize="@dimen/_22ssp" />
 
         </LinearLayout>
 
@@ -311,7 +297,7 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 android:text="20,000"
-                android:textSize="@dimen/_26ssp" />
+                android:textSize="@dimen/_22ssp" />
 
         </LinearLayout>
 
@@ -333,6 +319,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
+                android:textAllCaps="false"
                 android:text="@string/dedution" />
 
             <View
@@ -348,7 +335,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10ssp">
+            android:layout_marginTop="@dimen/_5ssp">
 
             <TextView
                 style="@style/text_normal"
@@ -432,6 +419,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
+                android:textAllCaps="false"
                 android:text="@string/total" />
 
             <View
@@ -447,7 +435,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10ssp">
+            android:layout_marginTop="@dimen/_5ssp">
 
             <TextView
                 style="@style/text_normal_nocaps"
@@ -504,7 +492,7 @@
             android:layout_marginTop="@dimen/_5ssp"
             android:gravity="center"
             android:text="4596 8596 2563 4145 7895"
-            android:textSize="@dimen/_22ssp" />
+            android:textSize="@dimen/_18ssp" />
 
         <View
             android:layout_width="match_parent"
@@ -590,9 +578,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/button_yellow_prnt"
-                android:padding="@dimen/_7sdp"
+                android:padding="@dimen/_5sdp"
                 android:text="PRINT"
-                android:textSize="@dimen/_14sdp" />
+                android:textSize="@dimen/_12sdp" />
 
             <TextView
                 android:id="@+id/tv_sms"
@@ -602,9 +590,9 @@
                 android:layout_toLeftOf="@+id/tv_print"
 
                 android:background="@drawable/button_gray_prnt"
-                android:padding="@dimen/_7sdp"
+                android:padding="@dimen/_5sdp"
                 android:text="SMS"
-                android:textSize="@dimen/_14sdp" />
+                android:textSize="@dimen/_12sdp" />
 
         </RelativeLayout>
 

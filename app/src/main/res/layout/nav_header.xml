@@ -89,7 +89,7 @@
                 <LinearLayout
                     android:id="@+id/dashboardLL"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_25sdp"
                     android:gravity="center_vertical">
 
                     <ImageView
@@ -110,7 +110,7 @@
                 <LinearLayout
                     android:id="@+id/dashboard_add_bill_payment"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_25sdp"
                     android:gravity="center_vertical"
                     android:layout_marginTop="@dimen/_8sdp">
 
@@ -132,7 +132,7 @@
                 <LinearLayout
                     android:id="@+id/meterLL"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_25sdp"
                     android:gravity="center"
                     android:layout_marginTop="@dimen/_8sdp">
 
@@ -153,7 +153,7 @@
                 <LinearLayout
                     android:id="@+id/posLL"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_25sdp"
                     android:gravity="center"
                     android:layout_marginTop="@dimen/_8sdp">
 
@@ -173,7 +173,7 @@
                 <LinearLayout
                     android:id="@+id/walletLL"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_25sdp"
                     android:gravity="center"
                     android:layout_marginTop="@dimen/_8sdp">
                     <ImageView
@@ -193,7 +193,7 @@
                 <LinearLayout
                     android:id="@+id/reportLL"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_25sdp"
                     android:gravity="center"
                     android:layout_marginTop="@dimen/_8sdp">
 
@@ -214,7 +214,7 @@
                 <LinearLayout
                     android:id="@+id/changepassLL"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_25sdp"
                     android:gravity="center"
                     android:layout_marginTop="@dimen/_8sdp">
 
@@ -236,7 +236,7 @@
                 <LinearLayout
                     android:id="@+id/notificationsLL"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_25sdp"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:layout_marginTop="@dimen/_8sdp">
@@ -270,7 +270,7 @@
                 <LinearLayout
                     android:id="@+id/privacyLL"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_25sdp"
                     android:gravity="center"
                     android:padding="@dimen/padding16"
                     android:visibility="gone"
@@ -293,7 +293,7 @@
                 <LinearLayout
                     android:id="@+id/contactusLL"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_25sdp"
                     android:visibility="gone"
                     android:gravity="center"
                     android:layout_marginTop="@dimen/_8sdp">
@@ -314,7 +314,7 @@
                 <LinearLayout
                     android:id="@+id/tcLL"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_25sdp"
                     android:gravity="center"
                     android:visibility="gone"
                     android:layout_marginTop="@dimen/_8sdp">
@@ -338,7 +338,7 @@
                 <LinearLayout
                     android:id="@+id/shareappLL"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_25sdp"
                     android:gravity="center"
                     android:layout_marginTop="@dimen/_8sdp">
 
@@ -359,7 +359,7 @@
                 <LinearLayout
                     android:id="@+id/logoutLL"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_25sdp"
                     android:gravity="center"
                     android:layout_marginTop="@dimen/_8sdp">
                     <ImageView

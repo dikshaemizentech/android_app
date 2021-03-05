@@ -15,6 +15,7 @@ import com.vendtech.app.R
 import com.vendtech.app.models.transaction.RechargeTransactionNewListModel
 import com.vendtech.app.ui.activity.transaction.RechargeTransactionDetails
 import com.vendtech.app.utils.Utilities
+import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.util.*
 
@@ -52,10 +53,16 @@ class SalesReportAdapter(internal var meterListModels: MutableList<RechargeTrans
         }*/
 
 
-        holder.tv_date.text =("Date/Time: "+Utilities.formatToUtc(meterListModels[position].createdAt));
+        holder.tv_date.text =(""+Utilities.formatToUtc(meterListModels[position].createdAt));
         holder.tv_meter.text =("Meter#: "+meterListModels[position].meterNumber);
-        holder.tv_amount.text =("Amount: "+meterListModels[position].amount);
-        holder.tv_transaction_id.text =("Transaction Id: "+meterListModels[position].transactionId);
+
+        var longval:Long=meterListModels[position].amount.toLong()
+        var formatter: DecimalFormat = NumberFormat.getInstance(Locale.US) as DecimalFormat
+        formatter.applyPattern("#,###,###,###")
+        var formattedString = formatter.format(longval)
+        holder.tv_amount.text =("Amount: "+formattedString)
+
+        holder.tv_transaction_id.text =("Trans ID: "+meterListModels[position].transactionId);
 
 
 

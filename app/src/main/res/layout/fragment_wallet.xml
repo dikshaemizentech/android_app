@@ -714,7 +714,7 @@
                         android:imeOptions="actionNext"
                         android:inputType="numberSigned|numberDecimal"
                         android:maxLines="1"
-                        android:maxLength="20"
+                        android:maxLength="11"
                         android:paddingStart="13dp"
                         android:paddingLeft="13dp"
                         android:paddingTop="13dp"
@@ -737,7 +737,7 @@
                         android:drawablePadding="3dp"
                         android:fontFamily="@font/roboto_bold"
                         android:gravity="start"
-
+                        android:singleLine="true"
                         android:paddingStart="13dp"
                         android:paddingLeft="13dp"
                         android:paddingTop="13dp"
@@ -747,7 +747,7 @@
                         android:paddingBottom="13dp"
                         android:textColor="@color/colorred"
                         android:textColorHint="@color/colorlightgrey"
-                        android:textSize="@dimen/_24sdp">
+                        android:textSize="@dimen/_18sdp">
 
                     </TextView>
                 </LinearLayout>

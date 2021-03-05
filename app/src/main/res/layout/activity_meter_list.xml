@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:fontFamily="@font/roboto_bold"
-            android:text="SAVED METER"
+            android:text="SAVED METERS"
             android:textColor="@color/colorWhite"
             android:textSize="16sp"
             android:visibility="visible" />

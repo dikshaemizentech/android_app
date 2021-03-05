@@ -52,6 +52,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.home.HomeActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.profile.EditProfileActivity"

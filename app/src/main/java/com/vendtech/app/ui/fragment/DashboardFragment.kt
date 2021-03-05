@@ -514,7 +514,7 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
             list.add(it.serialNumber)
         }
 
-        val adapter = ArrayAdapter<String>(context, R.layout.item_pos, list)
+        val adapter = ArrayAdapter<String>(context, R.layout.item_pos_large, list)
         adapter.setDropDownViewResource(R.layout.sppiner_layout_item)
         posSpinner.adapter = adapter
         posSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {

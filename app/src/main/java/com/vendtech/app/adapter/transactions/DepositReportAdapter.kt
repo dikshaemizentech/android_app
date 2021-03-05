@@ -50,16 +50,16 @@ class DepositReportAdapter(internal var depositListModels: MutableList<DepositTr
 
         holder.date.text = Utilities.formatToUtc(depositListModels[position].createdAt)*/
 
-        holder.tv_date.text=("Date: "+Utilities.formatToUtc(depositListModels[position].createdAt));
+        holder.tv_date.text=(""+Utilities.formatToUtc(depositListModels[position].createdAt));
         var formatter: DecimalFormat = NumberFormat.getInstance(Locale.US) as DecimalFormat
         formatter.applyPattern("#,###,###,###")
         var formattedString = formatter.format(depositListModels[position].newBalance.toLong())
 
-        holder.tv_new_balance.text=("New Balance: "+formattedString);
+        holder.tv_new_balance.text=("New Bal: "+formattedString);
 
+        formattedString = formatter.format(depositListModels[position].percentageAmount.toLong())
 
-
-        holder.tv_deposite.text=("Deposit: "+depositListModels[position].percentageAmount.toInt());
+        holder.tv_deposite.text=("Deposit: "+formattedString);
         holder.tv_bank_deposite_ref.text=("Deposit Ref#: "+depositListModels[position].depositId);
 
 
