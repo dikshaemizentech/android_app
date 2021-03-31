@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_20"
-
         android:orientation="vertical">
 
 
@@ -69,7 +68,8 @@
                 android:text="1/24/2021 10:53:58 AM"
                 android:textAllCaps="true"
                 android:textColor="@color/colorPrimary"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:id="@+id/tv_date"/>
 
         </LinearLayout>
 
@@ -98,7 +98,8 @@
                 android:text="Afro international"
                 android:textAllCaps="true"
                 android:textColor="@color/colorPrimary"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:id="@+id/tv"/>
 
         </LinearLayout>
 
@@ -122,10 +123,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-               android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
                 android:text="1001"
                 android:textAllCaps="true"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:id="@+id/tv_pos_id"/>
 
 
 
@@ -184,8 +186,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="right"
-
-                android:text="aliota vinod" />
+                android:text="aliota vinod"
+                android:id="@+id/tv_cus_name"/>
 
         </LinearLayout>
 
@@ -207,7 +209,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:text="40177" />
+                android:text="40177"
+                android:id="@+id/tv_amount"/>
 
         </LinearLayout>
 
@@ -229,7 +232,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:gravity="right"
-                android:text="90 kr00 Town Rd" />
+                android:text="90 kr00 Town Rd"
+                android:id="@+id/tv_address"/>
 
         </LinearLayout>
 
@@ -243,7 +247,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Mete r#:" />
+                android:text="Meter#:" />
 
             <TextView
                 style="@style/text_bold"
@@ -252,7 +256,8 @@
                 android:layout_weight="2"
                 android:gravity="right"
                 android:text="22222222222"
-                android:textSize="@dimen/_22ssp" />
+                android:textSize="@dimen/_22ssp"
+                android:id="@+id/tv_meter_number"/>
 
         </LinearLayout>
 
@@ -274,7 +279,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:gravity="right"
-                android:text="1080" />
+                android:text="1080"
+                android:id="@+id/tv_terrif"/>
 
         </LinearLayout>
 
@@ -297,7 +303,8 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 android:text="20,000"
-                android:textSize="@dimen/_22ssp" />
+                android:textSize="@dimen/_22ssp"
+                android:id="@+id/tv_amount_tendered"/>
 
         </LinearLayout>
 
@@ -350,8 +357,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="right"
-
-                android:text="le:0.00" />
+                android:text="le:0.00"
+                android:id="@+id/tv_gst"/>
 
         </LinearLayout>
 
@@ -373,8 +380,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="right"
-
-                android:text="le:0" />
+                android:text="le:0"
+                android:id="@+id/tv_service_charge"/>
 
         </LinearLayout>
 
@@ -397,7 +404,8 @@
                 android:layout_weight="1"
                 android:gravity="right"
 
-                android:text="le:0.00" />
+                android:text="le:0.00"
+                android:id="@+id/tv_debit_recovery"/>
 
         </LinearLayout>
 
@@ -450,8 +458,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="right"
-
-                android:text="le:100" />
+                android:text="le:100"
+                android:id="@+id/tv_cost_of_unit"/>
 
         </LinearLayout>
 
@@ -473,8 +481,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="right"
-
-                android:text="56" />
+                android:text="56"
+                android:id="@+id/tv_unit"/>
 
         </LinearLayout>
 
@@ -492,7 +500,8 @@
             android:layout_marginTop="@dimen/_5ssp"
             android:gravity="center"
             android:text="4596 8596 2563 4145 7895"
-            android:textSize="@dimen/_18ssp" />
+            android:textSize="@dimen/_18ssp"
+            android:id="@+id/tv_token"/>
 
         <View
             android:layout_width="match_parent"
@@ -520,7 +529,8 @@
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:gravity="right"
                 android:text="123456"
-                android:textStyle="italic" />
+                android:textStyle="italic"
+                android:id="@+id/tv_serial"/>
 
         </LinearLayout>
 
@@ -544,7 +554,8 @@
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:gravity="right"
                 android:text="00000000165"
-                android:textStyle="italic" />
+                android:textStyle="italic"
+                android:id="@+id/tv_transaction_id"/>
 
         </LinearLayout>
 
@@ -556,7 +567,6 @@
             android:layout_marginRight="@dimen/_10ssp"
             android:layout_toLeftOf="@+id/tv_tottext"
             android:background="@color/darkgreycolor" />
-
 
         <RelativeLayout
             android:layout_width="match_parent"

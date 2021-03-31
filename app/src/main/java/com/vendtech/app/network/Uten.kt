@@ -15,9 +15,9 @@ class Uten {
     companion object{
 
         //live
-       // val BASE_URL="http://vendtechsl.com/api/";
+         //val BASE_URL="http://vendtechsl.com/api/";
         //development
-          val BASE_URL="http://vendtechsl.net/api/";
+        val BASE_URL="http://vendtechsl.net/api/";
 
         fun FetchServerData(): ApiInterface {
             val retrofit = Retrofit.Builder().baseUrl(BASE_URL)

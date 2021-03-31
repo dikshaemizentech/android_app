@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="@color/colorYellow"/>
-    <HorizontalScrollView
+   <!-- <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/_24sdp"
@@ -19,7 +19,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/_24sdp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_32sdp"
@@ -98,9 +100,97 @@
                 tools:listitem="@layout/item_pos_list"
                 app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
         </LinearLayout>
-
     </HorizontalScrollView>
+-->
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_marginTop="@dimen/_24sdp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_32sdp"
+            android:gravity="center"
+            android:background="@color/colorYellow"
+            android:orientation="horizontal"
+            android:weightSum="3">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_12sdp"
+                android:textAllCaps="true"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/colorblack"
+                android:padding="@dimen/_4sdp"
+                android:text="Pos Id"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="@dimen/_180sdp"
+                android:layout_height="wrap_content"
+                android:text="Vendor Name"
+                android:visibility="gone"
+                android:gravity="center"
+                android:textColor="@color/colorblack"
+                android:textStyle="bold"
+                android:padding="@dimen/_4sdp"
+                android:textSize="@dimen/_12sdp"
+                android:textAllCaps="true"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_12sdp"
+                android:textColor="@color/colorblack"
+                android:textStyle="bold"
+                android:padding="@dimen/_4sdp"
+                android:textAllCaps="true"
+                android:gravity="center"
+                android:text="Balance"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_12sdp"
+                android:visibility="gone"
+                android:textAllCaps="true"
+                android:textColor="@color/colorblack"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:padding="@dimen/_4sdp"
+                android:text="Cell #"/>
+            <TextView
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:visibility="gone"
+                android:textColor="@color/colorblack"
+                android:textStyle="bold"
+                android:padding="@dimen/_4sdp"
+                android:textSize="@dimen/_12sdp"
+                android:textAllCaps="true"
+                android:text="Pos Type"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_4sdp"
+                android:textColor="@color/colorblack"
+                android:textStyle="bold"
+                android:textSize="@dimen/_12sdp"
+                android:textAllCaps="true"
+                android:gravity="center"
+                android:text="Enabled"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/posListRv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            tools:listitem="@layout/item_pos_list"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -118,7 +208,8 @@
             android:textAllCaps="true"
             android:gravity="right"
             android:paddingRight="@dimen/_10sdp"
-            android:text=""/>
+            android:text=""
+            android:textStyle="bold"/>
     </LinearLayout>
 
 

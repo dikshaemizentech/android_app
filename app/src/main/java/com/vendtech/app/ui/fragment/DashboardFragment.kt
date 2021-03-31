@@ -413,7 +413,7 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
     }
 
 
-    fun ShowAlertForRecharge(moneyvalue: String) {
+   /* fun ShowAlertForRecharge(moneyvalue: String) {
 
         val builder = AlertDialog.Builder(context)
         builder.setTitle(R.string.app_name)
@@ -434,7 +434,7 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
         val alertDialog: AlertDialog = builder.create()
         alertDialog.setCancelable(false)
         alertDialog.show()
-    }
+    }*/
 
     fun ShowPayLayout() {
 
@@ -580,7 +580,7 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
     }
 
 
-    fun DoRecharge(amount: String, meterId: String, posId: Int) {
+   /* fun DoRecharge(amount: String, meterId: String, posId: Int) {
 
         var customDialog: CustomDialog
         customDialog = CustomDialog(requireActivity())
@@ -634,7 +634,7 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
                 Utilities.shortToast("Something went wrong", requireActivity())
             }
         })
-    }
+    }*/
 
 
     fun SetAutoCompleteData() {
@@ -644,8 +644,8 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
         autoCompleteTV.threshold = 1
         autoCompleteTV.setOnItemClickListener() { parent, _, position, id ->
             val selectedPoi = parent.adapter.getItem(position) as MeterListResults?
-            autoCompleteTV.setText(selectedPoi?.number.toString())
-            selectedMeterID = selectedPoi?.meterId.toString()
+           // autoCompleteTV.setText(selectedPoi?.number.toString())
+           // selectedMeterID = selectedPoi?.meterId.toString()
         }
     }
 
@@ -776,6 +776,7 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
 
     override fun meterId(id: String, name: String) {
 
+        //Toast.makeText(activity,name,Toast.LENGTH_LONG).show();
         IsSelectFromMeterList = true
         selectedMeterID = id
         autoCompleteTV.setText(name)

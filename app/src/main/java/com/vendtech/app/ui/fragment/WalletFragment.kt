@@ -136,7 +136,7 @@ var depositType=""
         findviews(view)
         SetDepositLayout()
         GetBankDetails()
-GetPosIdList()
+        GetPosIdList()
         GetBankNames()
       //  GetBankDetails()
 

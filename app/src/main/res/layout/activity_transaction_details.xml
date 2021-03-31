@@ -99,9 +99,9 @@
 
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="0.80"
                             android:gravity="start"
                             android:text="Transaction ID"
                             android:textColor="@color/colorlightgrey"
@@ -109,7 +109,7 @@
 
                         <TextView
                             android:id="@+id/transID"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
@@ -133,9 +133,9 @@
 
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="0.80"
                             android:gravity="start"
                             android:text="Meter No."
                             android:textColor="@color/colorlightgrey"
@@ -143,7 +143,7 @@
 
                         <TextView
                             android:id="@+id/meternoTrans"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
@@ -166,9 +166,9 @@
 
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="0.80"
                             android:gravity="start"
                             android:text="Amount"
                             android:textColor="@color/colorlightgrey"
@@ -176,7 +176,7 @@
 
                         <TextView
                             android:id="@+id/amntTrans"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
@@ -199,9 +199,9 @@
 
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="0.80"
                             android:gravity="start"
                             android:text="Date"
                             android:textColor="@color/colorlightgrey"
@@ -209,7 +209,7 @@
 
                         <TextView
                             android:id="@+id/dateTrans"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
@@ -232,9 +232,9 @@
 
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="0.80"
                             android:gravity="start"
                             android:text="Time"
                             android:textColor="@color/colorlightgrey"
@@ -242,7 +242,7 @@
 
                         <TextView
                             android:id="@+id/timeTrans"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
@@ -265,9 +265,9 @@
 
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="0.80"
                             android:gravity="start"
                             android:text="Status"
                             android:textColor="@color/colorlightgrey"
@@ -275,7 +275,7 @@
 
                         <TextView
                             android:id="@+id/statusTrans"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
@@ -299,9 +299,9 @@
 
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="0.80"
                             android:gravity="start"
                             android:text="Payment Mode"
                             android:textColor="@color/colorlightgrey"
@@ -309,7 +309,7 @@
 
                         <TextView
                             android:id="@+id/paymodeTrans"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
@@ -333,17 +333,17 @@
 
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="0.80"
                             android:gravity="start"
-                            android:text="Vender Id"
+                            android:text="Vender ID"
                             android:textColor="@color/colorlightgrey"
                             android:textSize="13sp" />
 
                         <TextView
                             android:id="@+id/vendorIdTrans"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
@@ -367,9 +367,9 @@
 
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="0.80"
                             android:gravity="start"
                             android:text="Vendor Name"
                             android:textColor="@color/colorlightgrey"
@@ -377,7 +377,7 @@
 
                         <TextView
                             android:id="@+id/vendornameTrans"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
@@ -402,9 +402,9 @@
 
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="0.80"
                             android:gravity="start"
                             android:text="CHX/Slip No."
                             android:textColor="@color/colorlightgrey"
@@ -412,7 +412,7 @@
 
                         <TextView
                             android:id="@+id/checknoTrans"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"

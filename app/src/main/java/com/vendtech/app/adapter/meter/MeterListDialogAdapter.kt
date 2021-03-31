@@ -42,7 +42,7 @@ class MeterListDialogAdapter (internal var meterListModels: MutableList<MeterLis
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.meterName.text = meterListModels[position].name + "\n"+ "("+meterListModels[position].number+")"
+        holder.meterName.text = meterListModels[position].name + " "+ "("+meterListModels[position].number+")"
 
         holder.itemViews.setOnClickListener {
 
@@ -62,8 +62,6 @@ class MeterListDialogAdapter (internal var meterListModels: MutableList<MeterLis
     override fun onClick(v: View) {
 
     }
-
-
 
     interface ItemClickListener {
         fun meterId(id: String,name:String)
@@ -95,4 +93,6 @@ class MeterListDialogAdapter (internal var meterListModels: MutableList<MeterLis
         }
 
     }
+
+
 }

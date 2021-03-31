@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/medium"
         android:padding="@dimen/padding4"
-        android:text="Please enter passcode to Sign."
+        android:text="@string/please_enter_passcode"
         android:textColor="@color/colorWhite"
         android:textStyle="bold" />
 
@@ -219,7 +219,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/medium"
-            android:text=" SIGN UP"
-            android:textColor="@color/colorYellow" />
+            android:text="@string/register"
+            android:textColor="@color/colorYellow"
+            android:layout_marginLeft="@dimen/_2sdp"/>
+
     </LinearLayout>
 </LinearLayout>

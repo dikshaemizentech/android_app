@@ -59,6 +59,7 @@ class RechargeTransactionDetails : Activity(){
     var downloadID = 0
     internal var INVOICE_URL = ""
 
+    private var result:RechargeTransactionDetailResult?=null;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,12 +79,16 @@ class RechargeTransactionDetails : Activity(){
             overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
         });
         transctinDetailReprint.setOnClickListener{
-            startActivity(Intent(this@RechargeTransactionDetails,PrintScreenActivity::class.java))
+            //startActivity(Intent(this@RechargeTransactionDetails,PrintScreenActivity::class.java))
+            var intent=Intent(this,PrintScreenActivity::class.java);
+            intent.putExtra(Constants.DATA,result);
+            startActivity(intent)
         }
+
     }
 
-
     fun SetData(result: RechargeTransactionDetailResult) {
+        this.result=result;
 
            // vendorIdLL.visibility = View.GONE
             //vendorNameLL.visibility = View.GONE
@@ -96,7 +101,7 @@ class RechargeTransactionDetails : Activity(){
             Glide.with(this).load(R.drawable.light).into(rechargeLogoIV)
             rechargeTypeTV.text = "Electricity Recharge"
             transID.text = transIDS
-        vendorIdTrans.text="${result.vendorId}"
+        vendorIdTrans.text="${result.posId}"
         vendornameTrans.text=result.vendorName
         amntTrans.text= "SLL: ${NumberFormat.getNumberInstance(Locale.US).format(amountTrans.toDouble().toInt())}"
 
@@ -273,7 +278,6 @@ class RechargeTransactionDetails : Activity(){
     }
 
 
-
     private fun checkAndRequestPermissions(): Boolean {
         val writepermission = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
@@ -289,8 +293,7 @@ class RechargeTransactionDetails : Activity(){
         return true
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int,
-                                            permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
             REQUEST_ID_MULTIPLE_PERMISSIONS -> {
 
@@ -360,7 +363,6 @@ class RechargeTransactionDetails : Activity(){
     companion object {
         val REQUEST_ID_MULTIPLE_PERMISSIONS = 1
     }
-
 
     fun OpenPdfFile(file:File){
          var target =  Intent(Intent.ACTION_VIEW);

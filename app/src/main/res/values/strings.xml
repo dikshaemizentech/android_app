@@ -25,6 +25,9 @@
     <string name="sales_report_filters">SALES REPORT FILTERS</string>
     <string name="deposite_report_filters">DEPOSIT REPORT FILTERS</string>
 
+
+    <string name="please_enter_passcode">Please enter Passcode </string>
+
     <string name="enter_otp_message">Please type the verification code sent to your registered email.</string>
     <string-array name="list_test">
         <item>test1</item>
@@ -51,6 +54,20 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
     <string name="cust_info">Customer information</string>
     <string name="dedution">deductions</string>
     <string name="total">total</string>
+    
+    <string name="transaction_id">Trans ID:</string>
+    
+    <string name="deposite__notifications">DEPOSITS NOTIFICATIONS:</string>
+    <string name="meter_recharge_notifications">METER RECHARGE NOTIFICATIONS:</string>
+
+    
+    
+    <string name="register">REGISTER</string>
+    <string name="pos_id">POS ID</string>
+    <string name="token">TOKEN:</string>
+    <string name="deposite">Deposite:</string>
+    <string name="deposite_ref">Deposite Ref#:</string>
+    <string name="new_balance">New Bal:</string>
     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
     the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of
     type and scrambled it to make a type specimen book. It has survived not only five centuries, but

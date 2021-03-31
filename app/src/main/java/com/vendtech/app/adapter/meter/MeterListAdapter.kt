@@ -3,16 +3,11 @@ package com.vendtech.app.adapter.meter
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
-import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TableRow
-import android.widget.TextView
 import com.google.gson.Gson
 import com.vendtech.app.R
 import com.vendtech.app.adapter.meter.MeterListAdapter.ViewHolder
@@ -20,7 +15,6 @@ import com.vendtech.app.helper.SharedHelper
 import com.vendtech.app.models.meter.DeleteMeterModel
 import com.vendtech.app.models.meter.MeterListResults
 import com.vendtech.app.network.Uten
-import com.vendtech.app.ui.activity.meter.EditMeterActivity
 import com.vendtech.app.utils.Constants
 import com.vendtech.app.utils.CustomDialog
 import com.vendtech.app.utils.Utilities
@@ -34,7 +28,6 @@ class MeterListAdapter(internal var meterListModels: MutableList<MeterListResult
     lateinit var itemClickListener: ItemClickListener
     var itemEditables = false
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         @SuppressLint("InflateParams") val view = LayoutInflater.from(parent.context).inflate(R.layout.item_meter_list, null)
         this.itemClickListener = itemClickListeners
@@ -42,7 +35,6 @@ class MeterListAdapter(internal var meterListModels: MutableList<MeterListResult
 
         return ViewHolder(view)
     }
-
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
@@ -91,8 +83,6 @@ class MeterListAdapter(internal var meterListModels: MutableList<MeterListResult
     override fun onClick(v: View) {
 
     }
-
-
 
     fun AskDeleteDialog(meterId:String){
 
@@ -175,7 +165,6 @@ class MeterListAdapter(internal var meterListModels: MutableList<MeterListResult
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-
        /* internal var meterNo: TextView
        // internal var meterName: TextView
         internal var meterAddress: TextView
@@ -204,4 +193,5 @@ class MeterListAdapter(internal var meterListModels: MutableList<MeterListResult
         }
 
     }
+
 }

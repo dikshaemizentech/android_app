@@ -156,7 +156,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7dp"
                         android:background="@drawable/boarder_lightprimary"
-
                         android:paddingBottom="5dp">
 
                         <Spinner
@@ -177,7 +176,9 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/down_arrow" />
+                            android:src="@drawable/down_arrow"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginRight="@dimen/_5sdp"/>
                     </RelativeLayout>
 
                 </LinearLayout>
@@ -706,7 +707,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="top"
 
-                        android:layout_weight="1"
+                        android:layout_weight="0.70"
                         android:background="@drawable/border_lightgrey"
                         android:drawablePadding="3dp"
                         android:fontFamily="@font/roboto_bold"
@@ -731,19 +732,15 @@
                         android:id="@+id/plusPercentET"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-
                         android:layout_weight="1"
-
                         android:drawablePadding="3dp"
                         android:fontFamily="@font/roboto_bold"
                         android:gravity="start"
-                        android:singleLine="true"
                         android:paddingStart="13dp"
                         android:paddingLeft="13dp"
                         android:paddingTop="13dp"
                         android:paddingEnd="13dp"
                         android:paddingRight="13dp"
-
                         android:paddingBottom="13dp"
                         android:textColor="@color/colorred"
                         android:textColorHint="@color/colorlightgrey"

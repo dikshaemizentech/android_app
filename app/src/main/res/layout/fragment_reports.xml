@@ -15,13 +15,13 @@
         tools:layout_editor_absoluteX="-100dp" />
 
     <android.support.design.widget.FloatingActionButton
-    android:id="@+id/filterReport"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    android:src="@drawable/filter"
-    android:layout_margin="@dimen/_16sdp"/>
+        android:id="@+id/filterReport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/filter"
+        android:layout_margin="@dimen/_16sdp"/>
 
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="match_parent"

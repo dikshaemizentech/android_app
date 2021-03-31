@@ -1,25 +1,38 @@
 package com.vendtech.app.ui.Print
 
-import android.app.Activity
 import android.app.Dialog
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.Window
 import android.widget.TextView
 import com.vendtech.app.R
-import kotlinx.android.synthetic.main.item_deposit_report.*
+import com.vendtech.app.models.transaction.RechargeTransactionDetailResult
+import com.vendtech.app.utils.Constants
 import kotlinx.android.synthetic.main.print_screen_layout.*
 
-class PrintScreenActivity : Activity() {
+class PrintScreenActivity : AppCompatActivity() {
+
+    private var  rechargeTransactionDetailResult: RechargeTransactionDetailResult?=null;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.print_screen_layout)
+
+        if (intent.extras!=null){
+            rechargeTransactionDetailResult= intent.getSerializableExtra(Constants.DATA) as RechargeTransactionDetailResult?
+        }
 
         tv_sms.setOnClickListener{
             showdialog()
         }
 
     }
+    private fun setData(rechargeTransactionDetailResult: RechargeTransactionDetailResult){
+
+    }
+
+
+
 
     private fun showdialog() {
         val adDialog = Dialog(this@PrintScreenActivity, R.style.MyDialogThemeBlack)
@@ -33,7 +46,7 @@ class PrintScreenActivity : Activity() {
 
 
 
-     /*   tv_done.setOnClickListener {
+        /*tv_done.setOnClickListener {
             //   adDialog.cancel()
             if (MyApplication.isConnectingToInternet(THIS)) {
                 // var str = edittext.text.toString()

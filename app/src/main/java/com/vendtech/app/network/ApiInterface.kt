@@ -118,28 +118,11 @@ interface ApiInterface {
 
     @FormUrlEncoded
     @POST("Report/GetSalesReport")
-    fun getSalesReport(@Header("token") token: String,
-                       @Field("PosId") posId: Int,
-                       @Field("From") from: String,
-                       @Field("To") to: String,
-                       @Field("Meter") meter: String,
-                       @Field("TransactionId") transactionId: String,
-                       @Field("PageNo") pageNo: Int,
-                       @Field("RecordsPerPage") recordsPerPage: Int): Call<RechargeTransactionNewListModel>
+    fun getSalesReport(@Header("token") token: String, @Field("PosId") posId: Int, @Field("From") from: String, @Field("To") to: String, @Field("Meter") meter: String, @Field("TransactionId") transactionId: String, @Field("PageNo") pageNo: Int, @Field("RecordsPerPage") recordsPerPage: Int): Call<RechargeTransactionNewListModel>
 
     @FormUrlEncoded
     @POST("Report/GetDepositReport")
-    fun getDepositReports(@Header("token") token: String,
-                          @Field("PosId") posId: Int,
-                          @Field("From") from: String,
-                          @Field("To") to: String,
-                          @Field("Meter") meter: String,
-                          @Field("RefNumber") refNumber: String,
-                          @Field("TransactionId") transactionId: String,
-                          @Field("Bank") bank: String,
-                          @Field("DepositType") depositType: Int,
-                          @Field("PageNo") pageNo: Int,
-                          @Field("RecordsPerPage") recordsPerPage: Int): Call<DepositTransactionNewListModel>
+    fun getDepositReports(@Header("token") token: String, @Field("PosId") posId: Int, @Field("From") from: String, @Field("To") to: String, @Field("Meter") meter: String, @Field("RefNumber") refNumber: String, @Field("TransactionId") transactionId: String, @Field("Bank") bank: String, @Field("DepositType") depositType: Int, @Field("PageNo") pageNo: Int, @Field("RecordsPerPage") recordsPerPage: Int): Call<DepositTransactionNewListModel>
 
 
     @FormUrlEncoded
@@ -202,7 +185,8 @@ interface ApiInterface {
     @GET("Account/GetBankAccounts")
     fun bank_details(@Header("token") Token: String): Call<BankDetailsModel>
 
-    @GET("User/GetNotifications")
+    //@GET("User/GetNotifications")
+    @GET("User/GetUserNotificationsApi")
     fun get_notifications(@Header("token") Token: String, @Query("pageNo") pageNo: String, @Query("pageSize") pageSize: String): Call<NotificationListModel>
 
 }

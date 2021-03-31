@@ -1,15 +1,16 @@
 package com.vendtech.app.ui.activity.profile
 
 import android.app.Activity
+import android.app.NotificationManager
+import android.content.Context
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.View
 import com.google.gson.Gson
 import com.vendtech.app.R
 import com.vendtech.app.adapter.profile.NotificationListAdapter
-import com.vendtech.app.adapter.profile.UserServicesAdapter
 import com.vendtech.app.helper.SharedHelper
 import com.vendtech.app.models.profile.NotificationListModel
 import com.vendtech.app.models.profile.NotificationListResult
@@ -21,13 +22,9 @@ import kotlinx.android.synthetic.main.activity_notifications_list.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import com.downloader.PRDownloader.cancelAll
-import android.content.Context.NOTIFICATION_SERVICE
-import android.app.NotificationManager
-import android.content.Context
-import android.util.Log
-import com.vendtech.app.models.meter.MeterListResults
-import java.util.ArrayList
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.Comparator
 
 
 class NotificationsListActivity :Activity(){
@@ -36,6 +33,7 @@ class NotificationsListActivity :Activity(){
     var pageNumber=1
     lateinit var notificationListAdapter:NotificationListAdapter
     internal var notificationList: MutableList<NotificationListResult> = ArrayList()
+    internal var combinedList: MutableList<NotificationListResult> = ArrayList()
 
 
     //Pagination
@@ -86,40 +84,72 @@ class NotificationsListActivity :Activity(){
                 if(data!=null){
                     if(data.status.equals("true")){
 
-                        if(data.result.size>0){
+                        combinedList.clear();
+
+                        try {
+                            combinedList.addAll(response.body()!!.result.result1);
+                        }catch (exception:Exception){
+
+                        }
+
+                        try{
+                            //combinedList.addAll(response.body()!!.result.result2);
+
+                            for (items in response.body()!!.result.result2){
+                               // var notificationListResult=NotificationListResult("","",items.type,items.userName,items.sentOn,items.id,items.rechargeId,items.meterNumber,items.productShortName,items.meterRechargeId,items.posId,items.vendorName,items.vendorId,items.amount,items.valueDate,items.status,items.transactionId,items.meterRechargeId,items.chkNoOrSlipId,items.comments,items.bank,items.posNumber,items.balance,items.newBalance,items.percentageAmount,items.depositId,items.payer,items.issuingBank,items.valueDate);
+                                //combinedList.add(notificationListResult);
+                                items.createdAt=items.valueDate;
+                                combinedList.add(items);
+                            }
+                        }catch (exception:Exception){}
+
+                        try {
+                            //Log.d("BeforeSorting","----"+combinedList);
+                            // combinedList.sortByDescending {it.valueDate}
+                            /*Collections.sort(combinedList, Comparator { o1, o2 ->
+                                o1.createdAt.compareTo(o2.createdAt)
+                            })*/
 
 
-                            if(data.result.size<totalItemsNo){
+
+                            for (items in combinedList){
+                                // var notificationListResult=NotificationListResult("","",items.type,items.userName,items.sentOn,items.id,items.rechargeId,items.meterNumber,items.productShortName,items.meterRechargeId,items.posId,items.vendorName,items.vendorId,items.amount,items.valueDate,items.status,items.transactionId,items.meterRechargeId,items.chkNoOrSlipId,items.comments,items.bank,items.posNumber,items.balance,items.newBalance,items.percentageAmount,items.depositId,items.payer,items.issuingBank,items.valueDate);
+                                //combinedList.add(notificationListResult);
+                                val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm");
+                                val date = formatter.parse(items.createdAt);
+                                items.date=date;
+                            }
+                            combinedList.sortByDescending { it.date }
+                            // Log.d("AfterSorting","----"+combinedList);
+                        }catch (exception:java.lang.Exception){
+                            Log.d("Exception","---"+exception)
+                        }
+
+                        //sort list
+                        if (combinedList.size>0){
+                            if(combinedList.size<totalItemsNo){
                                 //last item reached. so no more pagination required
-                                loadings=false
+                                loadings=false;
                             }else{
-                                loadings=true
+                                loadings=true;
                             }
-
                             if(pageNumber==1){
-                                notificationList.clear()
-                                notificationList.addAll(data.result)
-                                SetUpAdapter(notificationList)
-
+                                notificationList.clear();
+                                notificationList.addAll(combinedList)
+                                SetUpAdapter(notificationList);
                             }else {
-
-                                notificationList.addAll(data.result)
-                                notificationListAdapter.notifyDataSetChanged()
-
+                                notificationList.addAll(combinedList)
+                                notificationListAdapter.notifyDataSetChanged();
                             }
-
-                            nodataTV.visibility=View.GONE
-                            recyclerView.visibility=View.VISIBLE
-                           // SetUpAdapter(data.result)
-
+                            nodataTV.visibility=View.GONE;
+                            recyclerView.visibility=View.VISIBLE;
                         }else{
-
                             if(notificationList.size<1) {
                                 nodataTV.visibility=View.VISIBLE
                                 recyclerView.visibility=View.GONE
                             }
                         }
-
+                        //combinedList.addAll(response.body().result.)
                     }else{
                         Utilities.CheckSessionValid(data.message,this@NotificationsListActivity,this@NotificationsListActivity)
 

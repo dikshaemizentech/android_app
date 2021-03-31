@@ -2,18 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:weightSum="3">
 
     <TextView
         android:id="@+id/item_pos_id"
-        android:layout_width="@dimen/_60sdp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="@dimen/_4sdp"
         android:text="3001"
         android:textAllCaps="true"
         android:textColor="@color/colorYellow"
-        android:textSize="@dimen/_12sdp" />
+        android:textSize="@dimen/_12sdp"
+        android:layout_weight="1"/>
 
     <TextView
         android:id="@+id/item_pos_vendor_name"
@@ -29,9 +31,10 @@
 
     <TextView
         android:id="@+id/item_pos_balance"
-        android:layout_width="@dimen/_80sdp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:layout_weight="1"
         android:padding="@dimen/_4sdp"
         android:paddingRight="@dimen/_5sdp"
         android:text="3,300,000"
@@ -65,13 +68,14 @@
 
     <TextView
         android:id="@+id/item_pos_enabled"
-        android:layout_width="@dimen/_80sdp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="@dimen/_4sdp"
         android:text="False"
         android:textAllCaps="true"
         android:textColor="@color/colorWhite"
-        android:textSize="@dimen/_10sdp" />
+        android:textSize="@dimen/_10sdp"
+        android:layout_weight="1"/>
 
 </LinearLayout>

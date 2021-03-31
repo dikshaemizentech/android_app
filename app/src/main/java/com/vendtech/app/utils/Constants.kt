@@ -41,6 +41,7 @@ class Constants {
         val NAV5_Saved_Meters = "Saved Meters"
         val NAV6_MANAGE_REPORTS = "MANAGE REPORTS"
         val NAV7_RESET_PASSCODE = "RESET PASSCODE"
+        val DATA = "data"
         //excel
 
 

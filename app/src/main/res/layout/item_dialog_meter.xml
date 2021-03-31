@@ -8,11 +8,11 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.AppCompatTextView android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:padding="10dp"
         app:fontFamily="@font/roboto_regular"
         android:text="Home meter"
-        android:textSize="@dimen/_24ssp"
+        android:textSize="@dimen/_12sdp"
         android:textColor="@color/colorblack"
         android:id="@+id/meterDetailTV"/>
 

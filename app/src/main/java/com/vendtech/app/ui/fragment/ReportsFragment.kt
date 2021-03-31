@@ -53,6 +53,7 @@ class ReportsFragment : android.support.v4.app.Fragment(), View.OnClickListener 
     lateinit var rechargeTRL: RelativeLayout
     lateinit var filterReport:FloatingActionButton
 
+
     //ANIMATION
     lateinit var slide_in: Animation
     lateinit var slide_out: Animation
@@ -80,14 +81,17 @@ class ReportsFragment : android.support.v4.app.Fragment(), View.OnClickListener 
     lateinit var nodataDeposit: TextView
     internal var rechargeListModel: MutableList<RechargeTransactionNewListModel.Result> = java.util.ArrayList()
     internal var depositListModel: MutableList<DepositTransactionNewListModel.Result> = java.util.ArrayList()
-   // lateinit var rechargetransAdapter: RechargeTransactionAdapter
+
+    // lateinit var rechargetransAdapter: RechargeTransactionAdapter
+
     lateinit var salesReportAdapter: SalesReportAdapter
     //lateinit var deposittransAdapter: DepositTransactionAdapter
+
     lateinit var deposittransAdapter: DepositReportAdapter
     var pageRecharge = 1
     public var pageDeposit = 1
     var totalItemsNo = 10
-var banKAccountId=""
+    var banKAccountId=""
     var refId=""
     var depositType=1
     var posId=0
@@ -165,30 +169,32 @@ var banKAccountId=""
         chxslipET = view.findViewById<View>(R.id.chxslipET) as EditText
         depositamountET = view.findViewById<View>(R.id.depositamountET) as EditText
         commentET = view.findViewById<View>(R.id.commentET) as EditText
+
         /*  lateinit var banknameTV:TextView
-    lateinit var accnameTV:TextView
-    lateinit var accnumberTV:TextView
-    lateinit var accbbanTV:TextView
+            lateinit var accnameTV:TextView
+            lateinit var accnumberTV:TextView
+            lateinit var accbbanTV:TextView
+        */
+
+        banknameTV = view.findViewById<View>(R.id.banknameTV) as TextView;
+        accnameTV = view.findViewById<View>(R.id.accnameTV) as TextView;
+        accnumberTV = view.findViewById<View>(R.id.accnumberTV) as TextView;
+        accbbanTV = view.findViewById<View>(R.id.accbbanTV) as TextView;
+
+        addBalanceTV.setOnClickListener(this);
+        tranhistoryTV.setOnClickListener(this);
+        selectPaytype.setOnClickListener(this);
+        filterReport.setOnClickListener(this);
+        rechargeTRL.performClick();
 
 
-*/
-        banknameTV = view.findViewById<View>(R.id.banknameTV) as TextView
-        accnameTV = view.findViewById<View>(R.id.accnameTV) as TextView
-        accnumberTV = view.findViewById<View>(R.id.accnumberTV) as TextView
-        accbbanTV = view.findViewById<View>(R.id.accbbanTV) as TextView
-
-        addBalanceTV.setOnClickListener(this)
-        tranhistoryTV.setOnClickListener(this)
-        selectPaytype.setOnClickListener(this)
-filterReport.setOnClickListener(this)
-        rechargeTRL.performClick()
 
     }
 
 
     fun SetDepositLayout() {
 
-        SetSpinnerData()
+        SetSpinnerData();
 
         sendNowTV.setOnClickListener(View.OnClickListener {
             if (TextUtils.isEmpty(vendornameET.text.toString().trim())) {
@@ -206,7 +212,7 @@ filterReport.setOnClickListener(this)
             } else {
              //   DoDeposit()
             }
-        })
+        });
 
     }
 
@@ -346,8 +352,6 @@ filterReport.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
-
-
         when (v.id) {
 
             R.id.addBalanceTV ->
@@ -400,7 +404,7 @@ filterReport.setOnClickListener(this)
         this.refId=""
         this.depositType=0
         isFilter=false
-recharge=true
+        recharge=true
         pageDeposit = 1
         linerecharge.setBackgroundColor(ContextCompat.getColor(requireActivity(), R.color.colorYellow))
         rechargeText.setTextColor(ContextCompat.getColor(requireActivity(), R.color.colorYellow))
@@ -432,7 +436,7 @@ recharge=true
         linedeposit.setBackgroundColor(ContextCompat.getColor(requireActivity(), R.color.colorYellow))
         depositText.setTextColor(ContextCompat.getColor(requireActivity(), R.color.colorYellow))
       //  posId: Int, from: String, to: String, meterNumber: String, refNumber: String, transId: String, bankAccountId: String, depositType: Int
-filterDepositData(0,"","","","","","",0)
+        filterDepositData(0,"","","","","","",0)
         //LoadDepositTransactionFragment()
     }
 
