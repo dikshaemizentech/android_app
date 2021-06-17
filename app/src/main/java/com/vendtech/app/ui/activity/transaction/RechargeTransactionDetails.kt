@@ -12,18 +12,20 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.StrictMode
 import android.provider.Settings
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.view.View.VISIBLE
 import android.widget.LinearLayout
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.downloader.*
 import com.google.gson.Gson
 import com.vendtech.app.R
 import com.vendtech.app.helper.SharedHelper
+import com.vendtech.app.models.meter.RechargeMeterModel
 import com.vendtech.app.models.transaction.RechargeTransactionDetailResult
 import com.vendtech.app.models.transaction.RechargeTransactionDetails
 import com.vendtech.app.models.transaction.RechargeTransactionInvoiceModel
@@ -44,20 +46,24 @@ import kotlin.collections.HashMap
 
 class RechargeTransactionDetails : Activity(){
 
-    var transIDS=""
-    var amountTrans=""
-    var dateTransaction=""
-    var statusTransaction=""
-    var meterNo=""
-    lateinit var downloadInvoicePDF:LinearLayout
-    var TAG="RechargeTransactionDetails"
-    var rechargeID=""
-    var timeTransaction=""
+    var transIDS="";
+    var amountTrans="";
+    var dateTransaction="";
+    var statusTransaction="";
+    var meterNo="";
+    lateinit var downloadInvoicePDF:LinearLayout;
+    var TAG="RechargeTransactionDetails";
+    var rechargeID="";
+    var timeTransaction="";
+    var meterId="";
+    var posIds="";
 
 
     //Download DetailsL
     var downloadID = 0
     internal var INVOICE_URL = ""
+
+    private var rechargePin="";
 
     private var result:RechargeTransactionDetailResult?=null;
 
@@ -78,14 +84,58 @@ class RechargeTransactionDetails : Activity(){
             finish();
             overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
         });
+
         transctinDetailReprint.setOnClickListener{
             //startActivity(Intent(this@RechargeTransactionDetails,PrintScreenActivity::class.java))
-            var intent=Intent(this,PrintScreenActivity::class.java);
-            intent.putExtra(Constants.DATA,result);
-            startActivity(intent)
-        }
+           /* var intent=Intent(this,PrintScreenActivity::class.java);
+              intent.putExtra(Constants.DATA,result);
+              startActivity(intent)
+            */
+            getPrintData(rechargePin);
 
+        }
     }
+    fun getPrintData(token: String) {
+
+        var customDialog: CustomDialog;
+        customDialog = CustomDialog(this);
+        customDialog.show();
+
+        val call: Call<RechargeMeterModel> = Uten.FetchServerData().getTransactionPintDetails(SharedHelper.getString(this, Constants.TOKEN),token);
+        call.enqueue(object : Callback<RechargeMeterModel> {
+            override fun onResponse(call: Call<RechargeMeterModel>, response: Response<RechargeMeterModel>) {
+                if (customDialog.isShowing) {
+                    customDialog.dismiss();
+                }
+
+                var data = response.body();
+                if (data!=null){
+                    if (data.message !=null) {
+                        Utilities.shortToast(data.message,this@RechargeTransactionDetails);
+                    }else {
+                        if (data.status.equals("true")) {
+                            var intent = Intent(this@RechargeTransactionDetails, PrintScreenActivity::class.java);
+                            intent.putExtra("data", response.body());
+                            startActivity(intent);
+                        } else {
+                            Utilities.CheckSessionValid(data.message, this@RechargeTransactionDetails!!, this@RechargeTransactionDetails!!);
+                        }
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<RechargeMeterModel>, t: Throwable) {
+                val gs = Gson()
+                gs.toJson(t.localizedMessage)
+                if (customDialog.isShowing) {
+                    customDialog.dismiss()
+
+                }
+                Utilities.shortToast("Something went wrong", this@RechargeTransactionDetails)
+            }
+        })
+    }
+
 
     fun SetData(result: RechargeTransactionDetailResult) {
         this.result=result;
@@ -101,9 +151,15 @@ class RechargeTransactionDetails : Activity(){
             Glide.with(this).load(R.drawable.light).into(rechargeLogoIV)
             rechargeTypeTV.text = "Electricity Recharge"
             transID.text = transIDS
-        vendorIdTrans.text="${result.posId}"
-        vendornameTrans.text=result.vendorName
-        amntTrans.text= "SLL: ${NumberFormat.getNumberInstance(Locale.US).format(amountTrans.toDouble().toInt())}"
+            vendorIdTrans.text="${result.posId}"
+            vendornameTrans.text=result.vendorName
+            amntTrans.text= "SLL: ${NumberFormat.getNumberInstance(Locale.US).format(amountTrans.toDouble().toInt())}"
+
+        tv_token_no.setText(result.rechargePin);
+
+
+        rechargePin=result.rechargePin;
+        rechargePin=rechargePin.replace("\\s".toRegex(), "");
 
     //  amntTrans.text = amountTrans
             dateTrans.text = dateTransaction
@@ -163,12 +219,16 @@ class RechargeTransactionDetails : Activity(){
                         }
 
                         amountTrans=data.result.amount
-                        dateTransaction=Utilities.changeDateFormat(/*this@RechargeTransactionDetails,*/data.result.createdAt)
+                       // dateTransaction=Utilities.changeDateFormat(/*this@RechargeTransactionDetails,*/data.result.createdAt)
+                        dateTransaction=data.result.createdAt;
                         timeTransaction=Utilities.changeTimeFormat(this@RechargeTransactionDetails,data.result.createdAt)
                         statusTransaction=data.result.status
-                        meterNo=data.result.meterNumber
+                        meterNo=data.result.meterNumber;
+                        meterId=data.result.meterId;
+                        posIds=data.result.posId;
 
-                        SetData(data.result)
+
+                        SetData(data.result);
                     }else{
                         Utilities.CheckSessionValid(data.message,this@RechargeTransactionDetails,this@RechargeTransactionDetails)
                     }
@@ -350,7 +410,7 @@ class RechargeTransactionDetails : Activity(){
     }
 
     private fun explain(msg: String) {
-        val dialog = android.support.v7.app.AlertDialog.Builder(this)
+        val dialog = AlertDialog.Builder(this)
         dialog.setMessage(msg)
                 .setPositiveButton("Yes") { paramDialogInterface, paramInt ->
                     //  permissionsclass.requestPermission(type,code);

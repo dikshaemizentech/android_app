@@ -65,8 +65,8 @@
 
                     <ImageView
                         android:id="@+id/rechargeLogoIV"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="30dp"
                         android:background="@drawable/circle_dark_primary"
@@ -103,7 +103,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="0.80"
                             android:gravity="start"
-                            android:text="Transaction ID"
+                            android:text="Transaction ID:"
                             android:textColor="@color/colorlightgrey"
                             android:textSize="13sp" />
 
@@ -137,7 +137,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="0.80"
                             android:gravity="start"
-                            android:text="Meter No."
+                            android:text="Meter No.:"
                             android:textColor="@color/colorlightgrey"
                             android:textSize="13sp" />
 
@@ -170,7 +170,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="0.80"
                             android:gravity="start"
-                            android:text="Amount"
+                            android:text="Amount:"
                             android:textColor="@color/colorlightgrey"
                             android:textSize="13sp" />
 
@@ -203,7 +203,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="0.80"
                             android:gravity="start"
-                            android:text="Date"
+                            android:text="Date:"
                             android:textColor="@color/colorlightgrey"
                             android:textSize="13sp" />
 
@@ -228,7 +228,8 @@
                         android:layout_marginEnd="20dp"
                         android:layout_marginRight="20dp"
                         android:orientation="horizontal"
-                        android:weightSum="2">
+                        android:weightSum="2"
+                        android:visibility="gone">
 
 
                         <TextView
@@ -236,7 +237,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="0.80"
                             android:gravity="start"
-                            android:text="Time"
+                            android:text="Time:"
                             android:textColor="@color/colorlightgrey"
                             android:textSize="13sp" />
 
@@ -269,7 +270,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="0.80"
                             android:gravity="start"
-                            android:text="Status"
+                            android:text="Status:"
                             android:textColor="@color/colorlightgrey"
                             android:textSize="13sp" />
 
@@ -303,7 +304,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="0.80"
                             android:gravity="start"
-                            android:text="Payment Mode"
+                            android:text="Payment Mode:"
                             android:textColor="@color/colorlightgrey"
                             android:textSize="13sp" />
 
@@ -337,7 +338,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="0.80"
                             android:gravity="start"
-                            android:text="Vender ID"
+                            android:text="Pos ID:"
                             android:textColor="@color/colorlightgrey"
                             android:textSize="13sp" />
 
@@ -354,7 +355,6 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/vendorNameLL"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
@@ -371,7 +371,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="0.80"
                             android:gravity="start"
-                            android:text="Vendor Name"
+                            android:text="Vendor Name:"
                             android:textColor="@color/colorlightgrey"
                             android:textSize="13sp" />
 
@@ -384,6 +384,40 @@
                             android:text=""
                             android:textColor="@color/colorWhite"
                             android:textSize="13sp" />
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/vendorNameLL"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:text="Token:"
+                            android:textColor="@color/colorlightgrey"
+                            android:textSize="13sp"
+                            android:textAllCaps="true"/>
+
+                        <TextView
+                            android:id="@+id/tv_token_no"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text=""
+                            android:textColor="@color/colorWhite"
+                            android:textSize="13sp"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginRight="@dimen/_25sdp"/>
 
                     </LinearLayout>
 
@@ -406,7 +440,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="0.80"
                             android:gravity="start"
-                            android:text="CHX/Slip No."
+                            android:text="CHX/Slip No.:"
                             android:textColor="@color/colorlightgrey"
                             android:textSize="13sp" />
 

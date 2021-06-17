@@ -59,13 +59,13 @@ class LoginActivity : BaseActivity() {
             //launchActivity(ForgotPasswordActivity::class.java)
             GotoForgotPassword()
         }
-        loginResetPasscode.setOnClickListener { v ->
 
+        loginResetPasscode.setOnClickListener { v ->
             //launchActivity(ForgotPasswordActivity::class.java)
             GotoForgotPassword()
         }
-        txtLogin.setOnClickListener { v -> processLogin() }
 
+        txtLogin.setOnClickListener { v -> processLogin() }
 
         if (!TextUtils.isEmpty(SharedHelper.getString(this, Constants.REMEMBER_EMAIL))) {
             emailET.setText(SharedHelper.getString(this, Constants.REMEMBER_EMAIL))
@@ -141,8 +141,8 @@ class LoginActivity : BaseActivity() {
                         SharedHelper.putString(this@LoginActivity, Constants.USER_ACCOUNT_STATUS, data.result.accountStatus)
                         SharedHelper.putString(this@LoginActivity, Constants.POS_NUMBER, data.result.posNumber)
                         SharedHelper.putString(this@LoginActivity, Constants.COMMISSION_PERCENTAGE, data.result.percentage)
-                        SharedHelper.putString(this@LoginActivity, Constants.PASS_CODE_VALUE, data.result.posNumber)
-                        var vv=SharedHelper.getString(this@LoginActivity, Constants.PASS_CODE_VALUE)
+                        SharedHelper.putString(this@LoginActivity, Constants.PASS_CODE_VALUE,loginFirstPinView.text.toString().trim())
+                        //var vv=SharedHelper.getString(this@LoginActivity, Constants.PASS_CODE_VALUE)
                         if (data.result.phone != null || data.result.phone == "null") {
                             SharedHelper.putString(this@LoginActivity, Constants.USER_PHONE, data.result.phone)
                         } else {

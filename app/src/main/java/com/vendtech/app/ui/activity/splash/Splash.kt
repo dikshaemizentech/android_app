@@ -7,14 +7,14 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Handler
 import android.os.Bundle
+import android.os.Handler
 import android.provider.Settings
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.view.Window
 import android.widget.TextView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.vendtech.app.R
 import com.vendtech.app.base.BaseActivity
 import com.vendtech.app.helper.SharedHelper
@@ -37,9 +37,14 @@ class Splash : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
+
+
        // if(checkAndRequestPermissions()){
-            GoInsideApp()
+           GoInsideApp()
         //}
+
+
+
     }
 
     private fun checkAndRequestPermissions(): Boolean {
@@ -129,7 +134,7 @@ class Splash : BaseActivity() {
     }
 
     private fun explain(msg: String) {
-        val dialog = android.support.v7.app.AlertDialog.Builder(this)
+        val dialog = AlertDialog.Builder(this)
         dialog.setMessage(msg)
                 .setPositiveButton("Yes") { paramDialogInterface, paramInt ->
                     //  permissionsclass.requestPermission(type,code);

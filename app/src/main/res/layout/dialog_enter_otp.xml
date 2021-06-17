@@ -10,7 +10,7 @@
         android:background="@color/colorPrimary"
         android:orientation="vertical">
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Kindly check email for OTP Code."
@@ -51,7 +51,7 @@
         android:background="@color/colorYellow"
         android:weightSum="2">
 
-        <android.support.v7.widget.AppCompatTextView android:layout_width="match_parent"
+        <androidx.appcompat.widget.AppCompatTextView android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Submit"
             android:textColor="@color/colorblack"

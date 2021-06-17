@@ -2,16 +2,17 @@ package com.vendtech.app.ui.fragment
 
 import android.os.Bundle
 import android.os.Handler
-import android.support.design.widget.FloatingActionButton
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.text.TextUtils
 import android.util.Log
 import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.*
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
 
 import com.vendtech.app.R
@@ -29,7 +30,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ReportsFragment : android.support.v4.app.Fragment(), View.OnClickListener {
+class ReportsFragment : Fragment(), View.OnClickListener {
 
 
     lateinit var addBalanceTV: TextView
@@ -51,7 +52,7 @@ class ReportsFragment : android.support.v4.app.Fragment(), View.OnClickListener 
     lateinit var rechargeText: TextView
     lateinit var linerecharge: View
     lateinit var rechargeTRL: RelativeLayout
-    lateinit var filterReport:FloatingActionButton
+    lateinit var filterReport: FloatingActionButton
 
 
     //ANIMATION
@@ -121,7 +122,6 @@ class ReportsFragment : android.support.v4.app.Fragment(), View.OnClickListener 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_reports, container, false)
-
         findviews(view)
         SetDepositLayout()
 //        GetBankDetails()
@@ -453,18 +453,18 @@ class ReportsFragment : android.support.v4.app.Fragment(), View.OnClickListener 
 
 
                 if (customDialog.isShowing) {
-                    customDialog.dismiss()
+                    customDialog.dismiss();
                 }
-                var data = response.body()
+                var data = response.body();
                 if (data != null) {
                     if (data.status.equals("true")) {
 
                         if (data.result.size > 0) {
 
                             if (data.result.size < totalItemsNo) {
-                                loadings_r = false
+                                loadings_r = false;
                             } else {
-                                loadings_r = true
+                                loadings_r = true;
                             }
 
                             if (pageRecharge == 1) {
@@ -481,8 +481,6 @@ class ReportsFragment : android.support.v4.app.Fragment(), View.OnClickListener 
                             }
 
                         } else {
-
-
                             if (rechargeListModel.size < 1) {
                                 nodataDeposit.visibility = View.GONE
                                 nodataRecharge.visibility = View.VISIBLE

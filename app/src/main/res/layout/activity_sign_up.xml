@@ -9,7 +9,7 @@
     android:padding="@dimen/padding16"
     tools:context="com.vendtech.app.ui.activity.authentication.LoginActivity">
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/mainlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -685,7 +685,7 @@
                     android:textColor="@color/colorYellow" />
             </LinearLayout>
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
     <LinearLayout

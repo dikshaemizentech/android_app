@@ -92,7 +92,7 @@
                     android:gravity="center"
                     android:text="Enabled"/>
             </LinearLayout>
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/posListRv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -183,13 +183,13 @@
                 android:text="Enabled"
                 android:layout_weight="1"/>
         </LinearLayout>
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/posListRv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:nestedScrollingEnabled="false"
             tools:listitem="@layout/item_pos_list"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
     </LinearLayout>
 
     <LinearLayout

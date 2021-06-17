@@ -1,5 +1,6 @@
 package com.vendtech.app.ui.fragment
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
@@ -8,27 +9,28 @@ import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.support.design.widget.FloatingActionButton
-import android.support.v7.widget.AppCompatTextView
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.Window
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.*
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
 import com.robinhood.ticker.TickerUtils
 import com.robinhood.ticker.TickerView
-
 import com.vendtech.app.R
 import com.vendtech.app.adapter.meter.MeterListAutoCompleteAdapter
 import com.vendtech.app.adapter.meter.MeterListDialogAdapter
@@ -43,7 +45,6 @@ import com.vendtech.app.models.profile.UserAssignedServicesModel
 import com.vendtech.app.models.profile.UserServicesResult
 import com.vendtech.app.network.Uten
 import com.vendtech.app.ui.Print.PrintScreenActivity
-import com.vendtech.app.ui.activity.meter.AddMeterActivity
 import com.vendtech.app.utils.Constants
 import com.vendtech.app.utils.CustomDialog
 import com.vendtech.app.utils.MessageEvent
@@ -56,13 +57,15 @@ import org.greenrobot.eventbus.ThreadMode
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.StringBuilder
+import java.lang.Exception
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListener, MeterListDialogAdapter.ItemClickListener, UserServicesAdapter.ItemClickListener {
+class DashboardFragment : Fragment(), View.OnClickListener, MeterListDialogAdapter.ItemClickListener, UserServicesAdapter.ItemClickListener {
+
+    private  var data:MeterListResults?=null;
 
 
     lateinit var contactVendtechTV: TextView
@@ -105,7 +108,7 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
     //ANIMATION
     lateinit var slide_up: Animation
     lateinit var slide_down: Animation
-    var posId = 0
+    var posId =""
     var balance = ""
 
     //INTERFACE COUNTS
@@ -114,6 +117,7 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_dashboard, container, false)
         //val view = inflater.inflate(R.layout.layout_service_menu, container, false)
+
         try {
             countInterface = activity as? NotificationCount
         } catch (e: ClassCastException) {
@@ -121,7 +125,29 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
                     + " must implement MyInterface ");
         }
         findviews(view)
+
+        getData();
+
         return view
+    }
+
+    private fun getData(){
+        try {
+            val bundle = this.arguments;
+             data= bundle!!.getSerializable("data") as MeterListResults;
+             ShowPayLayout();
+
+            autoCompleteTV.setText(data!!.number);
+            selectedMeterID=data!!.meterId;
+
+            showListmeterIV.setOnClickListener(null)
+
+        }catch (exception:Exception){
+
+        }
+
+
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -168,7 +194,7 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
         payLayout.visibility = View.GONE
 
 
-        autoCompleteTV.addTextChangedListener(object : TextWatcher {
+       /* autoCompleteTV.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
 
                 if (!IsSelectFromMeterList) {
@@ -184,7 +210,7 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
-        })
+        })*/
 
 
         moneyET.addTextChangedListener(object : TextWatcher {
@@ -244,9 +270,8 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
         }
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
-
     }
 
 
@@ -333,8 +358,13 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
             R.id.confirmPayCancel->{
                 HideConfirmLayout()
             } R.id.confirmPayPayBtn->{
-            startActivity(Intent(activity, PrintScreenActivity::class.java))
-                HideConfirmLayout()
+               // startActivity(Intent(activity, PrintScreenActivity::class.java))
+                HideConfirmLayout();
+                if (Uten.isInternetAvailable(requireActivity())){
+                    DoRecharge(confirmPayAmtValue.text.toString().trim().replace(",", ""), selectedMeterID, posId)
+                } else {
+                    Utilities.shortToast("No internet connection. Please check your network connectivity.", requireActivity())
+                }
             }
 
             /*   R.id.waterLL->{
@@ -365,6 +395,7 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
 
         autoCompleteTV.setText("")
         moneyET.setText("")
+
 
 
         if (payLayout.visibility == View.VISIBLE) {
@@ -400,8 +431,7 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
     override fun onResume() {
 
         if (Uten.isInternetAvailable(requireActivity())) {
-            GetWalletBalance()
-
+             GetWalletBalance();
             if (payLayout.visibility == View.VISIBLE) {
                 GetMeterList()
                 GetPosIdList()
@@ -468,14 +498,12 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
     }
 
     fun HideConfirmLayout() {
-
         if (payConfirm.visibility == View.VISIBLE) {
-            payConfirm.startAnimation(slide_down)
+            payConfirm.startAnimation(slide_down);
         }
-        payConfirm.visibility = View.GONE
-
+        payConfirm.visibility = View.GONE;
         //showPayLayout
-        ShowPayLayout()
+        ShowPayLayout();
 //        if (serviceLayout.visibility == View.GONE) {
 //            serviceLayout.startAnimation(slide_up)
 //        }
@@ -508,26 +536,29 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
     }
 
     private fun SetOnSpinner(result: List<PosResultModel.Result>) {
+        posList.clear();
         posList.addAll(result)
         val list = ArrayList<String>()
         result.forEach {
             list.add(it.serialNumber)
         }
 
-        val adapter = ArrayAdapter<String>(context, R.layout.item_pos_large, list)
-        adapter.setDropDownViewResource(R.layout.sppiner_layout_item)
-        posSpinner.adapter = adapter
-        posSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(p0: AdapterView<*>?) {
+        if (activity!=null) {
+            val adapter = ArrayAdapter<String>(context, R.layout.item_pos_large, list)
+            adapter.setDropDownViewResource(R.layout.sppiner_layout_item)
+            posSpinner.adapter = adapter
+            posSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(p0: AdapterView<*>?) {
 
-            }
+                }
 
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                balance = posList.get(p2).balance;
-                posId = posList.get(p2).posId;
-                Log.e("balance+pos", "$balance $posId");
-                tvPosNumber.setText("POS ID : " + posList.get(p2).serialNumber);
-                tickerViewBalance.setText(balance);
+                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    balance = posList.get(p2).balance;
+                    posId = posList.get(p2).posId.toString();
+                    Log.e("balance+pos", "$balance $posId");
+                    tvPosNumber.setText("POS ID : " + posList.get(p2).serialNumber);
+                    tickerViewBalance.setText(balance);
+                }
             }
         }
     }
@@ -551,10 +582,10 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
                             if (meterListModels.size > 0) {
                                 meterListModels.clear()
                             }
-                            meterListModels.addAll(data.result)
-                            SetAutoCompleteData()
+                            meterListModels.addAll(data.result);
+                            //SetAutoCompleteData();
                         } else {
-                            Utilities.shortToast("No meter found", requireActivity())
+                            Utilities.shortToast("No meter found", requireActivity());
                         }
                     } else {
                         Utilities.CheckSessionValid(data.message, requireContext(), requireActivity())
@@ -580,13 +611,16 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
     }
 
 
-   /* fun DoRecharge(amount: String, meterId: String, posId: Int) {
+    fun DoRecharge(amount: String, meterId: String, posId: String) {
 
-        var customDialog: CustomDialog
-        customDialog = CustomDialog(requireActivity())
-        customDialog.show()
-        var meterNumber: String? = null
-        var meterid: String? = null
+
+        //Toast.makeText(activity,meterId,Toast.LENGTH_LONG).show();
+
+        var customDialog: CustomDialog;
+        customDialog = CustomDialog(requireActivity());
+        customDialog.show();
+        var meterNumber: String? = null;
+        var meterid: String? = null;
         if (meterId.isEmpty()) {
             meterNumber = autoCompleteTV.text.toString().trim()
             meterid = null
@@ -594,33 +628,31 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
             meterid = meterId
             meterNumber = null
         }
-        val call: Call<RechargeMeterModel> = Uten.FetchServerData().recharge_meter(SharedHelper.getString(requireActivity(), Constants.TOKEN), meterid, amount, meterNumber, posId)
+        //val call: Call<RechargeMeterModel> = Uten.FetchServerData().rechargeMeter(SharedHelper.getString(requireActivity(), Constants.TOKEN), meterid, amount, meterNumber, posId,SharedHelper.getString(activity!!, Constants.PASS_CODE_VALUE))
+        val call: Call<RechargeMeterModel> = Uten.FetchServerData().rechargeMeter(SharedHelper.getString(requireActivity(), Constants.TOKEN),amount,meterId,posId)
         call.enqueue(object : Callback<RechargeMeterModel> {
             override fun onResponse(call: Call<RechargeMeterModel>, response: Response<RechargeMeterModel>) {
-
                 if (customDialog.isShowing) {
-                    customDialog.dismiss()
+                    customDialog.dismiss();
                 }
-                var data = response.body()
-                if (data != null) {
-                    Utilities.shortToast(data.message, requireActivity())
-                    if (data.status.equals("true")) {
-                        val temp = autoCompleteTV.text.toString()
-                        autoCompleteTV.setText("")
-                        moneyET.setText("")
-                        HidePayLayout()
-                        GetWalletBalance()
-                                if (activity != null && cbSaveMeter.isChecked) {
-                                    val bundle = Bundle();
-                                    bundle.putString(Constants.METER_NAME, temp)
-                                    val intent = Intent(activity, AddMeterActivity::class.java)
-                                    intent.putExtras(bundle)
-                                    startActivity(intent)
-                                }
 
-                    } else {
+                var data = response.body();
+                if (data!=null){
+                    if (data.message !=null) {
+                        Utilities.shortToast(data.message, activity!!);
+                    }else {
+                        if (data.status.equals("true")) {
+                            if (data!=null){
+                                serviceLayout.visibility= VISIBLE;
+                                payLayout.visibility= GONE;
+                            }
+                            var intent = Intent(activity!!, PrintScreenActivity::class.java);
+                            intent.putExtra("data", response.body());
+                            startActivityForResult(intent,Constants.REQUEST_CODE);
 
-                        Utilities.CheckSessionValid(data.message, requireContext(), requireActivity());
+                        } else {
+                            Utilities.CheckSessionValid(data.message, activity!!, activity!!);
+                        }
                     }
                 }
             }
@@ -634,8 +666,18 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
                 Utilities.shortToast("Something went wrong", requireActivity())
             }
         })
-    }*/
+    }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode==Constants.REQUEST_CODE){
+            if (resultCode== Activity.RESULT_OK){
+                ShowPayLayout();
+            }
+        }
+
+        //Toast.makeText(activity, "OnactivityResult", Toast.LENGTH_SHORT).show();
+    }
 
     fun SetAutoCompleteData() {
 
@@ -644,8 +686,11 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
         autoCompleteTV.threshold = 1
         autoCompleteTV.setOnItemClickListener() { parent, _, position, id ->
             val selectedPoi = parent.adapter.getItem(position) as MeterListResults?
-           // autoCompleteTV.setText(selectedPoi?.number.toString())
-           // selectedMeterID = selectedPoi?.meterId.toString()
+            // autoCompleteTV.setText(selectedPoi?.number.toString())
+            //selectedMeterID = selectedPoi?.meterId.toString();
+
+            //Toast.makeText(activity!!,"--"+selectedMeterID,Toast.LENGTH_LONG).show();
+
         }
     }
 
@@ -667,18 +712,16 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
                 var data = response.body()
                 if (data != null) {
                     if (data.status.equals("true")) {
-
                         Log.v("AssignedServices", Gson().toJson(data.result))
                         if (data.result.size > 0) {
-
                             servicesRecyclerview.visibility = View.VISIBLE
                             errorAccountService.visibility = View.GONE
                             UpdateServiceAdapter(data.result)
                         } else {
-
                             ErrorServiceAssigned()
-
                         }
+                    }else{
+                        Utilities.CheckSessionValid(data.message, requireContext(), requireActivity())
                     }
                 }
             }
@@ -707,7 +750,7 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
 
     private fun NoInternetDialog(msg: String) {
 
-        val dialog = android.support.v7.app.AlertDialog.Builder(requireActivity())
+        val dialog = AlertDialog.Builder(requireActivity())
         dialog.setMessage(msg)
                 .setPositiveButton("OK") { paramDialogInterface, paramInt ->
                     //  permissionsclass.requestPermission(type,code);
@@ -776,11 +819,13 @@ class DashboardFragment : android.support.v4.app.Fragment(), View.OnClickListene
 
     override fun meterId(id: String, name: String) {
 
-        //Toast.makeText(activity,name,Toast.LENGTH_LONG).show();
+
         IsSelectFromMeterList = true
         selectedMeterID = id
         autoCompleteTV.setText(name)
         dialogMain.dismiss()
+
+
 
     }
 

@@ -1,13 +1,14 @@
 package com.vendtech.app.ui.fragment
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.vendtech.app.R
 import com.vendtech.app.adapter.PosListAdapter
@@ -16,6 +17,7 @@ import com.vendtech.app.models.meter.PosListModel
 import com.vendtech.app.network.Uten
 import com.vendtech.app.utils.Constants
 import com.vendtech.app.utils.CustomDialog
+import com.vendtech.app.utils.Utilities
 import kotlinx.android.synthetic.main.fragment_pos_list.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -24,12 +26,12 @@ import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class PosListFragment :Fragment(){
+class PosListFragment : Fragment(){
     var pageNo=1
     val pageSize=10
     lateinit var posListAdapter: PosListAdapter
     var posList=ArrayList<PosListModel.Result>()
-    var layoutManager:LinearLayoutManager?=null
+    var layoutManager: LinearLayoutManager?=null
     var isLastPage=false
 
     var totalBalance:Long=0;
@@ -99,6 +101,8 @@ class PosListFragment :Fragment(){
                             setPosList(data)
                         }
                         else isLastPage=true
+                    }else{
+                        Utilities.CheckSessionValid(data.message, requireContext(), requireActivity())
                     }
                 }
             }

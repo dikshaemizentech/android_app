@@ -3,8 +3,7 @@ package com.vendtech.app.adapter.meter
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
-import android.support.v7.widget.AppCompatImageButton
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatImageButton
 import com.google.gson.Gson
 import com.vendtech.app.R
 import com.vendtech.app.helper.SharedHelper
@@ -19,7 +19,9 @@ import com.vendtech.app.models.meter.DeleteMeterModel
 import com.vendtech.app.models.meter.MeterListResults
 import com.vendtech.app.network.Uten
 import com.vendtech.app.ui.activity.RechargeActivity
+import com.vendtech.app.ui.activity.home.HomeActivity
 import com.vendtech.app.ui.activity.meter.EditMeterActivity
+import com.vendtech.app.ui.activity.meter.MeterListActivity
 import com.vendtech.app.utils.Constants
 import com.vendtech.app.utils.CustomDialog
 import com.vendtech.app.utils.Utilities
@@ -28,17 +30,17 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class MeterListNewAdapter(internal var meterListModels: MutableList<MeterListResults>, internal var context: Context, var itemEditable:Boolean, var itemClickListeners: MeterListAdapter.ItemClickListener): RecyclerView.Adapter<MeterListNewAdapter.ViewHolder>() {
+class MeterListNewAdapter(internal var meterListModels: MutableList<MeterListResults>, internal var context: Context, var itemEditable:Boolean, var itemClickListeners: MeterListAdapter.ItemClickListener,var passCode:String,var meterListActivity: MeterListActivity): RecyclerView.Adapter<MeterListNewAdapter.ViewHolder>() {
 
 
-    lateinit var itemClickListener: MeterListAdapter.ItemClickListener
-    var itemEditables = false
+    lateinit var itemClickListener: MeterListAdapter.ItemClickListener;
+    var itemEditables = false;
 
    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_meter_list, parent, false);
 
-       this.itemClickListener = itemClickListeners
-       this.itemEditables=itemEditable
+       this.itemClickListener = itemClickListeners;
+       this.itemEditables=itemEditable;
 
        return ViewHolder(view);
    }
@@ -46,9 +48,9 @@ class MeterListNewAdapter(internal var meterListModels: MutableList<MeterListRes
    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
              if (itemEditables) {
-                holder.delete.visibility = View.VISIBLE
+                holder.delete.visibility = View.VISIBLE;
              } else {
-                 holder.delete.visibility = View.GONE
+                 holder.delete.visibility = View.GONE;
              }
 
 
@@ -61,13 +63,13 @@ class MeterListNewAdapter(internal var meterListModels: MutableList<MeterListRes
              holder.itemView.setOnClickListener {
 
                  if (itemEditables) {
-                     val `is` = Intent(context, EditMeterActivity::class.java)
-                     `is`.putExtra("mnumber", meterListModels[position].number)
-                     `is`.putExtra("mname", meterListModels[position].name)
-                     `is`.putExtra("maddress", meterListModels[position].address)
-                     `is`.putExtra("mdate", meterListModels[position].meterMake)
-                     `is`.putExtra("mid", meterListModels[position].meterId)
-                     context.startActivity(`is`)
+                     val `is` = Intent(context, EditMeterActivity::class.java);
+                     `is`.putExtra("mnumber", meterListModels[position].number);
+                     `is`.putExtra("mname", meterListModels[position].name);
+                     `is`.putExtra("maddress", meterListModels[position].address);
+                     `is`.putExtra("mdate", meterListModels[position].meterMake);
+                     `is`.putExtra("mid", meterListModels[position].meterId);
+                     context.startActivity(`is`);
                  }
 
 
@@ -76,14 +78,21 @@ class MeterListNewAdapter(internal var meterListModels: MutableList<MeterListRes
 
              holder.iv_recharge.setOnClickListener {
 
+                 /*val `is` = Intent(context, RechargeActivity::class.java)
+                  `is`.putExtra("Data", meterListModels[position]);
+                   context.startActivity(`is`);
+                 */
 
-
-                 val `is` = Intent(context, RechargeActivity::class.java)
+                 /*val `is` = Intent(context, HomeActivity::class.java)
+                 // set the new task and clear flags
+                 `is`.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK;
                  `is`.putExtra("Data", meterListModels[position]);
-                 context.startActivity(`is`)
+                 context.startActivity(`is`);*/
 
 
-
+                 if (meterListActivity!=null){
+                     meterListActivity.setOnclickIntent(meterListModels[position]);
+                 }
 
 
              }

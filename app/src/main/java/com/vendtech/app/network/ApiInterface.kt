@@ -135,12 +135,11 @@ interface ApiInterface {
                         @Field("ChkBankName") bankName: String?,
                         @Field("NameOnCheque") nameOnCheque: String?,
                         @Field("Amount") amount: String,
-                        @Field("TotalAmountWithPercentage") totalAmountWithPercentage: String
-    ): Call<DepositRequestModel>
+                        @Field("TotalAmountWithPercentage") totalAmountWithPercentage: String): Call<DepositRequestModel>
 
-    @FormUrlEncoded
+   /* @FormUrlEncoded
     @POST("Meter/RechargeMeter")
-    fun recharge_meter(@Header("token") Token: String, @Field("MeterId") MeterId: String?, @Field("Amount") Amount: String, @Field("MeterNumber") MeterNumber: String?, @Field("POSId") posId: Int): Call<RechargeMeterModel>
+    fun recharge_meter(@Header("token") Token: String, @Field("MeterId") MeterId: String?, @Field("Amount") Amount: String, @Field("MeterNumber") MeterNumber: String?, @Field("POSId") posId: Int,@Field("passCode") passCode: String): Call<RechargeMeterModel>*/
 
     @GET("User/GetUserPos")
     fun getPosList(@Header("token") Token: String): Call<PosResultModel>
@@ -188,5 +187,14 @@ interface ApiInterface {
     //@GET("User/GetNotifications")
     @GET("User/GetUserNotificationsApi")
     fun get_notifications(@Header("token") Token: String, @Query("pageNo") pageNo: String, @Query("pageSize") pageSize: String): Call<NotificationListModel>
+
+    @FormUrlEncoded
+    @POST("Meter/RechargeMeterReceipt")
+    fun rechargeMeter(@Header("token")token: String, @Field("Amount")Amount:String, @Field("MeterId")MeterId:String, @Field("POSId")POSId:String): Call<RechargeMeterModel>
+
+    @FormUrlEncoded
+    @POST("Meter/TransactionDetail")
+    fun getTransactionPintDetails(@Header("token")token: String, @Field("Token")Token:String): Call<RechargeMeterModel>
+
 
 }

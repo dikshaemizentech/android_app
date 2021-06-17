@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@color/colorPrimary"
@@ -16,7 +16,7 @@
         app:fontFamily="@font/roboto_regular"/>
 
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="@dimen/_200sdp"
         android:id="@+id/recyclerviewMeter"/>
@@ -28,7 +28,7 @@
         android:background="@color/colorYellow"
         android:weightSum="2">
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Cancel"

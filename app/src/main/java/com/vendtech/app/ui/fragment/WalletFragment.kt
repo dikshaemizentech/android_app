@@ -2,9 +2,7 @@ package com.vendtech.app.ui.fragment
 
 import android.os.Bundle
 import android.os.Handler
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
@@ -16,6 +14,9 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.vendtech.app.R
 import com.vendtech.app.adapter.transactions.DepositTransactionAdapter
@@ -39,7 +40,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class WalletFragment : android.support.v4.app.Fragment(), View.OnClickListener {
+class WalletFragment : Fragment(), View.OnClickListener {
 
 
     lateinit var addBalanceTV: TextView
@@ -76,7 +77,8 @@ class WalletFragment : android.support.v4.app.Fragment(), View.OnClickListener {
     var transactionMode = 1
 
     lateinit var sendNowTV: TextView
-   // lateinit var vendornameET: EditText
+
+    // lateinit var vendornameET: EditText
     lateinit var chxslipET: EditText
     lateinit var depositamountET: EditText
     lateinit var commentET: EditText
@@ -85,17 +87,19 @@ class WalletFragment : android.support.v4.app.Fragment(), View.OnClickListener {
     lateinit var accnameTV: TextView
     lateinit var accnumberTV: TextView
     lateinit var accbbanTV: TextView
-   // lateinit var commissionLL: LinearLayout
-   // lateinit var tvCommisionPercentage: TextView
+
+    // lateinit var commissionLL: LinearLayout
+    // lateinit var tvCommisionPercentage: TextView
     lateinit var tvPosNumber: TextView
     lateinit var tvWalletBalance: TextView
     lateinit var commissionPercent: TextView
     lateinit var chequeLayout: LinearLayout
-  //  lateinit var bankName: EditText
+
+    //  lateinit var bankName: EditText
     lateinit var chequeName: EditText
 
     //RECHARGE TRANSACTION AND DEPOSIT TRANSACTION LAYOUTS
-var bankName=""
+    var bankName = ""
     lateinit var recyclerviewRecharge: RecyclerView
     lateinit var nodataRecharge: TextView
     lateinit var recyclerviewDeposit: RecyclerView
@@ -107,9 +111,9 @@ var bankName=""
     var pageRecharge = 1
     var pageDeposit = 1
     var totalItemsNo = 15
-var percentage=0.0
-    var posId=0
-    var bankAccountId="0"
+    var percentage = 0.0
+    var posId = 0
+    var bankAccountId = "0"
 
     //ANIMATION
     lateinit var slide_up: Animation
@@ -129,7 +133,7 @@ var percentage=0.0
     var visibleItemCount_d = 0
     var totalItemCount_d = 0
     var posList = ArrayList<PosResultModel.Result>()
-var depositType=""
+    var depositType = ""
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_wallet, container, false)
 
@@ -138,7 +142,7 @@ var depositType=""
         GetBankDetails()
         GetPosIdList()
         GetBankNames()
-      //  GetBankDetails()
+        //  GetBankDetails()
 
         return view
     }
@@ -147,8 +151,8 @@ var depositType=""
         var customDialog: CustomDialog
         customDialog = CustomDialog(requireActivity())
         customDialog.show()
-        val call=Uten.FetchServerData().getBankNames(SharedHelper.getString(requireActivity(),Constants.TOKEN))
-        call.enqueue(object :Callback<BankNameModel>{
+        val call = Uten.FetchServerData().getBankNames(SharedHelper.getString(requireActivity(), Constants.TOKEN))
+        call.enqueue(object : Callback<BankNameModel> {
             override fun onFailure(call: Call<BankNameModel>, t: Throwable) {
                 val gs = Gson()
                 gs.toJson(t.localizedMessage)
@@ -158,11 +162,11 @@ var depositType=""
             }
 
             override fun onResponse(call: Call<BankNameModel>, response: Response<BankNameModel>) {
-                if(customDialog.isShowing){
+                if (customDialog.isShowing) {
                     customDialog.dismiss()
                 }
-                var data=response.body()
-                if(data!=null) {
+                var data = response.body()
+                if (data != null) {
                     if (data.status.equals("true")) {
                         if (data.result.size > 0) {
                             setBankSpinner(data.result)
@@ -174,20 +178,20 @@ var depositType=""
             }
 
             private fun setBankSpinner(result: List<BankNameModel.Result>) {
-                val bank=ArrayList<String>()
+                val bank = ArrayList<String>()
                 result.forEach {
                     bank.add(it.text)
                 }
                 val adapter = ArrayAdapter<String>(requireActivity(), R.layout.spinner_text_second, bank)
                 adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown)
-                bankNameSpinner.adapter=adapter
-                bankNameSpinner.onItemSelectedListener=object :AdapterView.OnItemSelectedListener{
+                bankNameSpinner.adapter = adapter
+                bankNameSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                     override fun onNothingSelected(p0: AdapterView<*>?) {
 
                     }
 
                     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                        bankName=result.get(p2).value
+                        bankName = result.get(p2).value
                     }
 
                 }
@@ -200,12 +204,12 @@ var depositType=""
 
 //        tvPosNumber.text = SharedHelper.getString(activity!!, Constants.POS_NUMBER)
         val commissionPercent: String? = SharedHelper.getString(activity!!, Constants.COMMISSION_PERCENTAGE)
-      /*  if ((commissionPercent?.toDouble() ?: 0.0) > 0) {
-            commissionLL.visibility = View.VISIBLE
-            tvCommisionPercentage.text = commissionPercent
-        } else {
-            commissionLL.visibility = View.GONE
-        }*/
+        /*  if ((commissionPercent?.toDouble() ?: 0.0) > 0) {
+              commissionLL.visibility = View.VISIBLE
+              tvCommisionPercentage.text = commissionPercent
+          } else {
+              commissionLL.visibility = View.GONE
+          }*/
 
     }
 
@@ -213,17 +217,17 @@ var depositType=""
     fun findviews(view: View) {
 
         spAccounts = view.findViewById(R.id.spAccounts) as Spinner
-        spPosId=view.findViewById(R.id.spPosId) as Spinner
-        bankNameSpinner=view.findViewById(R.id.bankNameSpinner) as Spinner
-       // addBalanceTV = view.findViewById<View>(R.id.addBalanceTV) as TextView
+        spPosId = view.findViewById(R.id.spPosId) as Spinner
+        bankNameSpinner = view.findViewById(R.id.bankNameSpinner) as Spinner
+        // addBalanceTV = view.findViewById<View>(R.id.addBalanceTV) as TextView
 //        tranhistoryTV = view.findViewById<View>(R.id.tranhistoryTV) as TextView
-        chequeLayout=view.findViewById(R.id.chequeLayout)
-        chequeName=view.findViewById(R.id.chequeNameET)
-       // bankName=view.findViewById(R.id.bankNameET)
+        chequeLayout = view.findViewById(R.id.chequeLayout)
+        chequeName = view.findViewById(R.id.chequeNameET)
+        // bankName=view.findViewById(R.id.bankNameET)
         slide_down = AnimationUtils.loadAnimation(activity, R.anim.slide_down)
         slide_up = AnimationUtils.loadAnimation(activity, R.anim.slide_up)
-        tvWalletBalance=view.findViewById(R.id.walletBalance);
-        commissionPercent=view.findViewById(R.id.commissionPercentTV)
+        tvWalletBalance = view.findViewById(R.id.walletBalance);
+        commissionPercent = view.findViewById(R.id.commissionPercentTV)
 
         //ADD BALANCE LAYOUT
         addBalanceLayout = view.findViewById<View>(R.id.layoutAddBalance) as ScrollView
@@ -253,12 +257,12 @@ var depositType=""
         selectPaytype = view.findViewById<View>(R.id.selectPaytype) as RelativeLayout
 //        tvPosNumber = view.findViewById(R.id.tvPosNumber) as TextView
         sendNowTV = view.findViewById<View>(R.id.sendnowTV) as TextView
-       // vendornameET = view.findViewById<View>(R.id.vendornameET) as EditText
+        // vendornameET = view.findViewById<View>(R.id.vendornameET) as EditText
         chxslipET = view.findViewById<View>(R.id.chxslipET) as EditText
         depositamountET = view.findViewById<View>(R.id.depositamountET) as EditText
         plusPercentET = view.findViewById<View>(R.id.plusPercentET) as TextView
         commentET = view.findViewById<View>(R.id.commentET) as EditText
-      //  commissionLL = view.findViewById(R.id.commissionLL) as LinearLayout
+        //  commissionLL = view.findViewById(R.id.commissionLL) as LinearLayout
         //tvCommisionPercentage = view.findViewById(R.id.tvCommisionPercentage) as TextView
         /*  lateinit var banknameTV:TextView
     lateinit var accnameTV:TextView
@@ -267,10 +271,10 @@ var depositType=""
 
 
 */
-      //  banknameTV = view.findViewById<View>(R.id.banknameTV) as TextView
-      //  accnameTV = view.findViewById<View>(R.id.accnameTV) as TextView
-     //   accnumberTV = view.findViewById<View>(R.id.accnumberTV) as TextView
-     //   accbbanTV = view.findViewById<View>(R.id.accbbanTV) as TextView
+        //  banknameTV = view.findViewById<View>(R.id.banknameTV) as TextView
+        //  accnameTV = view.findViewById<View>(R.id.accnameTV) as TextView
+        //   accnumberTV = view.findViewById<View>(R.id.accnumberTV) as TextView
+        //   accbbanTV = view.findViewById<View>(R.id.accbbanTV) as TextView
 
         //addBalanceTV.setOnClickListener(this)
         //tranhistoryTV.setOnClickListener(this)
@@ -283,29 +287,28 @@ var depositType=""
     fun SetDepositLayout() {
 
         SetSpinnerData()
-SetDepositTextChangeListener()
+        SetDepositTextChangeListener()
         sendNowTV.setOnClickListener(View.OnClickListener {
-          /*  if (TextUtils.isEmpty(vendornameET.text.toString().trim())) {
-                Utilities.shortToast("Enter vendor name", requireActivity())
-            } else */
-            if(transactionMode==2){
-               /* if(TextUtils.isEmpty(bankName.text.toString())){
-                    Utilities.shortToast("Enter your bank name", requireActivity())
-                }
-                else*/ if(TextUtils.isEmpty(chequeName.text.toString())){
+            /*  if (TextUtils.isEmpty(vendornameET.text.toString().trim())) {
+                  Utilities.shortToast("Enter vendor name", requireActivity())
+              } else */
+            if (transactionMode == 2) {
+                /* if(TextUtils.isEmpty(bankName.text.toString())){
+                     Utilities.shortToast("Enter your bank name", requireActivity())
+                 }
+                 else*/ if (TextUtils.isEmpty(chequeName.text.toString())) {
                     Utilities.shortToast("Enter the name on Cheque", requireActivity())
 
                 }
 
             }
-             if (TextUtils.isEmpty(chxslipET.text.toString().trim())) {
+            if (TextUtils.isEmpty(chxslipET.text.toString().trim())) {
                 if (transactionMode == 1) {
                     Utilities.shortToast("Enter slip id", requireActivity())
                 } else {
                     Utilities.shortToast("Enter cheque id", requireActivity())
                 }
-            }
-        else if (TextUtils.isEmpty(depositamountET.text.toString().trim())) {
+            } else if (TextUtils.isEmpty(depositamountET.text.toString().trim())) {
                 Utilities.shortToast("Enter deposit amount", requireActivity())
             } /*else if (TextUtils.isEmpty(commentET.text.toString().trim())) {
                 Utilities.shortToast("Please type some comment", requireActivity())
@@ -317,30 +320,29 @@ SetDepositTextChangeListener()
     }
 
     private fun SetDepositTextChangeListener() {
-        depositamountET.addTextChangedListener(object :TextWatcher {
+        depositamountET.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 depositamountET.removeTextChangedListener(this);
 
                 try {
                     var originalString = s.toString();
-                    var plusPercent=s.toString()
-                    var longval:Long;
+                    var plusPercent = s.toString()
+                    var longval: Long;
                     if (originalString.contains(",")) {
                         originalString = originalString.replace(",", "");
                     }
                     longval = originalString.toLong()
                     var formatter = NumberFormat.getNumberInstance(Locale.US);
-                   // formatter.applyPattern("#,###,###,###");
+                    // formatter.applyPattern("#,###,###,###");
                     var formattedString = formatter.format(longval);
                     depositamountET.setText(formattedString);
                     depositamountET.setSelection(depositamountET.text.length);
-                    if(s.toString().length>0){
-                        if(plusPercentET.text.toString().contains(",")){
-                            plusPercent=plusPercent.replace(",","")
+                    if (s.toString().length > 0) {
+                        if (plusPercentET.text.toString().contains(",")) {
+                            plusPercent = plusPercent.replace(",", "")
                         }
                         plusPercentET.setText(getPercentage(plusPercent?.toLong()!!))
-                    }
-                    else plusPercentET.setText("")
+                    } else plusPercentET.setText("")
 
                 } catch (nfe: NumberFormatException) {
                     nfe.printStackTrace();
@@ -369,10 +371,10 @@ if(p0?.length!!>0){
     }
 
     private fun getPercentage(p0: Long): String {
-        val percent=(p0*percentage)/100
+        val percent = (p0 * percentage) / 100
 
-        Log.e("percent",percent.toString())
-        val number=p0+percent.toLong()
+        Log.e("percent", percent.toString())
+        val number = p0 + percent.toLong()
 
         return NumberFormat.getNumberInstance(Locale.US).format(number)
     }
@@ -383,30 +385,28 @@ if(p0?.length!!>0){
         var customDialog: CustomDialog
         customDialog = CustomDialog(requireActivity())
         customDialog.show()
-        var bankname:String?=null
-        var nameOnCheque:String?=null
-        if(transactionMode==1){
-            depositType="Cash"
-            bankname=null
-            nameOnCheque=null
-        }else {
-            depositType="Cheque"
-          //  bankname=bankName.text.toString()
-            nameOnCheque=chequeName.text.toString()
+        var bankname: String? = null
+        var nameOnCheque: String? = null
+        if (transactionMode == 1) {
+            depositType = "Cash"
+            bankname = null
+            nameOnCheque = null
+        } else {
+            depositType = "Cheque"
+            //  bankname=bankName.text.toString()
+            nameOnCheque = chequeName.text.toString()
         }
-        var depositAmount=""
-        var plusPercentAmount=""
-        if(depositamountET.text.toString().contains(",")){
-            depositAmount=depositamountET.text.toString().replace(",","");
+        var depositAmount = ""
+        var plusPercentAmount = ""
+        if (depositamountET.text.toString().contains(",")) {
+            depositAmount = depositamountET.text.toString().replace(",", "");
+        } else {
+            depositAmount = depositamountET.text.toString()
         }
-        else{
-            depositAmount=depositamountET.text.toString()
-        }
-        if(plusPercentET.text.toString().contains(",")){
-            plusPercentAmount=plusPercentET.text.toString().replace(",","");
-        }
-        else{
-            plusPercentAmount=plusPercentET.text.toString().trim()
+        if (plusPercentET.text.toString().contains(",")) {
+            plusPercentAmount = plusPercentET.text.toString().replace(",", "");
+        } else {
+            plusPercentAmount = plusPercentET.text.toString().trim()
         }
         val call: Call<DepositRequestModel> = Uten.FetchServerData().deposit_request(SharedHelper.getString(requireActivity(),
                 Constants.TOKEN),
@@ -477,9 +477,9 @@ if(p0?.length!!>0){
         vendornameET.setText("")
         chxslipET.setText("")
         depositamountET.setText("")
-      //  bankName.setText("")
+        //  bankName.setText("")
         chequeName.setText("")
-       // commentET.setText("")
+        // commentET.setText("")
         SetSpinnerData()
 
     }
@@ -500,10 +500,10 @@ if(p0?.length!!>0){
                 //Toast.makeText(this@SignUpActivity, "Country ID: " + data[position].countryId, Toast.LENGTH_SHORT).show()
                 if (position == 0) {
                     transactionMode = 1
-                    chequeLayout.visibility=View.GONE
+                    chequeLayout.visibility = View.GONE
                 } else {
                     transactionMode = 2
-                    chequeLayout.visibility=View.VISIBLE
+                    chequeLayout.visibility = View.VISIBLE
                 }
             }
 
@@ -604,16 +604,16 @@ if(p0?.length!!>0){
         }
         val adapter = ArrayAdapter<String>(requireActivity(), R.layout.item_pos, list)
         adapter.setDropDownViewResource(R.layout.sppiner_layout_item)
-        spPosId.adapter=adapter
-          spPosId.onItemSelectedListener=object :AdapterView.OnItemSelectedListener{
+        spPosId.adapter = adapter
+        spPosId.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
 
             }
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 walletBalance.setText(posList.get(p2).balance)
-                posId=posList.get(p2).posId
-                percentage=posList.get(p2).percentage
+                posId = posList.get(p2).posId
+                percentage = posList.get(p2).percentage
                 commissionPercent.setText("PLUS ${posList.get(p2).percentage}%")
 
             }
@@ -877,22 +877,22 @@ if(p0?.length!!>0){
         var customDialog: CustomDialog
         customDialog = CustomDialog(requireActivity())
         customDialog.show()
-val call=Uten.FetchServerData().getBankDetail(SharedHelper.getString(requireActivity(),Constants.TOKEN))
-        call.enqueue(object :Callback<BankResponseModel>{
+        val call = Uten.FetchServerData().getBankDetail(SharedHelper.getString(requireActivity(), Constants.TOKEN))
+        call.enqueue(object : Callback<BankResponseModel> {
             override fun onFailure(call: Call<BankResponseModel>, t: Throwable) {
                 val gs = Gson()
-             gs.toJson(t.localizedMessage)
+                gs.toJson(t.localizedMessage)
                 if (customDialog.isShowing) {
                     customDialog.dismiss()
                 }
             }
 
             override fun onResponse(call: Call<BankResponseModel>, response: Response<BankResponseModel>) {
-if(customDialog.isShowing){
-    customDialog.dismiss()
-}
-                var data=response.body()
-                if(data!=null) {
+                if (customDialog.isShowing) {
+                    customDialog.dismiss()
+                }
+                var data = response.body()
+                if (data != null) {
                     if (data.status.equals("true")) {
                         if (data.result.size > 0) {
                             setAccountSpinner(data.result)
@@ -901,7 +901,7 @@ if(customDialog.isShowing){
                     }
                 }
 
-        }
+            }
         })
 //        val call: Call<BankDetailsModel> = Uten.FetchServerData().bank_details(SharedHelper.getString(requireActivity(), Constants.TOKEN))
 //        call.enqueue(object : Callback<BankDetailsModel> {
@@ -948,20 +948,20 @@ if(customDialog.isShowing){
     }
 
     private fun setAccountSpinner(result: List<BankResponseModel.Result>) {
-        val accountList=ArrayList<String>()
+        val accountList = ArrayList<String>()
         result.forEach {
             accountList.add(it.text)
         }
         val adapter = ArrayAdapter<String>(requireActivity(), R.layout.spinner_text_second, accountList)
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown)
-        spAccounts.adapter=adapter
-        spAccounts.onItemSelectedListener=object :AdapterView.OnItemSelectedListener{
+        spAccounts.adapter = adapter
+        spAccounts.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
 
             }
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-bankAccountId=result.get(p2).value
+                bankAccountId = result.get(p2).value
             }
 
         }

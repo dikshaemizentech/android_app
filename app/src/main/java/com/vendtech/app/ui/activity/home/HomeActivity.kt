@@ -1,15 +1,11 @@
 package com.vendtech.app.ui.activity.home
 
+//import com.vendtech.app.BuildConfig
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
-import android.content.SharedPreferences
-import android.os.Build
-import android.os.Handler
-import android.support.design.widget.NavigationView
-import android.support.v4.widget.DrawerLayout
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.multidex.BuildConfig
+import android.os.Handler
 import android.text.TextUtils
 import android.util.Log
 import android.view.Gravity
@@ -19,30 +15,33 @@ import android.view.View.VISIBLE
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
 import com.bumptech.glide.Glide
+import com.google.android.material.navigation.NavigationView
 import com.google.gson.Gson
-
+import com.vendtech.app.BuildConfig
 import com.vendtech.app.R
 import com.vendtech.app.helper.SharedHelper
+import com.vendtech.app.models.meter.MeterListResults
+import com.vendtech.app.models.referral.ReferralCodeModel
 import com.vendtech.app.network.Uten
 import com.vendtech.app.ui.activity.authentication.LoginActivity
 import com.vendtech.app.ui.activity.meter.MeterListActivity
 import com.vendtech.app.ui.activity.profile.ChangePasswordActivity
 import com.vendtech.app.ui.activity.profile.EditProfileActivity
+import com.vendtech.app.ui.activity.profile.NotificationsListActivity
 import com.vendtech.app.ui.activity.termspolicies.ContactUsActivity
 import com.vendtech.app.ui.activity.termspolicies.TermsPoliciesActivity
 import com.vendtech.app.ui.fragment.DashboardFragment
-import com.vendtech.app.ui.fragment.WalletFragment
-import com.vendtech.app.utils.Constants
-import com.vendtech.app.utils.Utilities
-
-import de.hdodenhof.circleimageview.CircleImageView
-//import com.vendtech.app.BuildConfig
-import com.vendtech.app.models.referral.ReferralCodeModel
-import com.vendtech.app.ui.activity.profile.NotificationsListActivity
 import com.vendtech.app.ui.fragment.PosListFragment
 import com.vendtech.app.ui.fragment.ReportsFragment
+import com.vendtech.app.ui.fragment.WalletFragment
+import com.vendtech.app.utils.Constants
 import com.vendtech.app.utils.CustomDialog
+import com.vendtech.app.utils.Utilities
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.nav_header.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -100,8 +99,8 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
                 drawerLayout!!.openDrawer(Gravity.START)
         }
 
+        LoadDashboardFragment();
 
-        LoadDashboardFragment()
     }
 
 
@@ -136,6 +135,8 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
             }
         }
     }
+
+
 
     fun findNavView(navigationView: View) {
 
@@ -254,12 +255,12 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
                 Handler().postDelayed({ LoadReportsFragment() }, 400)
             }
             R.id.meterLL -> {
-                /* if (drawerLayout!!.isDrawerOpen(Gravity.START))
-                     drawerLayout!!.closeDrawer(Gravity.START)*/
+                  if (drawerLayout!!.isDrawerOpen(Gravity.START))
+                     drawerLayout!!.closeDrawer(Gravity.START)
 
                 Handler().postDelayed({
                     val i = Intent(this@HomeActivity, MeterListActivity::class.java)
-                    startActivity(i)
+                    startActivityForResult(i,1201)
                     overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                 }, 400)
             }
@@ -348,6 +349,19 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
                     startActivity(i)
                     overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                 }, 400)
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode==1201){
+            //Toast.makeText(this,"fnksfnksnfksnf",Toast.LENGTH_LONG).show();
+
+            if (resultCode== Activity.RESULT_OK) {
+                var data: MeterListResults = data!!.getSerializableExtra("data") as MeterListResults
+                Handler().postDelayed({ LoadDashboardFragment(data) }, 400)
             }
         }
     }
@@ -448,9 +462,18 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
     }
 
 
-    fun LoadDashboardFragment() {
+    fun LoadDashboardFragment(data:MeterListResults?=null) {
+
+        val bundle = Bundle();
+        if (data!=null){
+            bundle.putSerializable("data",data);
+        }
         ShowLogo()
-        val fragment = DashboardFragment.newInstance()
+
+
+        val fragment = DashboardFragment.newInstance();
+        fragment.setArguments(bundle);
+
         val ft = supportFragmentManager.beginTransaction()
         ft.replace(R.id.fragment_frame, fragment)
         ft.commit()

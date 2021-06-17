@@ -1,10 +1,10 @@
 package com.vendtech.app.adapter
 
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.vendtech.app.R
 import com.vendtech.app.models.meter.PosListModel
 import kotlinx.android.synthetic.main.item_pos_list.view.*

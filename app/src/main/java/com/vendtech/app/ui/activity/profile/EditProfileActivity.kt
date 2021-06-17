@@ -20,13 +20,12 @@ import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.provider.Settings
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
-import android.support.v4.content.FileProvider
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 
@@ -183,10 +182,10 @@ class EditProfileActivity : Activity(), View.OnClickListener {
         val city = RequestBody.create(MediaType.parse("text/plain"), CITY_ID)
         val country = RequestBody.create(MediaType.parse("text/plain"), COUNTRY_ID)
         val address = RequestBody.create(MediaType.parse("text/plain"), addressET.text.toString().trim())
+        //val passCode = RequestBody.create(MediaType.parse("text/plain"), SharedHelper.getString(this, Constants.PASS_CODE_VALUE))
 
         val call: Call<UpdateProfileModel> = Uten.FetchServerData().update_profile(SharedHelper.getString(this, Constants.TOKEN), fname, lname, phone, city, country, address, getImageAsPart(filePathImage))
         call.enqueue(object : Callback<UpdateProfileModel> {
-
 
             override fun onResponse(call: Call<UpdateProfileModel>, response: Response<UpdateProfileModel>) {
                 customDialog.dismiss()
@@ -325,7 +324,7 @@ class EditProfileActivity : Activity(), View.OnClickListener {
     }
 
     private fun explain(msg: String) {
-        val dialog = android.support.v7.app.AlertDialog.Builder(this)
+        val dialog = AlertDialog.Builder(this)
         dialog.setMessage(msg)
                 .setPositiveButton("Yes") { paramDialogInterface, paramInt ->
                     //  permissionsclass.requestPermission(type,code);
@@ -402,15 +401,13 @@ class EditProfileActivity : Activity(), View.OnClickListener {
         displayImage(imagePath)
     }
 
-    //    没4.4的设备，略过
+    //    No 4.4 devices, skip
     private fun handleImageBeforeKitkat(data: Intent?) {
-        var imagePath: String? = null
-        val uri = data!!.data
+        var imagePath: String? = null;
+        val uri = data!!.data;
 
-        imagePath = PathUtil.getPath(this, uri)
-        displayImage(imagePath)
-
-
+        imagePath = PathUtil.getPath(this, uri);
+        displayImage(imagePath);
     }
 
     private fun imagePath(uri: Uri?, selection: String?): String {

@@ -4,9 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
 import android.view.animation.Animation
@@ -15,6 +12,9 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
 import com.vendtech.app.R
 import com.vendtech.app.adapter.meter.MeterListAdapter
@@ -87,6 +87,15 @@ class MeterListActivity : Activity(), View.OnClickListener,MeterListAdapter.Item
 //        }
         initView()
         //GetMeterList()
+
+    }
+
+    fun setOnclickIntent(data:MeterListResults){
+
+        var intent=Intent();
+        intent.putExtra("data",data);
+        setResult(RESULT_OK,intent);
+        finish();
 
     }
 
@@ -221,20 +230,15 @@ class MeterListActivity : Activity(), View.OnClickListener,MeterListAdapter.Item
         })
     }
 
-
-
     override fun itemDeleted() {
 
         GetMeterList()
 
     }
-
-
-
     fun setData() {
        Log.v("BeforeEdit",Gson().toJson(meterListModels));
 
-       meterListAdapter = MeterListNewAdapter(meterListModels, this,itemEditables,this);
+       meterListAdapter = MeterListNewAdapter(meterListModels, this,itemEditables,this,SharedHelper.getString(this, Constants.PASS_CODE_VALUE),this);
        /* val mLayoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
        recyclerViewList.adapter = meterListAdapter;
        recyclerViewList.layoutManager = mLayoutManager;
@@ -248,14 +252,11 @@ class MeterListActivity : Activity(), View.OnClickListener,MeterListAdapter.Item
        meterListAdapter.notifyDataSetChanged();
 
     }
-
     fun ShowMainLayout(){
 
         mainLayout.visibility==View.VISIBLE
         errorLayout.visibility==View.GONE
     }
-
-
     override fun onClick(v: View) {
 
 
@@ -322,14 +323,10 @@ class MeterListActivity : Activity(), View.OnClickListener,MeterListAdapter.Item
         }
 
     }
-
-
     override fun onResume() {
         super.onResume()
         GetMeterList()
     }
-
-
     @SuppressLint("RestrictedApi")
     fun ShowFabButton(){
 
@@ -339,7 +336,6 @@ class MeterListActivity : Activity(), View.OnClickListener,MeterListAdapter.Item
         fabAdd.visibility = View.VISIBLE
 
     }
-
     @SuppressLint("RestrictedApi")
     fun HideFabButton(){
 

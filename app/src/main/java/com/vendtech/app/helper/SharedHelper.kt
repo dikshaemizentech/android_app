@@ -48,6 +48,7 @@ class SharedHelper {
             putString(context,Constants.USER_PHONE,"")
             putString(context,Constants.USER_ID,"")
             putString(context,Constants.USER_TYPE,"")
+            putString(context,Constants.PASS_CODE_VALUE,"")
             if(!getBoolean(context,Constants.IS_REMEMBER_ME)){
                 putString(context,Constants.REMEMBER_PASS,"")
                 putString(context,Constants.REMEMBER_EMAIL,"")

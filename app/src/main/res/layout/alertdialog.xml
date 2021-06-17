@@ -2,25 +2,37 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:id="@+id/liner_main"
     android:padding="10dp">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
     <TextView
-
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAllCaps="true"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Send Voucher by sms to :"
-        android:id="@+id/tv_title" />
+        android:id="@+id/tv_title"
+        android:layout_weight="1"/>
 
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:background="@null"
+        android:src="@drawable/ic_close"
+        android:scaleType="fitCenter"
+        android:padding="@dimen/_7sdp"
+        android:id="@+id/img_close"/>
+    </LinearLayout>
 
-
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-android:layout_marginTop="@dimen/_20"
+        android:layout_marginTop="@dimen/_20"
         android:layout_height="wrap_content">
 
         <TextView
@@ -31,15 +43,31 @@ android:layout_marginTop="@dimen/_20"
             android:text="Phone #:"
            />
 
-        <TextView
+
+
+        <LinearLayout
             android:id="@+id/tv2"
-            android:layout_toRightOf="@+id/tv1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:background="@drawable/box_blank"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/_10ssp"
-            android:text="+232"
-             />
+            android:layout_marginLeft="@dimen/_2sdp"
+            android:gravity="center">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="+232"
+                android:textColor="@color/colorblack"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textSize="@dimen/_12sdp"
+                />
+        </LinearLayout>
+
+
 
         <EditText
             android:layout_toRightOf="@+id/tv2"
@@ -47,10 +75,15 @@ android:layout_marginTop="@dimen/_20"
             android:inputType="number"
             android:layout_marginLeft="@dimen/_10ssp"
             android:background="@drawable/box_blank"
-            android:layout_height="wrap_content"/>
+            android:layout_height="@dimen/_30sdp"
+            android:textColor="@color/colorblack"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold"
+            android:paddingLeft="@dimen/_5sdp"
+            android:paddingRight="@dimen/_5sdp"/>
 
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tv_send"

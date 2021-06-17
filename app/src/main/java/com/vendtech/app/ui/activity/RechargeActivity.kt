@@ -3,13 +3,13 @@ package com.vendtech.app.ui.activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 import com.vendtech.app.R
 import com.vendtech.app.helper.SharedHelper
@@ -42,11 +42,12 @@ class RechargeActivity: AppCompatActivity() {
     lateinit var posSpinner: Spinner
     var posId = 0;
 
-
+    var meter_id=""
     private fun getData(){
         if(intent!!.extras!=null){
             meterListResults= intent.extras.getSerializable("Data") as MeterListResults;
             tv_meter_number.setText(meterListResults.number);
+            meter_id=meterListResults.meterId;
             //tv_meter_number.setText(meterListResults.number)
         }
     }
@@ -95,7 +96,6 @@ class RechargeActivity: AppCompatActivity() {
             }
 
         });
-
         getData();
         GetWalletBalance();
         GetPosIdList();
@@ -118,41 +118,48 @@ class RechargeActivity: AppCompatActivity() {
                 ShowAlertForRecharge(moneyValue);
             }
         }
-
-
-
     }
+
     fun DoRecharge(amount: String, meterId: String, posId: Int) {
 
         var customDialog: CustomDialog
         customDialog = CustomDialog(this)
         customDialog.show()
-        var meterNumber: String? = null
-        var meterid: String? = null
-        if (meterId.isEmpty()) {
+
+
+        //var meterNumber: String? = null
+       // var meterid: String? = null
+       /* if (meterId.isEmpty()) {
             meterNumber = tv_meter_number.text.toString().trim()
             meterid = null
         } else {
             meterid = meterId
             meterNumber = null
-        }
-        val call: Call<RechargeMeterModel> = Uten.FetchServerData().recharge_meter(SharedHelper.getString(this, Constants.TOKEN), meterid, amount, meterNumber, posId)
+        }*/
+        //val call: Call<RechargeMeterModel> = Uten.FetchServerData().recharge_meter(SharedHelper.getString(this, Constants.TOKEN), meterId, amount, "", posId,SharedHelper.getString(this, Constants.PASS_CODE_VALUE))
+        val call: Call<RechargeMeterModel> = Uten.FetchServerData().rechargeMeter(SharedHelper.getString(this, Constants.TOKEN),amount,meterId,posId.toString())
         call.enqueue(object : Callback<RechargeMeterModel> {
             override fun onResponse(call: Call<RechargeMeterModel>, response: Response<RechargeMeterModel>) {
 
                 if (customDialog.isShowing) {
                     customDialog.dismiss()
                 }
-                var data = response.body()
+
+                Log.d("PrintResponce","---"+response.body());
+                var data = response.body();
                 if (data != null) {
-                    Utilities.shortToast(data.message, applicationContext)
-                    if (data.status.equals("true")) {
-                        //val temp = autoCompleteTV.text.toString()
-                        //autoCompleteTV.setText("")
-                        et_money.setText("")
-                        //HidePayLayout()
-                       // GetWalletBalance()
-                        /*if (activity != null && cbSaveMeter.isChecked) {
+
+
+                    if (data.message!=null) {
+                        Utilities.shortToast(data.message, applicationContext)
+                    }else {
+                        if (data.status.equals("true")) {
+                            //val temp = autoCompleteTV.text.toString()
+                            //autoCompleteTV.setText("")
+                            et_money.setText("")
+                            //HidePayLayout()
+                            // GetWalletBalance()
+                            /*if (activity != null && cbSaveMeter.isChecked) {
                             val bundle = Bundle();
                             bundle.putString(Constants.METER_NAME, temp)
                             val intent = Intent(activity, AddMeterActivity::class.java)
@@ -160,8 +167,9 @@ class RechargeActivity: AppCompatActivity() {
                             startActivity(intent)
                         }*/
 
-                    } else {
-                        Utilities.CheckSessionValid(data.message, applicationContext, this@RechargeActivity);
+                        } else {
+                            Utilities.CheckSessionValid(data.message, applicationContext, this@RechargeActivity);
+                        }
                     }
                 }
             }
@@ -176,6 +184,8 @@ class RechargeActivity: AppCompatActivity() {
             }
         })
     }
+
+
     fun ShowAlertForRecharge(moneyvalue: String) {
 
         val builder = AlertDialog.Builder(this)
@@ -185,9 +195,9 @@ class RechargeActivity: AppCompatActivity() {
 
         builder.setPositiveButton("Recharge") { dialogInterface, which ->
             if (Uten.isInternetAvailable(this)) {
-                DoRecharge(moneyvalue, tv_meter_number.text.toString(), posId)
+                DoRecharge(moneyvalue, meter_id, posId);
             } else {
-                Utilities.shortToast("No internet connection. Please check your network connectivity.", this)
+                Utilities.shortToast("No internet connection. Please check your network connectivity.", this);
             }
         }
         builder.setNegativeButton("Check Again") { dialogInterface, which ->

@@ -1,5 +1,7 @@
 package com.vendtech.app.utils
 
+
+
 class Constants {
 
 
@@ -33,6 +35,7 @@ class Constants {
         val STATUS_PENDING = "Pending"
         val STATUS_PASSWORD_NOT_RESET = "PasswordNotReset"
         val PASS_CODE_VALUE = "PassCodeValue"
+        val ACCOUNT_DISABLE_MSG = "Your Account has been disabled.Please contact VENDTECH management";
 
         val NAV1_SALES_REPORT = "SALES REPORT"
         val NAV2_DEPOSITS_REPORT = "DEPOSITS REPORT"
@@ -45,7 +48,7 @@ class Constants {
         //excel
 
 
-
+        val REQUEST_CODE=1201;
 
 
 

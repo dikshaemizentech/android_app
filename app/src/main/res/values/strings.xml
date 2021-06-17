@@ -50,15 +50,17 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
     <string name="select_saved_meter">SELECT SAVED METER #</string>
     <string name="recharge">Recharge</string>
     <string name="seleted_pos_ids">Selected POS ID</string>
-    <string name="Electricity_purchace">Electricity purchace</string>
-    <string name="cust_info">Customer information</string>
-    <string name="dedution">deductions</string>
-    <string name="total">total</string>
+    <string name="Electricity_purchace">EDSA Electricity purchace</string>
+    <string name="cust_info">Customer Information</string>
+    <string name="dedution">Deductions</string>
+    <string name="total">Total</string>
     
     <string name="transaction_id">Trans ID:</string>
     
     <string name="deposite__notifications">DEPOSITS NOTIFICATIONS:</string>
     <string name="meter_recharge_notifications">METER RECHARGE NOTIFICATIONS:</string>
+
+    <string name="vendor">Vendor:</string>
 
     
     
@@ -68,6 +70,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
     <string name="deposite">Deposite:</string>
     <string name="deposite_ref">Deposite Ref#:</string>
     <string name="new_balance">New Bal:</string>
+    <string name="print">Print</string>
     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
     the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of
     type and scrambled it to make a type specimen book. It has survived not only five centuries, but
@@ -90,4 +93,21 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
     recently with desktop publishing software like Aldus PageMaker including versions of Lorem
     Ipsum.
 
+
+    <string name="ptintInit">Printer initialing... Please try again after a few seconds.</string>
+    <string name="printing_wait">Printing, please wait……</string>
+    <string name="bl_dy">Print</string>
+    <string name="empty">The content is empty！</string>
+
+    <string name="noPaper">No paper</string>
+    <string name="noPaperNotice">No paper, please put paper in and retry</string>
+    <string name="sure">sure</string>
+
+    <string name="overTemp">over temp !</string>
+    <string name="dialog_comfirm">ConFirm</string>
+
+    <string name="operation_fail">Operation failed</string>
+    <string name="operation_result">Result</string>
+
+    <string name="LowBattery">Low battery, please connect the charger!</string>
 </resources>

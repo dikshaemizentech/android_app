@@ -68,7 +68,7 @@
         android:background="@color/colorYellow"/>
 
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="15dp"
@@ -89,7 +89,7 @@
 
 
 
-    <android.support.design.widget.FloatingActionButton android:layout_width="wrap_content"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"

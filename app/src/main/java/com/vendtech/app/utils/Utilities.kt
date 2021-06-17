@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.vendtech.app.helper.SharedHelper
 import com.vendtech.app.ui.activity.authentication.LoginActivity
 import com.vendtech.app.ui.activity.profile.ChangePasswordActivity
@@ -158,6 +159,16 @@ fun changeDateFormat(dates: String): String {
                 context.startActivity(i)
                 activity.finish()
 
+            }else if (string.contentEquals(Constants.ACCOUNT_DISABLE_MSG)) {
+
+                longToast(string, context)
+                SharedHelper.removeUserData(context)
+                SharedHelper.putBoolean(context, Constants.IS_LOGGEDIN, false)
+                val i = Intent(context, LoginActivity::class.java)
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                context.startActivity(i)
+                activity.finish()
+
             } else {
                 longToast(string, context)
             }
@@ -197,7 +208,7 @@ fun changeDateFormat(dates: String): String {
         fun PleaseResetPassword(context: Context, isFinish: Boolean, activity: Activity) {
 
 
-            val dialog = android.support.v7.app.AlertDialog.Builder(context)
+            val dialog = AlertDialog.Builder(context)
             dialog.setCancelable(false)
             dialog.setMessage("Please set a new password")
                     .setPositiveButton("Ok") { paramDialogInterface, paramInt ->

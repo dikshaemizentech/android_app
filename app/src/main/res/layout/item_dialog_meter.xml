@@ -7,7 +7,7 @@
     android:background="@color/colorWhite"
     android:orientation="vertical">
 
-    <android.support.v7.widget.AppCompatTextView android:layout_width="match_parent"
+    <androidx.appcompat.widget.AppCompatTextView android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp"
         app:fontFamily="@font/roboto_regular"

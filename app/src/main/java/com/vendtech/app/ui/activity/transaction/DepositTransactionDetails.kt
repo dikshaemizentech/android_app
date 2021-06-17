@@ -12,12 +12,12 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.StrictMode
 import android.provider.Settings
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.downloader.Error
 import com.downloader.OnDownloadListener
@@ -38,6 +38,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
+import java.lang.Exception
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -328,9 +329,14 @@ class DepositTransactionDetails : Activity(){
                         }
 
                         amountTrans=data.result.amount
-                        dateTransaction=Utilities.changeDateFormat(this@DepositTransactionDetails,data.result.createdAt)
+                        //dateTransaction=Utilities.changeDateFormat(this@DepositTransactionDetails,data.result.createdAt)
+                        dateTransaction=data.result.createdAt;
                         timeTransaction=Utilities.changeTimeFormat(this@DepositTransactionDetails,data.result.createdAt)
-                        statusTransaction=data.result.status
+                        try {
+                            statusTransaction = data.result.status
+                        }catch (exceptin:Exception){
+
+                        }
                         vendorName=data.result.vendorName
                         cheque_slip_no=data.result.chkNoOrSlipId
                         commentTrans=data.result.comments?:""
@@ -370,7 +376,7 @@ class DepositTransactionDetails : Activity(){
     }
 
     private fun explain(msg: String) {
-        val dialog = android.support.v7.app.AlertDialog.Builder(this)
+        val dialog = AlertDialog.Builder(this)
         dialog.setMessage(msg)
                 .setPositiveButton("Yes") { paramDialogInterface, paramInt ->
                     //  permissionsclass.requestPermission(type,code);

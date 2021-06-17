@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorBlue">
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorBlue"
@@ -15,7 +15,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="15dp">
-
             <LinearLayout
                 android:id="@+id/posLayout"
                 android:layout_width="match_parent"
@@ -42,7 +41,11 @@
                         android:layout_height="wrap_content"
                         android:layout_toStartOf="@+id/sadf"
                         android:layout_toLeftOf="@+id/sadf"
-                        android:background="@android:color/transparent" />
+                        android:textSize="@dimen/_24ssp"
+                        android:background="@android:color/transparent"
+                        android:gravity="right"
+                        android:layout_gravity="right"
+                        android:textAlignment="gravity"/>
 
                     <ImageView
                         android:id="@+id/sadf"
@@ -55,7 +58,6 @@
                 </RelativeLayout>
 
             </LinearLayout>
-
             <LinearLayout
                 android:id="@+id/rechargemeter"
                 android:layout_width="match_parent"
@@ -86,7 +88,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
-                        android:fontFamily="@font/roboto_bold"
                         android:gravity="end"
                         android:imeOptions="actionNext"
                         android:inputType="number"
@@ -99,8 +100,10 @@
                         android:paddingRight="10dp"
                         android:paddingBottom="7dp"
                         android:text=""
-                        android:textColor="@color/colorWhite"
-                        android:textSize="26sp" />
+                        android:textSize="@dimen/_26sdp"
+                        android:padding="@dimen/_10sdp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorWhite"/>
 
                     <ImageView
                         android:id="@+id/showListmeterIV"
@@ -113,8 +116,6 @@
 
 
             </LinearLayout>
-
-
             <LinearLayout
                 android:id="@+id/money"
                 android:layout_width="match_parent"
@@ -161,8 +162,6 @@
 
 
             </LinearLayout>
-
-
             <CheckBox
                 android:id="@+id/cbSaveMeter"
                 android:layout_width="wrap_content"
@@ -174,8 +173,6 @@
                 android:text="@string/save_meter"
                 android:textColor="@color/colorWhite"
                 android:visibility="gone" />
-
-
             <RelativeLayout
                 android:layout_marginTop="@dimen/_20ssp"
                 android:layout_below="@+id/money"
@@ -183,7 +180,7 @@
                 android:layout_height="wrap_content">
 
 
-                <android.support.design.widget.FloatingActionButton
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/fabBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -212,13 +209,8 @@
                     android:textColor="@color/colorblack" />
 
             </RelativeLayout>
-
-
-
-
-
         </RelativeLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
 

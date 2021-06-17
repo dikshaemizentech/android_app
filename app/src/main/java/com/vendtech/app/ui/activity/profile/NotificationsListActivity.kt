@@ -4,10 +4,10 @@ import android.app.Activity
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.vendtech.app.R
 import com.vendtech.app.adapter.profile.NotificationListAdapter
@@ -177,7 +177,7 @@ class NotificationsListActivity :Activity(){
 
     fun SetUpAdapter(data:MutableList<NotificationListResult>){
 
-        var mLayoutManager=LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        var mLayoutManager= LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         notificationListAdapter = NotificationListAdapter(this, data)
         recyclerView.adapter = notificationListAdapter
         recyclerView.layoutManager = mLayoutManager

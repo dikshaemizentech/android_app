@@ -2,11 +2,11 @@ package com.vendtech.app.ui.fragment
 
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.fragment.app.DialogFragment
 import com.google.gson.Gson
 import com.vendtech.app.R
 import com.vendtech.app.helper.SharedHelper
@@ -25,7 +25,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class ReportFilterDialog :DialogFragment(){
+class ReportFilterDialog : DialogFragment(){
 
     var posList=ArrayList<PosResultModel.Result>()
     var posId=0
@@ -111,6 +111,8 @@ setUpClick()
             getFormattedDate(reportFilterTo)
         }
         reportFilterSearch.setOnClickListener {
+
+           //  Toast.makeText(activity!!,""+posId,Toast.LENGTH_LONG).show();
             if(reportFilterFrom.text.toString().isNotEmpty()){
              //  from
             }
@@ -226,6 +228,7 @@ if(textView==reportFilterTo){
 
     fun getPosIdList() {
         val call= Uten.FetchServerData().getPosList(SharedHelper.getString(requireActivity(), Constants.TOKEN))
+
         call.enqueue(object : Callback<PosResultModel> {
             override fun onFailure(call: Call<PosResultModel>, t: Throwable) {
                 val gs = Gson()
@@ -265,7 +268,10 @@ if(textView==reportFilterTo){
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 if(p2>0) {
-                    posId = posList[p2 - 1].posId
+                   // posId = posList[p2 - 1].posId;
+                    posId = posList[p2].posId;
+
+
                 }
                 else posId=0
             }

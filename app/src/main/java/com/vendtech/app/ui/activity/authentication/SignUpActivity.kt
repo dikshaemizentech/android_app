@@ -2,10 +2,8 @@ package com.vendtech.app.ui.activity.authentication
 
 import android.content.Intent
 import android.opengl.Visibility
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.support.v4.widget.NestedScrollView
 import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
@@ -33,6 +31,8 @@ import kotlinx.android.synthetic.main.activity_sign_up.emailET
 import kotlinx.android.synthetic.main.activity_sign_up.passwordET
 import kotlinx.android.synthetic.main.layout_error.*
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.NestedScrollView
 import java.lang.Exception
 
 
@@ -49,7 +49,7 @@ class SignUpActivity : AppCompatActivity() {
     lateinit var USER_TYPE_ID:String
     lateinit var AppUserType:String
     var USER_NAME = ""
-    lateinit var mainLayout:NestedScrollView
+    lateinit var mainLayout: NestedScrollView
     lateinit var errorLayout:LinearLayout
     lateinit var backPress:TextView
     lateinit var checkBoxTC:CheckBox
