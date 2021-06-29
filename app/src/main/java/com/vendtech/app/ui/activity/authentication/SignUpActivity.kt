@@ -84,9 +84,9 @@ class SignUpActivity : AppCompatActivity() {
             USER_NAME=intent.getStringExtra("username")
             PASSWORD=intent.getStringExtra("password")
 
-        listListners()
-        getUserTypes()
-        getCountries()
+            listListners()
+            getUserTypes()
+            getCountries()
     }
 
     private fun listListners() {
@@ -111,21 +111,17 @@ class SignUpActivity : AppCompatActivity() {
             }else if(lastnameTV.text.toString().trim().length<3) {
                 Utilities.shortToast(resources.getString(R.string.last_name_length),this)
             }
-          /*  else if(TextUtils.isEmpty(usernameET.text.toString().trim())) {
+            /*  else if(TextUtils.isEmpty(usernameET.text.toString().trim())) {
                 Utilities.shortToast("Enter Username",this)
-
             }else if(usernameET.text.toString().trim().length<3) {
                 Utilities.shortToast(resources.getString(R.string.user_name_length),this)
-            }*/else if(TextUtils.isEmpty(emailET.text.toString().trim())) {
+            }*/
+            else if(TextUtils.isEmpty(emailET.text.toString().trim())) {
                 Utilities.shortToast("Enter email address",this)
-
             }else if(!emailET.text.matches(Patterns.EMAIL_ADDRESS.toRegex())){
-
                 Utilities.shortToast("Enter a valid email address",this);
-
             } else if(TextUtils.isEmpty(phoneET.text.toString().trim())) {
                 Utilities.shortToast("Enter phone number",this)
-
             } else if(phoneET.text.toString().trim().length!=10) {
                 Utilities.shortToast("Enter a valid phone number",this)
 
@@ -147,17 +143,14 @@ class SignUpActivity : AppCompatActivity() {
             } */else if(!checkBoxTC.isChecked) {
                 Utilities.shortToast("Please accept Terms & Conditions and Privacy Policy",this)
             }else {
-
-
                 if(Uten.isInternetAvailable(this)){
                   //  USER_NAME=usernameET.text.toString().trim()
                     DoSignUp()
                 }else{
                     Utilities.shortToast("No internet connection. Please check your network connectivity.",this)
-                }
+                  }
                }
         })
-
 
         selectCityTV.setOnClickListener(View.OnClickListener {
 
@@ -247,8 +240,8 @@ class SignUpActivity : AppCompatActivity() {
 //        }
 
         USER_TYPE_ID="AppUser"
-      var  DeviceType="ABC"
-      var  AppType=Constants.DEVICE_TYPE
+          var  DeviceType="ABC"
+          var  AppType=Constants.DEVICE_TYPE
         customDialog.show()
 
 
@@ -292,7 +285,6 @@ class SignUpActivity : AppCompatActivity() {
                     }
                 }
             }
-
             override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
                   if(customDialog.isShowing){
                     customDialog.dismiss()
@@ -340,7 +332,6 @@ class SignUpActivity : AppCompatActivity() {
                         Utilities.CheckSessionValid(dataCountry.message,this@SignUpActivity,this@SignUpActivity)
                     }
                 }
-
                 if(customDialog.isShowing){
                     customDialog.dismiss()
                 }
@@ -493,22 +484,13 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-
-
-
-
     fun setCities(data: List<ResultCities>){
-
         val list: MutableList<String> = ArrayList()
-
         for (i in 0..data.size-1){
             list.add(data.get(i).name)
         }
-
         list.add("Select City")
-
         var listTrunclate = list.size-1
-
         val cityAdapter =object :ArrayAdapter<CharSequence>(this,R.layout.spinner_text, list as List<CharSequence>){
             override fun getCount(): Int {
                 return (listTrunclate) // Truncate the list
@@ -518,8 +500,6 @@ class SignUpActivity : AppCompatActivity() {
         citySpinner.setAdapter(cityAdapter)
         citySpinner.setSelection(listTrunclate)
 
-
-
         citySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                // Toast.makeText(this@SignUpActivity, "City ID: " + data[position].cityId, Toast.LENGTH_SHORT).show()
@@ -528,7 +508,6 @@ class SignUpActivity : AppCompatActivity() {
                 }catch (e:Exception){
                 }
             }
-
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 // Code to perform some action when nothing is selected
             }

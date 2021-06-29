@@ -27,6 +27,7 @@ import com.telpo.tps550.api.util.SystemUtil
 import com.vendtech.app.R
 import com.vendtech.app.models.meter.RechargeMeterModel
 import com.vendtech.app.utils.Constants
+import com.vendtech.app.utils.Utilities
 import kotlinx.android.synthetic.main.print_screen_layout.*
 import java.text.DecimalFormat
 import java.text.NumberFormat
@@ -54,33 +55,31 @@ class PrintScreenActivity : AppCompatActivity() {
     val PRINTPICTURE = 14
     val EXECUTECOMMAND = 15
 
-
-
     private val size = 660;
     private val size_width = 600;
     private val size_height = 264;
 
-    var Result: String? = null
-    var nopaper = false
-    var LowBattery = false
+    private var Result: String? = null
+    private var nopaper = false
+    private var LowBattery = false
 
-    var barcodeStr: String? = null
-    var qrcodeStr: String? = null
-    var paperWalk = 0
-    var printContent: String? = null
-    val leftDistance = 0
-    val lineDistance = 0
-    val wordFont = 0
-    val printGray = 0
-    var progressDialog: ProgressDialog? = null
-    val MAX_LEFT_DISTANCE = 255
+    private var barcodeStr: String? = null
+    private var qrcodeStr: String? = null
+    private var paperWalk = 0
+    private var printContent: String? = null
+    private val leftDistance = 0
+    private val lineDistance = 0
+    private val wordFont = 0
+    private val printGray = 0
+    private var progressDialog: ProgressDialog? = null
+    private val MAX_LEFT_DISTANCE = 255
 
-    var handler: MyHandler? = null
+    private var handler: MyHandler? = null
 
-    private var  rechargeTransactionDetailResult: RechargeMeterModel?=null;
+    private var rechargeTransactionDetailResult: RechargeMeterModel?=null;
 
+    private var dialog: ProgressDialog? = null;
 
-    var dialog: ProgressDialog? = null
     inner class MyHandler : Handler() {
         override fun handleMessage(msg: Message) {
             when (msg.what) {
@@ -110,7 +109,7 @@ class PrintScreenActivity : AppCompatActivity() {
                     progressDialog!!.dismiss()
                     progressDialog = null
                 }
-               // EXECUTECOMMAND ->executeCommand().start()
+                // EXECUTECOMMAND ->executeCommand().start()
                 OVERHEAT -> {
                     val overHeatDialog = AlertDialog.Builder(this@PrintScreenActivity)
                     overHeatDialog.setTitle(R.string.operation_result)
@@ -132,7 +131,7 @@ class PrintScreenActivity : AppCompatActivity() {
                 ThermalPrinter.walkPaper(paperWalk)
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
-                Result = e.toString()
+                Result = e.toString();
                 if (Result == "com.telpo.tps550.api.printer.NoPaperException") {
                     nopaper = true
                 } else if (Result == "com.telpo.tps550.api.printer.OverHeatException") {
@@ -152,15 +151,15 @@ class PrintScreenActivity : AppCompatActivity() {
         }
     }
 
-    @Throws(WriterException::class)
-    fun CreateCode(str: String?, type: BarcodeFormat?, bmpWidth: Int, bmpHeight: Int): Bitmap? {
+   @Throws(WriterException::class)
+   fun CreateCode(str: String?, type: BarcodeFormat?, bmpWidth: Int, bmpHeight: Int): Bitmap? {
         val mHashtable = Hashtable<EncodeHintType, String?>()
         mHashtable[EncodeHintType.CHARACTER_SET] = "UTF-8"
-        // 生成二维矩阵,编码时要指定大小,不要生成了图片以后再进行缩放,以防模糊导致识别失败
+        // Generate a two-dimensional matrix, specify the size when encoding, do not zoom after the image is generated, to prevent blurring and cause recognition
         val matrix = MultiFormatWriter().encode(str, type, bmpWidth, bmpHeight, mHashtable)
         val width = matrix.width
         val height = matrix.height
-        // 二维矩阵转为一维像素数组（一直横着排）
+        // Convert a two-dimensional matrix to a one-dimensional pixel array (row horizontally all the time)
         val pixels = IntArray(width * height)
         for (y in 0 until height) {
             for (x in 0 until width) {
@@ -172,7 +171,7 @@ class PrintScreenActivity : AppCompatActivity() {
             }
         }
         val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-        // 通过像素数组生成bitmap,具体参考api
+        // Generate bitmap through pixel array, refer to api for details api
         bitmap.setPixels(pixels, 0, width, 0, 0, width, height)
         return bitmap
     }
@@ -211,7 +210,7 @@ class PrintScreenActivity : AppCompatActivity() {
                 ThermalPrinter.stop(this@PrintScreenActivity)
             }
         }
-    }
+   }
 
    inner private class qrcodePrintThread : Thread() {
         override fun run() {
@@ -247,7 +246,7 @@ class PrintScreenActivity : AppCompatActivity() {
                 ThermalPrinter.stop(this@PrintScreenActivity)
             }
         }
-    }
+   }
 
    inner private class contentPrintThread : Thread() {
         override fun run() {
@@ -255,7 +254,7 @@ class PrintScreenActivity : AppCompatActivity() {
             try {
                 ThermalPrinter.start(this@PrintScreenActivity)
                 ThermalPrinter.reset()
-                ThermalPrinter.setAlgin(ThermalPrinter.ALGIN_LEFT)
+                ThermalPrinter.setAlgin(ThermalPrinter.ALGIN_MIDDLE)
                 ThermalPrinter.setLeftIndent(leftDistance)
                 ThermalPrinter.setLineSpace(lineDistance)
                 if (wordFont == 4) {
@@ -270,17 +269,18 @@ class PrintScreenActivity : AppCompatActivity() {
                     ThermalPrinter.setFontSize(1)
                 }
                 ThermalPrinter.setGray(printGray)
+                //ThermalPrinter.addString(printContent)
                 ThermalPrinter.addString(printContent)
 
-                val bitmap = CreateCode(tv_bar_code_no.text.toString(), BarcodeFormat.CODE_128, 320, 176)
+                val bitmap = CreateCode(tv_bar_code_no.text.toString(), BarcodeFormat.CODE_39, 320, 176)
                 if (bitmap != null) {
                     ThermalPrinter.printLogo(bitmap)
                 }
+
                 ThermalPrinter.addString(tv_bar_code_no.text.toString());
 
-
                 ThermalPrinter.printString()
-                ThermalPrinter.walkPaper(100)
+                ThermalPrinter.walkPaper(100);
             } catch (e: Exception) {
                 e.printStackTrace()
                 Result = e.toString()
@@ -301,9 +301,9 @@ class PrintScreenActivity : AppCompatActivity() {
                 ThermalPrinter.stop(this@PrintScreenActivity)
             }
         }
-    }
+   }
 
-   inner   private class MakerThread : Thread() {
+   inner private class MakerThread : Thread() {
         override fun run() {
             super.run()
             try {
@@ -332,8 +332,7 @@ class PrintScreenActivity : AppCompatActivity() {
         }
     }
 
-
-  /* inner private class executeCommand : Thread() {
+    /* inner private class executeCommand : Thread() {
         override fun run() {
             super.run()
             try {
@@ -392,33 +391,27 @@ class PrintScreenActivity : AppCompatActivity() {
         val pIntentFilter = IntentFilter()
         pIntentFilter.addAction(Intent.ACTION_BATTERY_CHANGED)
         pIntentFilter.addAction("android.intent.action.BATTERY_CAPACITY_EVENT")
-        registerReceiver(printReceive, pIntentFilter)
-
-        // customDialog = CustomDialog(this);
+        registerReceiver(printReceive, pIntentFilter);
 
         tv_sms.setOnClickListener{
                 showdialog();
-            }
-
+        }
         imgBack.setOnClickListener {
             var intent=Intent();
             setResult(Activity.RESULT_OK);
             finish();
-
         }
-
         img_close.setOnClickListener {
             var intent=Intent();
             setResult(Activity.RESULT_OK);
             finish();
         }
-
         tv_print.setOnClickListener {
                // mPdfPrinter!!.print(PRINT_PDF, mDirectory!!, mFilename!!);
 
                printContent="${tv_vendtech_name.text.toString()}\n" +
                     "${tv_edsa.text.toString()}\n" +
-                    "-----------------------------\n" +
+                    "--------------------------------------------------------------\n" +
                     "${tv_date_txt.text.toString() +" "+tv_date.text.toString()}\n" +
                     "${tv_vendor_txt.text.toString() +" "+tv_vendor_name.text.toString()}\n" +
                     "${tv_pos_id_txt.text.toString() +" "+tv_pos_id.text.toString()}\n" +
@@ -438,10 +431,12 @@ class PrintScreenActivity : AppCompatActivity() {
                     "${tv_web_text.text.toString()}\n" +
                     "${tv_phone_no.text.toString()}\n";
 
+                     //Toast.makeText(this,""+printContent,Toast.LENGTH_LONG).show();
+
                     if (printContent==null || printContent!!.length==0){
-                             Toast.makeText(this, getString(R.string.empty), Toast.LENGTH_LONG).show()
-                            return@setOnClickListener
-                   }
+                        Utilities.longToast(getString(R.string.empty),this)
+                         return@setOnClickListener
+                    }
                     if (LowBattery==true){
                         handler!!.sendMessage(handler!!.obtainMessage(LOWBATTERY, 1, 0, null))
                     }else{
@@ -449,13 +444,13 @@ class PrintScreenActivity : AppCompatActivity() {
                             progressDialog = ProgressDialog.show(this, getString(R.string.bl_dy), getString(R.string.printing_wait))
                             handler!!.sendMessage(handler!!.obtainMessage(PRINTCONTENT, 1, 0, null));
                         } else {
-                            Toast.makeText(this, getString(R.string.ptintInit), Toast.LENGTH_LONG).show()
+                            //Toast.makeText(this, , Toast.LENGTH_LONG).show()
+                            Utilities.longToast(getString(R.string.ptintInit),applicationContext);
                         }
+
                     }
 
         }
-
-
     }
 
     private val printReceive: BroadcastReceiver = object : BroadcastReceiver() {
@@ -504,7 +499,6 @@ class PrintScreenActivity : AppCompatActivity() {
         var intent=Intent();
         setResult(Activity.RESULT_OK);
         finish();
-
     }
 
     private fun setBarCode(barCodeNo:String){
@@ -516,9 +510,11 @@ class PrintScreenActivity : AppCompatActivity() {
         } catch (we: WriterException) {
             we.printStackTrace()
         }
+
         if (bitmap != null) {
-            img_bar_code.setImageBitmap(bitmap)
+            img_bar_code.setImageBitmap(bitmap);
         }
+
     }
 
     private fun setData(rechargeMeterModel: RechargeMeterModel){
@@ -526,7 +522,6 @@ class PrintScreenActivity : AppCompatActivity() {
         if (rechargeMeterModel.result==null){
             return;
         }
-
 
         tv_date.setText(rechargeMeterModel.result.transactionDate)
         tv_vendor_name.setText(rechargeMeterModel.result.vendorId)
@@ -536,8 +531,6 @@ class PrintScreenActivity : AppCompatActivity() {
         tv_address.setText(rechargeMeterModel.result.address)
         tv_meter_number.setText(rechargeMeterModel.result.deviceNumber)
         //tv_terrif.setText(rechargeMeterModel.result.tarrif)
-
-
 
         //var longval:Long=meterListModels[position].amount.toLong();
 
@@ -550,24 +543,21 @@ class PrintScreenActivity : AppCompatActivity() {
         var formatterFloat: DecimalFormat = NumberFormat.getInstance(Locale.US) as DecimalFormat
         formatterFloat.applyPattern("#,###,###,###.##");
 
-
         //val  amoundDouble:Double=rechargeMeterModel.result.amount.toDouble();
         val  chargesDouble:Double=rechargeMeterModel.result.charges.toDouble();
         val  debitRecoveryDouble:Double=rechargeMeterModel.result.debitRecovery.toDouble();
         val  tarrifDouble:Double=rechargeMeterModel.result.tarrif.toDouble();
-        val  unitCostDouble:Double=rechargeMeterModel.result.unitCost.toDouble();
+        //val  unitCostDouble:Double=rechargeMeterModel.result.unitCost.toDouble();
+        val  unitCostDouble:Double=rechargeMeterModel.result.unitCost.replace(",","").toDouble();
         val  taxDouble:Double=rechargeMeterModel.result.tax.toDouble();
 
-
-
-       // var formattedAmount = formatter.format(amoundDouble);
+        // var formattedAmount = formatter.format(amoundDouble);
         var formattedServiceCharge = formatter.format(chargesDouble);
         var formattedRecovery = formatter.format(debitRecoveryDouble);
         var formattedTarrif = formatter.format(tarrifDouble);
 
-        var formattedUnitCost=formatterFloat.format(unitCostDouble)
-        var formattedTax=formatterFloat.format(taxDouble)
-
+        var formattedUnitCost=formatterFloat.format(unitCostDouble);
+        var formattedTax=formatterFloat.format(taxDouble);
 
         tv_gst.setText("le:"+formattedTax);
 
@@ -618,15 +608,12 @@ class PrintScreenActivity : AppCompatActivity() {
         adDialog.setContentView(R.layout.alertdialog);
         adDialog.setCancelable(false);
 
-
         val tv_send = adDialog.findViewById<TextView>(R.id.tv_send);
         val img_close = adDialog.findViewById<AppCompatImageButton>(R.id.img_close);
-
 
         img_close.setOnClickListener {
             adDialog.dismiss();
         }
-
 
         /*tv_done.setOnClickListener {
             //   adDialog.cancel()
@@ -642,9 +629,9 @@ class PrintScreenActivity : AppCompatActivity() {
             } else
                 noNetConnection()
         }*/
+
         tv_send.setOnClickListener { adDialog.cancel() }
         adDialog.show();
-
     }
 
     override fun onDestroy() {
@@ -656,6 +643,5 @@ class PrintScreenActivity : AppCompatActivity() {
         ThermalPrinter.stop()
         super.onDestroy()
     }
-
 
 }

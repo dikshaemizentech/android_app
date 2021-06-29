@@ -45,7 +45,6 @@ class SignUpActivityUsername : Activity(){
         layoutSignIn=findViewById<View>(R.id.layoutSignIn)as LinearLayout
 
         layoutSignIn.setOnClickListener(View.OnClickListener {
-
             val intent = Intent(this@SignUpActivityUsername, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
@@ -80,11 +79,9 @@ class SignUpActivityUsername : Activity(){
         val call: Call<CheckUsernameModel> = Uten.FetchServerData().check_username(usernameET.text.toString().trim())
         call.enqueue(object : Callback<CheckUsernameModel> {
             override fun onResponse(call: Call<CheckUsernameModel>, response: Response<CheckUsernameModel>) {
-
                 if(customDialog.isShowing){
                     customDialog.dismiss()
                 }
-
                 var data=response.body()
                 if(data!=null){
                     if(data.status.equals("true")){
@@ -94,7 +91,6 @@ class SignUpActivityUsername : Activity(){
                     }
                 }
             }
-
             override fun onFailure(call: Call<CheckUsernameModel>, t: Throwable) {
                 val  gs = Gson()
                 gs.toJson(t.localizedMessage)
@@ -102,11 +98,8 @@ class SignUpActivityUsername : Activity(){
                     customDialog.dismiss()
                 }
             }
-
         })
     }
-
-
 
     fun GotoSignUpActivity(){
 

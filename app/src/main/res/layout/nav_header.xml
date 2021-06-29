@@ -18,7 +18,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
 
 
                 <LinearLayout
@@ -28,7 +29,6 @@
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="30dp">
-
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/userpic"
                         android:layout_width="90dp"
@@ -36,7 +36,6 @@
                         android:src="@drawable/dummyuser"
                         app:civ_border_color="@color/colorPrimary"
                         app:civ_border_width="0.5dp" />
-
                     <TextView
                         android:id="@+id/usernameTV"
                         android:layout_width="wrap_content"
@@ -53,8 +52,8 @@
                         android:gravity="center"
                         android:textColor="@color/colorblack"
                         android:textSize="@dimen/_16ssp"
-                        android:textStyle="bold" />
-
+                        android:textStyle="bold"
+                        android:layout_marginBottom="@dimen/_20sdp"/>
                     <TextView
                         android:id="@+id/editprofileTV"
                         android:layout_width="wrap_content"
@@ -77,6 +76,39 @@
                     android:padding="10dp"
                     android:src="@drawable/editp" />
 
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:id="@+id/fl_count">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:padding="@dimen/_5sdp"
+                    android:background="@color/colorblack">
+                    <ImageView
+                        android:layout_width="@dimen/_13sdp"
+                        android:layout_height="@dimen/_13sdp"
+                        android:src="@drawable/bellicon"/>
+                </RelativeLayout>
+                <TextView
+                        android:id="@+id/notificationCountTV"
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
+                        android:background="@drawable/circle_themecolor"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/_10sdp"
+                        android:visibility="visible"
+                        android:layout_gravity="right|bottom"/>
+                </FrameLayout>
+
             </RelativeLayout>
 
             <LinearLayout
@@ -84,18 +116,20 @@
                 android:layout_height="match_parent"
                 android:background="@color/colorPrimaryDark"
                 android:orientation="vertical"
-                android:padding="@dimen/_25dp">
+                android:padding="@dimen/_25dp"
+                android:layout_weight="1">
 
                 <LinearLayout
                     android:id="@+id/dashboardLL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/_5sdp">
 
                     <ImageView
                         android:layout_width="@dimen/_15sdp"
                         android:layout_height="@dimen/_15sdp"
-                        android:src="@drawable/dashboard" />
+                        android:src="@drawable/dashboard"/>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -106,13 +140,13 @@
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/_13ssp" />
                 </LinearLayout>
-
                 <LinearLayout
                     android:id="@+id/dashboard_add_bill_payment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:layout_marginTop="@dimen/_8sdp">
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:padding="@dimen/_5sdp">
 
                     <ImageView
                         android:layout_width="@dimen/_15sdp"
@@ -127,14 +161,13 @@
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/_13ssp" />
                 </LinearLayout>
-
-
                 <LinearLayout
                     android:id="@+id/meterLL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:layout_marginTop="@dimen/_8sdp">
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:padding="@dimen/_5sdp">
 
                     <ImageView
                         android:layout_width="@dimen/_15sdp"
@@ -155,7 +188,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:layout_marginTop="@dimen/_8sdp">
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:padding="@dimen/_5sdp">
 
                     <ImageView
                         android:layout_width="@dimen/_15sdp"
@@ -175,7 +209,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:layout_marginTop="@dimen/_8sdp">
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:padding="@dimen/_5sdp">
                     <ImageView
                         android:layout_width="@dimen/_15sdp"
                         android:layout_height="@dimen/_15sdp"
@@ -189,13 +224,13 @@
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/_13ssp" />
                 </LinearLayout>
-
                 <LinearLayout
                     android:id="@+id/reportLL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:layout_marginTop="@dimen/_8sdp">
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:padding="@dimen/_5sdp">
 
                     <ImageView
                         android:layout_width="@dimen/_15sdp"
@@ -216,7 +251,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:layout_marginTop="@dimen/_8sdp">
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:padding="@dimen/_5sdp">
 
                     <ImageView
                         android:layout_width="@dimen/_15sdp"
@@ -232,14 +268,14 @@
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/_13ssp"/>
                 </LinearLayout>
-
-                <LinearLayout
+                <!--<LinearLayout
                     android:id="@+id/notificationsLL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:layout_marginTop="@dimen/_8sdp">
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:padding="@dimen/_5sdp">
 
                     <ImageView
                         android:layout_width="@dimen/_15sdp"
@@ -266,7 +302,7 @@
                         android:textColor="@color/colorblack"
                         android:textSize="@dimen/_14ssp"
                         android:visibility="gone" />
-                </LinearLayout>
+                </LinearLayout>-->
                 <LinearLayout
                     android:id="@+id/privacyLL"
                     android:layout_width="match_parent"
@@ -340,7 +376,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:layout_marginTop="@dimen/_8sdp">
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:padding="@dimen/_5sdp">
 
                     <ImageView
                         android:layout_width="@dimen/_15sdp"
@@ -361,7 +398,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:layout_marginTop="@dimen/_8sdp">
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:padding="@dimen/_5sdp">
                     <ImageView
                         android:layout_width="@dimen/_15sdp"
                         android:layout_height="@dimen/_15sdp"

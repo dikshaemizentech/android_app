@@ -39,6 +39,44 @@
                 android:textStyle="bold" />
 
             <RelativeLayout
+                android:id="@+id/select_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_25dp"
+                android:background="@drawable/boarder_lightprimary"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="5dp">
+
+                <Spinner
+                    android:id="@+id/typeSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_toStartOf="@+id/userarrow"
+                    android:layout_toLeftOf="@+id/userarrow"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:spinnerMode="dropdown" />
+
+
+                <ImageView
+                    android:id="@+id/userarrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/down_arrow" />
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/selectUser"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -12,10 +12,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import com.bumptech.glide.Glide
@@ -68,7 +65,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
     lateinit var reportLL: LinearLayout
     lateinit var meterLL: LinearLayout
     lateinit var changepasswordLL: LinearLayout
-    lateinit var notificationLL: LinearLayout
+    lateinit var fl_count: FrameLayout
     lateinit var termsLL: LinearLayout
     lateinit var privacyLL: LinearLayout
     lateinit var shareappLL: LinearLayout
@@ -148,7 +145,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
         reportLL = navigationView.findViewById<View>(R.id.reportLL) as LinearLayout
         meterLL = navigationView.findViewById<View>(R.id.meterLL) as LinearLayout
         changepasswordLL = navigationView.findViewById<View>(R.id.changepassLL) as LinearLayout
-        notificationLL = navigationView.findViewById<View>(R.id.notificationsLL) as LinearLayout
+        fl_count = navigationView.findViewById<View>(R.id.fl_count) as FrameLayout
         termsLL = navigationView.findViewById<View>(R.id.tcLL) as LinearLayout
         privacyLL = navigationView.findViewById<View>(R.id.privacyLL) as LinearLayout
         logoutLL = navigationView.findViewById<View>(R.id.logoutLL) as LinearLayout
@@ -177,7 +174,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
         editUserProfile.setOnClickListener(this)
         editprofileTV.setOnClickListener(this)
         shareappLL.setOnClickListener(this)
-        notificationLL.setOnClickListener(this)
+        fl_count.setOnClickListener(this)
 
 
         SetUpProfile()
@@ -201,21 +198,21 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
 
             walletLL.alpha = 1.toFloat()
             meterLL.alpha = 1.toFloat()
-            notificationLL.alpha = 1.toFloat()
+            //notificationLL.alpha = 1.toFloat()
 
             walletLL.isEnabled = true
             meterLL.isEnabled = true
-            notificationLL.isEnabled = true
+            //notificationLL.isEnabled = true
 
         } else {
 
             walletLL.alpha = 0.5.toFloat()
             meterLL.alpha = 0.5.toFloat()
-            notificationLL.alpha = 0.5.toFloat()
+            //notificationLL.alpha = 0.5.toFloat()
 
             walletLL.isEnabled = false
             meterLL.isEnabled = false
-            notificationLL.isEnabled = false
+            //notificationLL.isEnabled = false
 
         }
 
@@ -229,7 +226,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
             R.id.dashboardLL -> {
                 if (drawerLayout!!.isDrawerOpen(Gravity.START))
                     drawerLayout!!.closeDrawer(Gravity.START)
-
                 Handler().postDelayed({ LoadDashboardFragment() }, 400)
             }
             R.id.dashboard_add_bill_payment -> {
@@ -291,17 +287,10 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
                 if (drawerLayout!!.isDrawerOpen(Gravity.START))
                     drawerLayout!!.closeDrawer(Gravity.START)
                 Handler().postDelayed({
-
                     GenerateRefferalCode()
-
                 }, 400)
-
             }
-            R.id.notificationsLL -> {
-
-//                if (drawerLayout!!.isDrawerOpen(Gravity.START))
-//                    drawerLayout!!.closeDrawer(Gravity.START)
-
+            R.id.fl_count -> {
                 Handler().postDelayed({
 
                     val i = Intent(this@HomeActivity, NotificationsListActivity::class.java)
@@ -355,7 +344,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
         if (requestCode==1201){
             //Toast.makeText(this,"fnksfnksnfksnf",Toast.LENGTH_LONG).show();
 
@@ -406,7 +394,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
     }
 
     fun ShareAppLink(code: String) {
-
         try {
             val shareIntent = Intent(Intent.ACTION_SEND)
             shareIntent.type = "text/plain"
@@ -418,8 +405,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
         } catch (e: Exception) {
 
         }
-
-
     }
 
     fun ShowAlertForLogout() {
@@ -516,8 +501,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
 
         var customDialog: CustomDialog
         customDialog = CustomDialog(this)
-        customDialog.show()
-
+        customDialog.show();
         val call: Call<NavigationListModel> = Uten.FetchServerData().get_navigation(SharedHelper.getString(this, Constants.TOKEN), SharedHelper.getString(this, Constants.USER_ID))
         call.enqueue(object : Callback<NavigationListModel> {
             override fun onResponse(call: Call<NavigationListModel>, response: Response<NavigationListModel>) {

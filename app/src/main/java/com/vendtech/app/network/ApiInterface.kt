@@ -29,10 +29,7 @@ interface ApiInterface {
 
     @FormUrlEncoded
     @POST("Account/SignUp")
-    fun sign_up(@Field("Email") Email: String, @Field("Password") Password: String, @Field("FirstName") FirstName: String, @Field("LastName") LastName: String,
-                @Field("UserName") UserName: String, @Field("UserType") UserType: String, @Field("CompanyName") CompanyName: String, @Field("Country") Country: String,
-                @Field("City") City: String, @Field("Address") Address: String, @Field("Phone") Phone: String, @Field("ReferralCode") ReferralCode: String,
-                @Field("DeviceType") DeviceType: String, @Field("AppType") AppType: String, @Field("DeviceToken") DeviceToken: String, @Field("AppUserType") AppUserType: String
+    fun sign_up(@Field("Email") Email: String, @Field("Password") Password: String, @Field("FirstName") FirstName: String, @Field("LastName") LastName: String, @Field("UserName") UserName: String, @Field("UserType") UserType: String, @Field("CompanyName") CompanyName: String, @Field("Country") Country: String, @Field("City") City: String, @Field("Address") Address: String, @Field("Phone") Phone: String, @Field("ReferralCode") ReferralCode: String, @Field("DeviceType") DeviceType: String, @Field("AppType") AppType: String, @Field("DeviceToken") DeviceToken: String, @Field("AppUserType") AppUserType: String
     ): Call<SignUpResponse>
 
     @FormUrlEncoded
@@ -127,15 +124,7 @@ interface ApiInterface {
 
     @FormUrlEncoded
     @POST("Deposit/SaveDepositRequest")
-    fun deposit_request(@Header("token") Token: String,
-                        @Field("PosId") posId: Int,
-                        @Field("BankAccountId") bankAccountId: String,
-                        @Field("DepositType") depositType: String,
-                        @Field("ChkOrSlipNo") ChkOrSlipNo: String,
-                        @Field("ChkBankName") bankName: String?,
-                        @Field("NameOnCheque") nameOnCheque: String?,
-                        @Field("Amount") amount: String,
-                        @Field("TotalAmountWithPercentage") totalAmountWithPercentage: String): Call<DepositRequestModel>
+    fun deposit_request(@Header("token") Token: String, @Field("PosId") posId: Int, @Field("BankAccountId") bankAccountId: String, @Field("DepositType") depositType: String, @Field("ChkOrSlipNo") ChkOrSlipNo: String, @Field("ChkBankName") bankName: String?, @Field("NameOnCheque") nameOnCheque: String?, @Field("Amount") amount: String, @Field("TotalAmountWithPercentage") totalAmountWithPercentage: String): Call<DepositRequestModel>
 
    /* @FormUrlEncoded
     @POST("Meter/RechargeMeter")
