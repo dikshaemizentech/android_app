@@ -48,7 +48,8 @@ class LoginActivity : BaseActivity() {
 
         layoutSignUp.setOnClickListener { v ->
 
-            val intent = Intent(this@LoginActivity, SignUpActivityUsername::class.java)
+            //val intent = Intent(this@LoginActivity, SignUpActivityUsername::class.java)
+            val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
             startActivity(intent)
             finish()
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out)

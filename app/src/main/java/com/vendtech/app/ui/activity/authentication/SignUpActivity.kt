@@ -81,8 +81,8 @@ class SignUpActivity : AppCompatActivity() {
             CITY_ID=""
 
 
-            USER_NAME=intent.getStringExtra("username")
-            PASSWORD=intent.getStringExtra("password")
+           // USER_NAME=intent.getStringExtra("username")
+            //PASSWORD=intent.getStringExtra("password")
 
             listListners()
             getUserTypes()
@@ -153,14 +153,11 @@ class SignUpActivity : AppCompatActivity() {
         })
 
         selectCityTV.setOnClickListener(View.OnClickListener {
-
             Utilities.shortToast("Select country first",this)
         })
 
         backPress.setOnClickListener(View.OnClickListener {
-
             GotoLogin()
-
         })
 
         selectUser.setOnClickListener(View.OnClickListener {
@@ -168,12 +165,10 @@ class SignUpActivity : AppCompatActivity() {
         })
 
         selectCity.setOnClickListener(View.OnClickListener {
-
             if(selectCityTV.visibility==View.VISIBLE){
                 Utilities.shortToast("Select country first",this)
             }else{
                 citySpinner.performClick()
-
             }
         })
 
