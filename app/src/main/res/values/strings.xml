@@ -110,4 +110,22 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
     <string name="operation_result">Result</string>
 
     <string name="LowBattery">Low battery, please connect the charger!</string>
+
+
+
+    <string name="f_name">First Name</string>
+    <string name="rep_f_name">REP. First Name</string>
+    <string name="rep_l_name">REP. Last Name</string>
+    <string name="l_name">Last Name</string>
+
+    <string name="maker_not_find">Cannot Find Black Block</string>
+
+    <string name="thank_msg">Thank you for creating your VENDTECH Account.</string>
+    <string name="bill_payments"><![CDATA[<---  BILL PAYMENT (EDSA)]]></string>
+    <string name="save_your_meters"><![CDATA[<---  SAVE YOUR METERS]]></string>
+    <string name="manage_pos"><![CDATA[<---  MANAGE POS (VIEW BALANCE)]]></string>
+    <string name="manage_wallets"><![CDATA[<---  MANAGE WALLET (ADD FUNDS)]]></string>
+    <string name="manage_reports_"><![CDATA[<---  MANAGE REPORTS (VIEW HISTORY)]]></string>
+
+
 </resources>

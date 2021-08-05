@@ -54,6 +54,7 @@ class DepositTransactionAdapter(internal var depositListModels: MutableList<Depo
 
             val i = Intent(context, DepositTransactionDetails::class.java)
             i.putExtra("depositId",depositListModels[position].depositId)
+            i.putExtra("type","")
             context.startActivity(i)
             activity.overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
 
@@ -82,15 +83,11 @@ class DepositTransactionAdapter(internal var depositListModels: MutableList<Depo
         lateinit var rootView:LinearLayout
 
         init {
-
-
             transID = itemView.findViewById<View>(R.id.transactionidTV) as TextView
             date = itemView.findViewById<View>(R.id.dateTV) as TextView
             amount = itemView.findViewById<View>(R.id.amountTV) as TextView
             title = itemView.findViewById<View>(R.id.titleTV) as TextView
             rootView=itemView.findViewById<View>(R.id.rootView)as LinearLayout
-
-
         }
 
     }

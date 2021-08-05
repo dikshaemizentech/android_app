@@ -20,10 +20,12 @@ import com.vendtech.app.base.BaseActivity
 import com.vendtech.app.helper.SharedHelper
 import com.vendtech.app.models.profile.GetProfileModel
 import com.vendtech.app.network.Uten
+import com.vendtech.app.ui.Print.StringAlignUtils
 import com.vendtech.app.ui.activity.authentication.LoginActivity
 import com.vendtech.app.ui.activity.home.HomeActivity
 import com.vendtech.app.utils.Constants
 import com.vendtech.app.utils.Utilities
+import kotlinx.android.synthetic.main.print_screen_layout.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -42,6 +44,14 @@ class Splash : BaseActivity() {
        // if(checkAndRequestPermissions()){
            GoInsideApp()
         //}
+
+
+        var tv_address=
+            ("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt "
+                    + "ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris "
+                    + "nisi ut aliquip ex ea commodo consequat.")
+        var rightALign= StringAlignUtils(tv_address.length, StringAlignUtils.Alignment.CENTER);
+        Log.d("---",""+rightALign.format(tv_address))
 
 
 

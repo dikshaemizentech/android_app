@@ -29,7 +29,7 @@ interface ApiInterface {
 
     @FormUrlEncoded
     @POST("Account/SignUp")
-    fun sign_up(@Field("Email") Email: String, @Field("Password") Password: String, @Field("FirstName") FirstName: String, @Field("LastName") LastName: String, @Field("UserName") UserName: String, @Field("UserType") UserType: String, @Field("CompanyName") CompanyName: String, @Field("Country") Country: String, @Field("City") City: String, @Field("Address") Address: String, @Field("Phone") Phone: String, @Field("ReferralCode") ReferralCode: String, @Field("DeviceType") DeviceType: String, @Field("AppType") AppType: String, @Field("DeviceToken") DeviceToken: String, @Field("AppUserType") AppUserType: String
+    fun sign_up(@Field("Agency") Agency: String,@Field("Email") Email: String, /*@Field("Password") Password: String ,*/@Field("FirstName") FirstName: String, @Field("LastName") LastName: String/*, @Field("UserName") UserName: String*/, @Field("UserType") UserType: String, @Field("CompanyName") CompanyName: String, @Field("Country") Country: String, @Field("City") City: String, @Field("Address") Address: String, @Field("Phone") Phone: String, @Field("ReferralCode") ReferralCode: String, @Field("DeviceType") DeviceType: String, @Field("AppType") AppType: String, @Field("DeviceToken") DeviceToken: String, @Field("AppUserType") AppUserType: String
     ): Call<SignUpResponse>
 
     @FormUrlEncoded

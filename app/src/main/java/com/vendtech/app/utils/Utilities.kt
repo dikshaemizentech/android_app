@@ -67,8 +67,31 @@ fun formatToUtc(date:String):String{
             }
 
         }
+        fun changeDateFormatWithAmPm(context: Context, dates: String): String {
 
-fun changeDateFormat(dates: String): String {
+
+            Log.d("BeforechangeDate",""+dates);
+
+
+            try {
+                var date = dates
+                var spf = SimpleDateFormat("MM/dd/yyyy hh:mm:ss aa")
+               // spf.setTimeZone(TimeZone.getTimeZone("UTC"));
+                val newDate = spf.parse(date)
+                spf.timeZone = TimeZone.getDefault()
+                spf = SimpleDateFormat("dd/MM/yyyy : hh:mm aa")
+                date = spf.format(newDate)
+
+                return date
+
+            } catch (e: Exception) {
+
+                return "N/A"
+            }
+
+        }
+
+       fun changeDateFormat(dates: String): String {
 
 
             try {
@@ -89,9 +112,7 @@ fun changeDateFormat(dates: String): String {
 
         }
 
-
         fun DateFormatNotificationList(dates: String): String {
-
             try {
                 var date = dates
                 var spf = SimpleDateFormat("MM/dd/yyyy hh:mm:ss aa")
@@ -107,7 +128,6 @@ fun changeDateFormat(dates: String): String {
 
                 return "N/A"
             }
-
         }
 
 
@@ -177,8 +197,6 @@ fun changeDateFormat(dates: String): String {
 
 
         fun changeDateFormat2(context: Context, dates: String): String {
-
-
             try {
                 var date = dates
                 var spf = SimpleDateFormat("EEEE,dd MMMM yyyy")
@@ -195,8 +213,6 @@ fun changeDateFormat(dates: String): String {
 
                 return "N/A"
             }
-
-
         }
 
 
@@ -206,7 +222,6 @@ fun changeDateFormat(dates: String): String {
 
 
         fun PleaseResetPassword(context: Context, isFinish: Boolean, activity: Activity) {
-
 
             val dialog = AlertDialog.Builder(context)
             dialog.setCancelable(false)

@@ -35,11 +35,10 @@ class RechargeTransactionAdapter(internal var meterListModels: MutableList<Recha
 
         holder.title.text = "Meter no: "+meterListModels[position].meterNumber
         holder.amount.text = "SLL: ${NumberFormat.getNumberInstance(Locale.US).format(meterListModels[position].amount.toDouble().toInt())}"
-      //  holder.date.text = /*Utilities.changeDateFormat(context,*/meterListModels[position].createdAt
+        //  holder.date.text = /*Utilities.changeDateFormat(context,*/meterListModels[position].createdAt
         holder.date.text = Utilities.formatToUtc(meterListModels[position].createdAt)
 
         holder.transID.text = meterListModels[position].status
-
 
         if(meterListModels[position].status.equals("Pending")){
             holder.transID.setTextColor(ContextCompat.getColor(context,R.color.colorred))
@@ -60,8 +59,6 @@ class RechargeTransactionAdapter(internal var meterListModels: MutableList<Recha
 
 
         })
-
-
 
     }
 

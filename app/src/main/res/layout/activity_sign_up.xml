@@ -24,9 +24,8 @@
                 android:id="@+id/imgBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/_8sdp"
+                android:padding="@dimen/_10sdp"
                 android:src="@drawable/left_arrow" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -206,10 +205,11 @@
                     android:fontFamily="@font/regular"
                     android:paddingLeft="@dimen/padding8"
                     android:paddingRight="@dimen/padding8"
-                    android:text="First Name"
+                    android:text="@string/f_name"
                     android:textAllCaps="true"
                     android:textColor="@color/colorlightPrimary"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:id="@+id/tv_fname_txt"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -253,10 +253,11 @@
                     android:fontFamily="@font/regular"
                     android:paddingLeft="@dimen/padding8"
                     android:paddingRight="@dimen/padding8"
-                    android:text="Last Name"
+                    android:text="@string/l_name"
                     android:textAllCaps="true"
                     android:textColor="@color/colorlightPrimary"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:id="@+id/tv_l_name_txt"/>
             </RelativeLayout>
 
 
@@ -371,10 +372,46 @@
                     android:gravity="center"
                     android:padding="@dimen/padding12">
 
+
                     <ImageView
                         android:layout_width="@dimen/_15sdp"
                         android:layout_height="@dimen/_15sdp"
-                        android:src="@drawable/mobile" />
+                        android:src="@drawable/mobile"
+                        android:layout_gravity="center"/>
+
+                    <LinearLayout
+                        android:layout_width="@dimen/_70sdp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/boarder_lightprimary"
+                        android:paddingEnd="10dp"
+                        android:paddingRight="10dp"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="@dimen/_5sdp">
+
+
+
+                        <Spinner
+                            android:id="@+id/spinner_code"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:background="@android:color/transparent"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:spinnerMode="dropdown" />
+
+
+                        <ImageView
+                             android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/down_arrow"
+                            android:layout_gravity="center"/>
+                    </LinearLayout>
 
                     <EditText
                         android:id="@+id/phoneET"
@@ -385,7 +422,7 @@
                         android:fontFamily="@font/regular"
                         android:hint=""
                         android:inputType="phone"
-                        android:maxLength="10"
+                        android:maxLength="8"
                         android:maxLines="1"
                         android:singleLine="true"
                         android:textColor="@color/colorWhite"
@@ -557,7 +594,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin16">
+                android:layout_marginTop="@dimen/margin16"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -601,7 +639,6 @@
                     android:textColor="@color/colorlightPrimary"
                     android:textSize="14sp" />
             </RelativeLayout>
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -650,15 +687,14 @@
                     android:textColor="@color/colorlightPrimary"
                     android:textSize="14sp" />
             </RelativeLayout>
-
-
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin16"
                 android:gravity="center|start"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
 
                 <CheckBox
@@ -694,7 +730,7 @@
                 android:fontFamily="@font/medium"
                 android:gravity="center"
                 android:padding="@dimen/padding16"
-                android:text="Sign up"
+                android:text="@string/register"
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textColor="@color/colorPrimaryDark"

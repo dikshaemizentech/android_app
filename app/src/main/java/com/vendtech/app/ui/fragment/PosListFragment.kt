@@ -43,6 +43,7 @@ class PosListFragment : Fragment(){
             return PosListFragment()
         }
     }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
       val view=LayoutInflater.from(context).inflate(R.layout.fragment_pos_list,container,false)
         return view
@@ -89,7 +90,6 @@ class PosListFragment : Fragment(){
                     customDialog.dismiss()
                 }
             }
-
             override fun onResponse(call: Call<PosListModel>, response: Response<PosListModel>) {
                 if(customDialog.isShowing){
                     customDialog.dismiss()
@@ -106,7 +106,6 @@ class PosListFragment : Fragment(){
                     }
                 }
             }
-
         })
     }
 
@@ -122,8 +121,7 @@ class PosListFragment : Fragment(){
        }*/
        tv_total.setText(resources.getString(R.string.total_balance)+" "+NumberFormat.getNumberInstance(Locale.US).format(result.totalCount));
 
-        if (result.totalCount.equals("0"))
-        {
+        if (result.totalCount.equals("0")){
             ll_total.visibility=View.GONE
         }
 

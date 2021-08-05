@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin8"
-            android:padding="@dimen/_8sdp"
+            android:padding="@dimen/_10sdp"
             android:src="@drawable/left_arrow"/>
 
 
@@ -432,7 +432,6 @@
                         android:text="" />
 
                 </LinearLayout>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -456,7 +455,6 @@
                         android:text="" />
 
                 </LinearLayout>
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -488,7 +486,6 @@
                         android:background="@color/colorlightPrimary" />
 
                 </RelativeLayout>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -512,7 +509,6 @@
                         android:text="" />
 
                 </LinearLayout>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -636,17 +632,24 @@
                         android:textStyle="italic"
                         android:id="@+id/tv_web_text"/>
 
-                    <TextView
+                    <!--<TextView
                         style="@style/text_bold_nocaps"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="right"
                         android:text="Call +232 76 990 990"
+                        android:id="@+id/tv_phone_no"/>-->
+                    <TextView
+                        style="@style/text_bold_nocaps"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="Call +232 79 990990"
                         android:id="@+id/tv_phone_no"/>
                 </LinearLayout>
             </LinearLayout>
-
 
         </LinearLayout>
 
@@ -657,7 +660,7 @@
         android:orientation="horizontal"
         android:gravity="right"
         android:paddingBottom="@dimen/_20"
-        android:paddingRight="@dimen/_20"
+        android:paddingRight="@dimen/_3sdp"
         android:paddingTop="@dimen/_5sdp">
         <LinearLayout
             android:layout_width="match_parent"
@@ -690,19 +693,27 @@
             android:layout_marginRight="@dimen/_10ssp"
             android:layout_toLeftOf="@+id/tv_print"
             android:background="@drawable/button_gray_prnt"
-            android:padding="@dimen/_5sdp"
+            android:paddingTop="@dimen/_8sdp"
+            android:paddingBottom="@dimen/_8sdp"
+            android:paddingLeft="@dimen/_15sdp"
+            android:paddingRight="@dimen/_15sdp"
             android:text="SMS"
-            android:textSize="@dimen/_12sdp" />
+            android:textSize="@dimen/_12sdp"
+            android:layout_marginLeft="@dimen/_5sdp"/>
         <TextView
             android:id="@+id/tv_print"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:background="@drawable/button_yellow_prnt"
-            android:padding="@dimen/_5sdp"
+            android:paddingTop="@dimen/_8sdp"
+            android:paddingBottom="@dimen/_8sdp"
+            android:paddingLeft="@dimen/_20sdp"
+            android:paddingRight="@dimen/_20sdp"
             android:text="PRINT"
             android:textSize="@dimen/_12sdp"
             />
+
     </LinearLayout>
 
 

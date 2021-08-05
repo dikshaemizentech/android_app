@@ -89,11 +89,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_10sdp"
-                    android:padding="@dimen/_5sdp"
-                    android:background="@color/colorblack">
+                    android:padding="@dimen/_3sdp">
                     <ImageView
-                        android:layout_width="@dimen/_13sdp"
-                        android:layout_height="@dimen/_13sdp"
+                        android:layout_width="@dimen/_17sdp"
+                        android:layout_height="@dimen/_17sdp"
                         android:src="@drawable/bellicon"/>
                 </RelativeLayout>
                 <TextView
@@ -377,7 +376,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:layout_marginTop="@dimen/_8sdp"
-                    android:padding="@dimen/_5sdp">
+                    android:padding="@dimen/_5sdp"
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="@dimen/_15sdp"

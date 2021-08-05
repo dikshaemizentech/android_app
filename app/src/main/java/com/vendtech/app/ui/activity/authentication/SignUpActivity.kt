@@ -44,14 +44,20 @@ class SignUpActivity : AppCompatActivity() {
     lateinit var countrySpinner:Spinner
     lateinit var citySpinner:Spinner
     lateinit var userSpinner:Spinner
+    lateinit var typeSpinner:Spinner
+    lateinit var spinner_code:Spinner
     lateinit var CITY_ID:String
     lateinit var COUNTRY_ID:String
     lateinit var USER_TYPE_ID:String
     lateinit var AppUserType:String
     var USER_NAME = ""
+    var Agency = ""
     lateinit var mainLayout: NestedScrollView
     lateinit var errorLayout:LinearLayout
     lateinit var backPress:TextView
+    lateinit var tv_fname_txt:TextView
+    lateinit var tv_l_name_txt:TextView
+
     lateinit var checkBoxTC:CheckBox
     lateinit var termConditionTV:TextView
     lateinit var companyNameRL:RelativeLayout
@@ -68,17 +74,22 @@ class SignUpActivity : AppCompatActivity() {
             countrySpinner = findViewById(R.id.countrySpinner)
             citySpinner = findViewById(R.id.citySpinner)
             userSpinner = findViewById(R.id.userSpinner)
+            spinner_code = findViewById(R.id.spinner_code)
+            typeSpinner = findViewById(R.id.typeSpinner)
             mainLayout = findViewById(R.id.mainlayout)
             errorLayout = findViewById(R.id.error_layout)
             backPress = findViewById(R.id.backPress)
             checkBoxTC=findViewById(R.id.agreeTermsCB)
             termConditionTV=findViewById(R.id.termsConditionTV)
             companyNameRL=findViewById(R.id.companyNameRL)
+            tv_fname_txt=findViewById(R.id.tv_fname_txt)
+            tv_l_name_txt=findViewById(R.id.tv_l_name_txt)
             customDialog= CustomDialog(this)
 
             USER_TYPE_ID=""
             COUNTRY_ID=""
             CITY_ID=""
+            Agency=""
 
 
            // USER_NAME=intent.getStringExtra("username")
@@ -86,7 +97,8 @@ class SignUpActivity : AppCompatActivity() {
 
             listListners()
             getUserTypes()
-            getCountries()
+            getCountries();
+            setCountryCode()
     }
 
     private fun listListners() {
@@ -94,55 +106,54 @@ class SignUpActivity : AppCompatActivity() {
         imgBack.setOnClickListener { v -> onBackPressed() }
         layoutLogin.setOnClickListener { v -> GotoLogin() }
         signUpTV.setOnClickListener(View.OnClickListener {
-
-            if(TextUtils.isEmpty(USER_TYPE_ID)){
+            if (TextUtils.isEmpty(Agency)){
+                Utilities.shortToast("Select Agency",this)
+            }
+            else if(TextUtils.isEmpty(USER_TYPE_ID)){
                 Utilities.shortToast("Select user type",this)
             }else if(USER_TYPE_ID.contentEquals("20") && TextUtils.isEmpty(companynameET.text.toString().trim())){
                 Utilities.shortToast("Enter company name",this)
             }else if(USER_TYPE_ID.contentEquals("20") && companynameET.text.toString().trim().length<3){
                 Utilities.shortToast("Company name should be atleast 3 charachters",this)
             }
-            else if(TextUtils.isEmpty(fnameET.text.toString().trim())){
+             else if(TextUtils.isEmpty(fnameET.text.toString().trim())){
                 Utilities.shortToast("Enter first name",this)
             }else if(fnameET.text.toString().trim().length<3) {
                 Utilities.shortToast(resources.getString(R.string.first_name_length),this)
-            }else if(TextUtils.isEmpty(lastnameTV.text.toString().trim())) {
+             }else if(TextUtils.isEmpty(lastnameTV.text.toString().trim())) {
                 Utilities.shortToast("Enter last name",this)
             }else if(lastnameTV.text.toString().trim().length<3) {
                 Utilities.shortToast(resources.getString(R.string.last_name_length),this)
             }
-            /*  else if(TextUtils.isEmpty(usernameET.text.toString().trim())) {
+             /*  else if(TextUtils.isEmpty(usernameET.text.toString().trim())) {
                 Utilities.shortToast("Enter Username",this)
-            }else if(usernameET.text.toString().trim().length<3) {
+              }else if(usernameET.text.toString().trim().length<3) {
                 Utilities.shortToast(resources.getString(R.string.user_name_length),this)
-            }*/
-            else if(TextUtils.isEmpty(emailET.text.toString().trim())) {
+             }*/
+             else if(TextUtils.isEmpty(emailET.text.toString().trim())) {
                 Utilities.shortToast("Enter email address",this)
             }else if(!emailET.text.matches(Patterns.EMAIL_ADDRESS.toRegex())){
                 Utilities.shortToast("Enter a valid email address",this);
             } else if(TextUtils.isEmpty(phoneET.text.toString().trim())) {
                 Utilities.shortToast("Enter phone number",this)
-            } else if(phoneET.text.toString().trim().length!=10) {
+             } else if(phoneET.text.toString().trim().length!=8) {
                 Utilities.shortToast("Enter a valid phone number",this)
-
             } else if(TextUtils.isEmpty(addressET.text.toString().trim())) {
                 Utilities.shortToast("Enter address",this)
-
             } else if(TextUtils.isEmpty(COUNTRY_ID)) {
                 Utilities.shortToast("Select country",this)
 
             } else if(TextUtils.isEmpty(CITY_ID)) {
                 Utilities.shortToast("Select city",this)
-
             } else if(addressET.text.toString().trim().length<7) {
                 Utilities.shortToast(resources.getString(R.string.address_length),this)
             }/*else if(TextUtils.isEmpty(passwordET.text.toString().trim())) {
                 Utilities.shortToast("Enter password",this)
             } else if(passwordET.text.toString().trim().length<6) {
                 Utilities.shortToast(resources.getString(R.string.pass_length),this)
-            } */else if(!checkBoxTC.isChecked) {
+            } else if(!checkBoxTC.isChecked) {
                 Utilities.shortToast("Please accept Terms & Conditions and Privacy Policy",this)
-            }else {
+            }*/else {
                 if(Uten.isInternetAvailable(this)){
                   //  USER_NAME=usernameET.text.toString().trim()
                     DoSignUp()
@@ -163,6 +174,10 @@ class SignUpActivity : AppCompatActivity() {
         selectUser.setOnClickListener(View.OnClickListener {
             userSpinner.performClick()
         })
+
+        select_type.setOnClickListener {
+                typeSpinner.performClick();
+        }
 
         selectCity.setOnClickListener(View.OnClickListener {
             if(selectCityTV.visibility==View.VISIBLE){
@@ -228,11 +243,11 @@ class SignUpActivity : AppCompatActivity() {
 
         var companyName=""
 
-//        if(USER_TYPE_ID.contentEquals("20")){
-//            companyName=companynameET.text.toString().trim()
-//        }else{
-//            companyName=""
-//        }
+        if(USER_TYPE_ID.contentEquals("20")){
+            companyName=companynameET.text.toString().trim()
+        }else{
+            companyName=""
+        }
 
         USER_TYPE_ID="AppUser"
           var  DeviceType="ABC"
@@ -240,7 +255,7 @@ class SignUpActivity : AppCompatActivity() {
         customDialog.show()
 
 
-        val call: Call<SignUpResponse> = Uten.FetchServerData().sign_up(emailET.text.toString().trim(),PASSWORD,
+       /* val call: Call<SignUpResponse> = Uten.FetchServerData().sign_up(Agency,emailET.text.toString().trim(),PASSWORD,
                 fnameET.text.toString().trim(),
                 lastnameTV.text.toString().trim(),
                 USER_NAME,
@@ -252,9 +267,21 @@ class SignUpActivity : AppCompatActivity() {
                 phoneET.text.toString().trim(),
                 referralcodeET.text.toString().trim(),
                 DeviceType,AppType,SharedHelper.getString(this,Constants.TOKEN),
-                AppUserType )
+                AppUserType)*/
 
 
+        val call: Call<SignUpResponse> = Uten.FetchServerData().sign_up(Agency,emailET.text.toString().trim(),
+                fnameET.text.toString().trim(),
+                lastnameTV.text.toString().trim(),
+                USER_TYPE_ID,
+                companyName,
+                COUNTRY_ID,
+                CITY_ID,
+                addressET.text.toString().trim(),
+                phoneET.text.toString().trim(),
+                referralcodeET.text.toString().trim(),
+                DeviceType,AppType,SharedHelper.getString(this,Constants.TOKEN),
+                AppUserType)
 
         call.enqueue(object : Callback<SignUpResponse> {
             override fun onResponse(call: Call<SignUpResponse>, response: Response<SignUpResponse>) {
@@ -266,20 +293,20 @@ class SignUpActivity : AppCompatActivity() {
                 var data=response.body()
 
                 if(data!=null){
-
-
                     if(data.status.equals("true")){
                        // GotoLogin()
                         SharedHelper.putString(this@SignUpActivity,Constants.USER_ID,data.result.userId)
                         SharedHelper.putString(this@SignUpActivity,Constants.USER_ACCOUNT_STATUS,data.result.accountStatus)
-
-                        GotoVerifyOTP()
+                        //GotoVerifyOTP()
+                        finish();
+                        Utilities.shortToast(resources.getString(R.string.thank_msg),this@SignUpActivity)
+                       // Utilities.CheckSessionValid(data.message,this@SignUpActivity,this@SignUpActivity)
                     }else{
                         Utilities.CheckSessionValid(data.message,this@SignUpActivity,this@SignUpActivity)
-
                     }
                 }
             }
+
             override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
                   if(customDialog.isShowing){
                     customDialog.dismiss()
@@ -348,7 +375,6 @@ class SignUpActivity : AppCompatActivity() {
         })
     }
 
-
     fun getUserTypes(){
 
         customDialog.setCancelable(false)
@@ -370,7 +396,8 @@ class SignUpActivity : AppCompatActivity() {
 
                     if(data.status.equals("true")){
 
-                        setUsers(data.result)
+                        setUsers(data.result);
+                        setType(data.result);
                         getCountries()
 
                     }else{
@@ -390,8 +417,6 @@ class SignUpActivity : AppCompatActivity() {
             }
         })
     }
-
-
 
     fun getCities(countryId:String){
 
@@ -427,13 +452,11 @@ class SignUpActivity : AppCompatActivity() {
         })
     }
 
-
-
-
-
     fun setCountries(data: List<ResultCountries>){
 
         val list: MutableList<String> = ArrayList()
+        val typeLIst: MutableList<String> = ArrayList();
+
 
         for (i in 0..data.size-1){
             list.add(data.get(i).name)
@@ -478,7 +501,6 @@ class SignUpActivity : AppCompatActivity() {
             }
         }
     }
-
     fun setCities(data: List<ResultCities>){
         val list: MutableList<String> = ArrayList()
         for (i in 0..data.size-1){
@@ -508,14 +530,12 @@ class SignUpActivity : AppCompatActivity() {
             }
         }
     }
-
-
-    fun setUsers(data: List<ResultUserTypes>){
+    fun setUsers(data: Result){
 
         val list: MutableList<String> = ArrayList()
 
-        for (i in 0..data.size-1){
-            list.add(data.get(i).text)
+        for (i in 0..data.result2.size-1){
+            list.add(data.result2.get(i).text);
         }
         list.add("Select User Type")
 
@@ -535,25 +555,90 @@ class SignUpActivity : AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 // Toast.makeText(this@SignUpActivity, "City ID: " + data[position].cityId, Toast.LENGTH_SHORT).show()
                 try {
-                    USER_TYPE_ID=data[position].value
-                    AppUserType=data[position].value
-
+                    USER_TYPE_ID=data.result2[position].value
+                    AppUserType=data.result2[position].value
                     //Show company name field if User type is company
-                    if(data[position].value.contentEquals("20")){
-                        companyNameRL.visibility = View.VISIBLE
+                    if(data.result2[position].value.contentEquals("20")){
+                        companyNameRL.visibility = View.VISIBLE;
+                        tv_fname_txt.setText(resources.getString(R.string.rep_f_name))
+                        tv_l_name_txt.setText(resources.getString(R.string.rep_l_name))
+
                     }else {
                         companyNameRL.visibility = View.GONE
-                        companynameET.setText("")
+                        companynameET.setText("");
+                        tv_fname_txt.setText(resources.getString(R.string.f_name))
+                        tv_l_name_txt.setText(resources.getString(R.string.l_name))
+
                     }
+                }catch (e:Exception){}
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+    }
+    fun setType(data: Result){
+        val list: MutableList<String> = ArrayList()
+
+        for (items in data.result1) {
+            Log.d("ListResult","--"+items.text);
+            list.add(items.text)
+        }
+
+      /*  val adapter = ArrayAdapter(this, R.layout.spinner_text, list)
+        typeSpinner.adapter = adapter;*/
+
+        val usersAdapter = object :ArrayAdapter<String>(this,R.layout.spinner_text, list as List<String>){
+            override fun getCount(): Int {
+                return (list.size) // Truncate the list
+            }
+        }
+        usersAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown)
+        typeSpinner.setAdapter(usersAdapter);
+
+        typeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                //Toast.makeText(this@SignUpActivity, "City ID: " + data.result1[position].text, Toast.LENGTH_SHORT).show()
+                try {
+                   Agency=data.result1[position].value;
                 }catch (e:Exception){
                 }
             }
-
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
+       // userSpinner.setSelection(listTrunclate)
     }
 
+    fun setCountryCode(){
+
+        val list: MutableList<String> = ArrayList()
+
+        list.add("+232")
+
+
+
+        /*  val adapter = ArrayAdapter(this, R.layout.spinner_text, list)
+          typeSpinner.adapter = adapter;*/
+
+        val usersAdapter = object :ArrayAdapter<String>(this,R.layout.spinner_text, list as List<String>){
+            override fun getCount(): Int {
+                return (list.size) // Truncate the list
+            }
+        }
+        usersAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown)
+        spinner_code.setAdapter(usersAdapter);
+
+        spinner_code.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                //Toast.makeText(this@SignUpActivity, "City ID: " + list[position], Toast.LENGTH_SHORT).show()
+
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
+
+
+    }
 
 
     fun TextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
@@ -573,4 +658,7 @@ class SignUpActivity : AppCompatActivity() {
         this.movementMethod = LinkMovementMethod.getInstance() // without LinkMovementMethod, link can not click
         this.setText(spannableString, TextView.BufferType.SPANNABLE)
     }
+
+
+
 }

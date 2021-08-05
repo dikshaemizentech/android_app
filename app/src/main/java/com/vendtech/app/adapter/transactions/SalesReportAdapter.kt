@@ -71,6 +71,7 @@ class SalesReportAdapter(internal var meterListModels: MutableList<RechargeTrans
 
             val i = Intent(context, RechargeTransactionDetails::class.java)
             i.putExtra("rechargeId",meterListModels[position].rechargeId)
+            i.putExtra("type","")
             context.startActivity(i)
             activity.overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
 

@@ -61,6 +61,7 @@ class WalletFragment : Fragment(), View.OnClickListener {
     lateinit var rechargeText: TextView
     lateinit var linerecharge: View
     lateinit var rechargeTRL: RelativeLayout
+    lateinit var et_date: EditText
 
 
     //ANIMATION
@@ -240,8 +241,11 @@ class WalletFragment : Fragment(), View.OnClickListener {
         linerecharge = view.findViewById<View>(R.id.linerecharge) as View
         depositTRL = view.findViewById<View>(R.id.deposItTRL) as RelativeLayout
         rechargeTRL = view.findViewById<View>(R.id.rechargeTRL) as RelativeLayout
+        et_date = view.findViewById<View>(R.id.et_date) as EditText
+
         rechargeTRL.setOnClickListener(this)
         depositTRL.setOnClickListener(this)
+        et_date.setOnClickListener(this)
 
         //RECHARGE TRANSACTION AND DEPOSIT TRANSACTION LAYOUT
         recyclerviewDeposit = view.findViewById(R.id.recyclerviewDepositss)
@@ -303,9 +307,12 @@ class WalletFragment : Fragment(), View.OnClickListener {
 
             }
             if (TextUtils.isEmpty(chxslipET.text.toString().trim())) {
+               // Utilities.shortToast(""+transactionMode,requireActivity())
                 if (transactionMode == 1) {
                     Utilities.shortToast("Enter slip id", requireActivity())
-                } else {
+                } else if (transactionMode==3){
+                    Utilities.shortToast("Enter slip id", requireActivity())
+                }else {
                     Utilities.shortToast("Enter cheque id", requireActivity())
                 }
             } else if (TextUtils.isEmpty(depositamountET.text.toString().trim())) {
@@ -391,10 +398,14 @@ if(p0?.length!!>0){
             depositType = "Cash"
             bankname = null
             nameOnCheque = null
-        } else {
+        } else if (transactionMode==2){
             depositType = "Cheque"
             //  bankname=bankName.text.toString()
             nameOnCheque = chequeName.text.toString()
+        }else{
+            depositType = "Purchase Order"
+            bankname = null
+            nameOnCheque = null
         }
         var depositAmount = ""
         var plusPercentAmount = ""
@@ -409,15 +420,15 @@ if(p0?.length!!>0){
             plusPercentAmount = plusPercentET.text.toString().trim()
         }
         val call: Call<DepositRequestModel> = Uten.FetchServerData().deposit_request(SharedHelper.getString(requireActivity(),
-                Constants.TOKEN),
-                posId,
-                bankAccountId,
-                depositType,
-                chxslipET.text.toString().trim(),
-                bankname,
-                nameOnCheque,
-                depositAmount,
-                plusPercentAmount)
+            Constants.TOKEN),
+            posId,
+            bankAccountId,
+            depositType,
+            chxslipET.text.toString().trim(),
+            bankname,
+            nameOnCheque,
+            depositAmount,
+            plusPercentAmount)
         call.enqueue(object : Callback<DepositRequestModel> {
             override fun onResponse(call: Call<DepositRequestModel>, response: Response<DepositRequestModel>) {
 
@@ -490,26 +501,30 @@ if(p0?.length!!>0){
         val list: MutableList<String> = ArrayList()
         list.add("Cash")
         list.add("Cheque")
+        list.add("Purchase Order")
 
-        val adapte = ArrayAdapter<String>(requireActivity(), R.layout.spinner_text_second, list)
-        adapte.setDropDownViewResource(R.layout.simple_spinner_dropdown)
-        typeSpinner.setAdapter(adapte)
+        val adapter = ArrayAdapter<String>(requireActivity(), R.layout.spinner_text_second, list)
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown)
+        typeSpinner.setAdapter(adapter)
 
         typeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                //Toast.makeText(this@SignUpActivity, "Country ID: " + data[position].countryId, Toast.LENGTH_SHORT).show()
+                //Toast.makeText(activity, "Country ID: " +position , Toast.LENGTH_SHORT).show()
                 if (position == 0) {
                     transactionMode = 1
                     chequeLayout.visibility = View.GONE
-                } else {
+                } else if (position==1) {
                     transactionMode = 2
                     chequeLayout.visibility = View.VISIBLE
+                }else if (position==2){
+                    transactionMode=3;
+                    chequeLayout.visibility = View.GONE
                 }
             }
-
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
+
     }
 
     fun SelectAddBalance() {
@@ -616,6 +631,14 @@ if(p0?.length!!>0){
                 percentage = posList.get(p2).percentage
                 commissionPercent.setText("PLUS ${posList.get(p2).percentage}%")
 
+                //Toast.makeText(activity, ""+percentage, Toast.LENGTH_SHORT).show()
+                if (percentage.toString().equals("0.0")){
+                    commissionPercent.visibility=View.INVISIBLE;
+                   // plusPercentET.visibility=View.INVISIBLE;
+                }else{
+                    commissionPercent.visibility=View.VISIBLE;
+                    //plusPercentET.visibility=View.VISIBLE;
+                }
             }
 
         }
@@ -638,6 +661,9 @@ if(p0?.length!!>0){
             R.id.rechargeTRL ->
                 SelectRechargeTrans()
 
+            R.id.et_date->{
+                Toast.makeText(activity!!,"Date",Toast.LENGTH_LONG).show();
+            }
             R.id.deposItTRL ->
                 SelectDepositTrans()
         }

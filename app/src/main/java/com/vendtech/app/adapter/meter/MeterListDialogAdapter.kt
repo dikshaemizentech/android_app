@@ -73,8 +73,6 @@ class MeterListDialogAdapter (internal var meterListModels: MutableList<MeterLis
         internal var meterName: AppCompatTextView
         internal var itemViews: LinearLayout
 
-
-
         init {
 
 

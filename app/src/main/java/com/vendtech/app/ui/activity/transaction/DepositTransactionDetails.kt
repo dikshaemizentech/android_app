@@ -62,6 +62,7 @@ class DepositTransactionDetails : Activity(){
     //Download Details
     var downloadID = 0
     internal var INVOICE_URL = ""
+    private var type=""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,7 +74,11 @@ class DepositTransactionDetails : Activity(){
 
 
         depositId=intent.getIntExtra("depositId",0)
+        type=intent.getStringExtra("type")
 
+        if (type.equals("notification")){
+            transctinDetailReprint.visibility=View.GONE
+        }
         Log.v("DEPOSITID","Activity DepositId: "+depositId)
 
 

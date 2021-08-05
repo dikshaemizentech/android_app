@@ -21,7 +21,7 @@ import com.google.zxing.EncodeHintType
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
 import com.google.zxing.common.BitMatrix
-import com.telpo.tps550.api.printer.ThermalPrinter
+import com.telpo.tps550.api.printer.UsbThermalPrinter
 import com.telpo.tps550.api.util.StringUtil
 import com.telpo.tps550.api.util.SystemUtil
 import com.vendtech.app.R
@@ -41,19 +41,21 @@ class PrintScreenActivity : AppCompatActivity() {
      */
 
     var printVersion: String? = null
-    val NOPAPER = 3
-    val LOWBATTERY = 4
-    val PRINTVERSION = 5
-    val PRINTBARCODE = 6
-    val PRINTQRCODE = 7
-    val PRINTPAPERWALK = 8
-    val PRINTCONTENT = 9
-    val CANCELPROMPT = 10
-    val PRINTERR = 11
-    val OVERHEAT = 12
-    val MAKER = 13
-    val PRINTPICTURE = 14
-    val EXECUTECOMMAND = 15
+    private val NOPAPER = 3
+    private val LOWBATTERY = 4
+    private val PRINTVERSION = 5
+    private val PRINTBARCODE = 6
+    private val PRINTQRCODE = 7
+    private val PRINTPAPERWALK = 8
+    private val PRINTCONTENT = 9
+    private val CANCELPROMPT = 10
+    private val PRINTERR = 11
+    private val OVERHEAT = 12
+    private val MAKER = 13
+    private val PRINTPICTURE = 14
+    private val NOBLACKBLOCK = 15
+
+    // public var handler:MyHandler? = null
 
     private val size = 660;
     private val size_width = 600;
@@ -63,22 +65,35 @@ class PrintScreenActivity : AppCompatActivity() {
     private var nopaper = false
     private var LowBattery = false
 
-    private var barcodeStr: String? = null
-    private var qrcodeStr: String? = null
-    private var paperWalk = 0
-    private var printContent: String? = null
-    private val leftDistance = 0
-    private val lineDistance = 0
+    var barcodeStr: String? = null
+    var qrcodeStr: String? = null
+    var paperWalk = 0
+    var printContent: String? = null
+    private val leftDistance = 2
+    private val lineDistance = 1
     private val wordFont = 0
-    private val printGray = 0
+    private var printGray = 7
     private var progressDialog: ProgressDialog? = null
     private val MAX_LEFT_DISTANCE = 255
+    var mUsbThermalPrinter = UsbThermalPrinter(this)
 
-    private var handler: MyHandler? = null
+    var handler:MyHandler?=null;
+
+    var rechargeMeterModel: RechargeMeterModel?=null;
 
     private var rechargeTransactionDetailResult: RechargeMeterModel?=null;
 
     private var dialog: ProgressDialog? = null;
+
+    private fun noPaperDlg() {
+        val dlg = AlertDialog.Builder(this@PrintScreenActivity)
+        dlg.setTitle(getString(R.string.noPaper))
+        dlg.setMessage(getString(R.string.noPaperNotice))
+        dlg.setCancelable(false)
+        dlg.setPositiveButton(R.string.sure) { dialogInterface, i -> }
+        dlg.show()
+    }
+
 
     inner class MyHandler : Handler() {
         override fun handleMessage(msg: Message) {
@@ -91,10 +106,11 @@ class PrintScreenActivity : AppCompatActivity() {
                     alertDialog.setPositiveButton(getString(R.string.dialog_comfirm), DialogInterface.OnClickListener { dialogInterface, i -> })
                     alertDialog.show()
                 }
+                NOBLACKBLOCK -> Toast.makeText(this@PrintScreenActivity, R.string.maker_not_find, Toast.LENGTH_SHORT).show()
                 PRINTVERSION -> {
                     dialog!!.dismiss()
                     if (msg.obj == "1") {
-                        //textPrintVersion.setText(Constants.printVersion)
+                        // textPrintVersion.setText(printVersion)
                     } else {
                         Toast.makeText(this@PrintScreenActivity, R.string.operation_fail, Toast.LENGTH_LONG).show()
                     }
@@ -103,13 +119,10 @@ class PrintScreenActivity : AppCompatActivity() {
                 PRINTQRCODE -> qrcodePrintThread().start()
                 PRINTPAPERWALK -> paperWalkPrintThread().start()
                 PRINTCONTENT -> contentPrintThread().start()
-                MAKER -> MakerThread().start()
-                //Constants.PRINTPICTURE -> printPicture().start()
                 CANCELPROMPT -> if (progressDialog != null && !this@PrintScreenActivity.isFinishing()) {
                     progressDialog!!.dismiss()
                     progressDialog = null
                 }
-                // EXECUTECOMMAND ->executeCommand().start()
                 OVERHEAT -> {
                     val overHeatDialog = AlertDialog.Builder(this@PrintScreenActivity)
                     overHeatDialog.setTitle(R.string.operation_result)
@@ -117,21 +130,245 @@ class PrintScreenActivity : AppCompatActivity() {
                     overHeatDialog.setPositiveButton(getString(R.string.dialog_comfirm), DialogInterface.OnClickListener { dialogInterface, i -> })
                     overHeatDialog.show()
                 }
-                else -> Toast.makeText(this@PrintScreenActivity, "Print Error!", Toast.LENGTH_LONG).show()
+                else -> {
+                    Toast.makeText(this@PrintScreenActivity, "Print Error!", Toast.LENGTH_LONG).show();
+                }
             }
         }
     }
 
-   inner  private class paperWalkPrintThread : Thread() {
+
+    private inner class contentPrintThread : Thread() {
         override fun run() {
             super.run()
             try {
-                ThermalPrinter.start(this@PrintScreenActivity)
-                ThermalPrinter.reset()
-                ThermalPrinter.walkPaper(paperWalk)
+                mUsbThermalPrinter.reset();
+
+                /*mUsbThermalPrinter.setAlgin(UsbThermalPrinter.ALGIN_LEFT)
+                mUsbThermalPrinter.setLeftIndent(leftDistance)
+                mUsbThermalPrinter.setLineSpace(lineDistance)
+                if (wordFont == 4) {
+                    mUsbThermalPrinter.setTextSize(40)
+                } else if (wordFont == 3) {
+                    mUsbThermalPrinter.setTextSize(30)
+                } else if (wordFont == 2) {
+                    mUsbThermalPrinter.setTextSize(20)
+                } else if (wordFont == 1) {
+                    mUsbThermalPrinter.setTextSize(10)
+                }
+                //mUsbThermalPrinter.setHighlight(true);
+                mUsbThermalPrinter.setGray(printGray)
+                mUsbThermalPrinter.addString(printContent)
+                mUsbThermalPrinter.printString()
+                mUsbThermalPrinter.walkPaper(50)*/
+
+
+               // mUsbThermalPrinter.setFontSize(4);
+
+                mUsbThermalPrinter.setBold(true);
+                mUsbThermalPrinter.setAlgin(UsbThermalPrinter.ALGIN_MIDDLE);
+                mUsbThermalPrinter.setLeftIndent(leftDistance);
+                mUsbThermalPrinter.setLineSpace(lineDistance);
+                mUsbThermalPrinter.setTextSize(40);
+
+                //mUsbThermalPrinter.setFontSize(2);
+                //mUsbThermalPrinter.enlargeFontSize(2, 2);
+
+                mUsbThermalPrinter.setGray(printGray);
+                mUsbThermalPrinter.addString("VENDTECH");
+                mUsbThermalPrinter.setTextSize(25);
+                mUsbThermalPrinter.setLineSpace(2);
+                mUsbThermalPrinter.addString("EDSA Electricity Purchace");
+                mUsbThermalPrinter.addString("--------------------");
+                mUsbThermalPrinter.setTextSize(20);
+                mUsbThermalPrinter.setLineSpace(lineDistance);
+                mUsbThermalPrinter.setAlgin(UsbThermalPrinter.ALGIN_LEFT);
+                mUsbThermalPrinter.setBold(false);
+
+                mUsbThermalPrinter.addString("${"DATE:" + "                   " + tv_date.text.toString()}");
+
+                mUsbThermalPrinter.addString("${"VENDOR:"+"                         " + tv_vendor_name.text.toString()}");
+                mUsbThermalPrinter.addString("${"POS ID:"+"                          " + tv_pos_id.text.toString()}\n");
+                //mUsbThermalPrinter.setAlgin(UsbThermalPrinter.ALGIN_MIDDLE);
+                //mUsbThermalPrinter.setBold(true);
+                mUsbThermalPrinter.setLineSpace(2);
+                mUsbThermalPrinter.addString("--- ${tv_custInfo.text.toString() + " ---"}\n");
+                mUsbThermalPrinter.setBold(false);
+                //mUsbThermalPrinter.setAlgin(UsbThermalPrinter.ALGIN_RIGHT);
+                mUsbThermalPrinter.setLineSpace(lineDistance);
+                mUsbThermalPrinter.addString("${tv_customer_txt.text.toString() + "              " + tv_cus_name.text.toString()}");
+                mUsbThermalPrinter.addString("${tv_account_txt.text.toString() + "               " + tv_account.text.toString()}");
+
+    
+                // var rightALign= StringAlignUtils(tv_address.text.toString().length, StringAlignUtils.Alignment.RIGHT);
+                //var rightALignTerrif= StringAlignUtils(tv_terrif.text.toString().length, StringAlignUtils.Alignment.RIGHT);
+                mUsbThermalPrinter.setAlgin(UsbThermalPrinter.ALGIN_LEFT);
+
+                //mUsbThermalPrinter.addString("${"ADDRESS:" + "                       " + tv_address.text.toString()}"+"  ");
+                var addressValue= String.format("%1$-10s %2$10s ", "${"ADDRESS:"}", "${tv_address.text.toString()}");
+
+                mUsbThermalPrinter.addString(addressValue);
+
+                mUsbThermalPrinter.setAlgin(UsbThermalPrinter.ALGIN_LEFT);
+                mUsbThermalPrinter.setLineSpace(2);
+                mUsbThermalPrinter.setBold(true);
+                //mUsbThermalPrinter.setBold(true);
+                mUsbThermalPrinter.addString("${tv_meter_txt.text.toString() + "                          " + tv_meter_number.text.toString()}");
+                mUsbThermalPrinter.setLineSpace(1);
+                mUsbThermalPrinter.setBold(false);
+                mUsbThermalPrinter.addString("${tv_tarif_txt.text.toString() + "                                         " + tv_terrif.text.toString()}");
+                //mUsbThermalPrinter.addString("${tv_tarif_txt.text.toString() + "   " +rightALignTerrif.format(tv_terrif.text.toString())}");
+
+
+                //mUsbThermalPrinter.addString("${tv_amt_tend_txt.text.toString()+" le:" + "                      " +""+ tv_amount_tendered.text.toString()}\n");
+
+                mUsbThermalPrinter.setBold(true);
+
+                var amountTendred= String.format("%1$-10s %2$10s ", "${tv_amt_tend_txt.text.toString()+" le:"}", "${tv_amount_tendered.text.toString()}");
+                mUsbThermalPrinter.addString(amountTendred+"\n");
+                mUsbThermalPrinter.setBold(false);
+
+
+                mUsbThermalPrinter.setAlgin(UsbThermalPrinter.ALGIN_MIDDLE);
+                mUsbThermalPrinter.setBold(false);
+                // mUsbThermalPrinter.addString("-----------${tv_deduct.text.toString() + "-----------"}");
+                mUsbThermalPrinter.addString("-----    ${tv_deduct.text.toString() +"    -----"}\n");
+                mUsbThermalPrinter.setBold(false);
+                mUsbThermalPrinter.setAlgin(UsbThermalPrinter.ALGIN_LEFT);
+                //mUsbThermalPrinter.addString("${"GST:" + "                               " + tv_service_charge.text.toString()}");
+                //mUsbThermalPrinter.addString("${"GST: le:" + "                                           " + rechargeMeterModel!!.result.tax}");
+                var gstVale=String.format("%1$-10s %2$20s ", "${"GST: le:"}", "      ${rechargeMeterModel!!.result.tax}")
+                mUsbThermalPrinter.addString(gstVale);
+                // var rightALignServiceCharge= StringAlignUtils(tv_service_charge.text.toString().length, StringAlignUtils.Alignment.RIGHT);
+
+                //mUsbThermalPrinter.addString("${"GST:" + "              " + rightALignServiceCharge.format(tv_service_charge.text.toString())}");
+
+                var formatter: DecimalFormat = NumberFormat.getInstance(Locale.US) as DecimalFormat;
+                formatter.applyPattern("#,###,###,###");
+                val  chargesDouble:Double=rechargeMeterModel!!.result.charges.toDouble();
+                var formattedServiceCharge = formatter.format(chargesDouble);
+
+
+                //mUsbThermalPrinter.addString("${tv_service_charge_txt.text.toString() + "                       " + tv_service_charge.text.toString()}");
+                var serviceChargeValue=String.format("%1$-10s %2$20s ", "${tv_service_charge_txt.text.toString()+" le:"}", "    ${formattedServiceCharge.toString()}")
+
+                mUsbThermalPrinter.addString(serviceChargeValue);
+
+                //mUsbThermalPrinter.addString("${tv_service_charge_txt.text.toString()+" le:" + "                       " + formattedServiceCharge.toString()}");
+
+                val  debitRecoveryDouble:Double=rechargeMeterModel!!.result.debitRecovery.toDouble();
+                var formattedRecovery = formatter.format(debitRecoveryDouble);
+
+
+                //mUsbThermalPrinter.addString("${tv_debit_recovery_txt.text.toString()+" le:" + "                         " + formattedRecovery.toString()}\n");
+
+                var debitRecoveryValue=String.format("%1$-10s %2$20s ", "${tv_debit_recovery_txt.text.toString()+" le:"}", "    ${formattedRecovery.toString()}")
+
+                mUsbThermalPrinter.addString(debitRecoveryValue+"\n");
+                mUsbThermalPrinter.setAlgin(UsbThermalPrinter.ALGIN_MIDDLE);
+                mUsbThermalPrinter.setBold(false);
+                mUsbThermalPrinter.setLineSpace(2);
+                mUsbThermalPrinter.addString("-----     ${tv_tottext.text.toString() + "    -----"}\n");
+                mUsbThermalPrinter.setBold(false);
+                mUsbThermalPrinter.setLineSpace(2);
+                mUsbThermalPrinter.setAlgin(UsbThermalPrinter.ALGIN_LEFT);
+
+                var formatterFloat: DecimalFormat = NumberFormat.getInstance(Locale.US) as DecimalFormat;
+                formatterFloat.applyPattern("#,###,###,###.##");
+                val  unitCostDouble:Double=rechargeMeterModel!!.result.unitCost.replace(",","").toDouble();
+                var formattedUnitCost=formatterFloat.format(unitCostDouble);
+
+                //mUsbThermalPrinter.addString("${tv_cost_of_unit_txt.text.toString() + "                       " + tv_cost_of_unit.text.toString()}");
+
+                //mUsbThermalPrinter.addString("${tv_cost_of_unit_txt.text.toString()+" le:" + "                       " + formattedUnitCost.toString()}");
+                var costOfUnitValue=String.format("%1$-10s %2$10s ", "${tv_cost_of_unit_txt.text.toString()+" le:"}", "${formattedUnitCost.toString()}")
+                mUsbThermalPrinter.addString(costOfUnitValue);
+
+
+                //mUsbThermalPrinter.addString("${tv_unit_txt.text.toString() + "                                             " + tv_unit.text.toString()}\n");
+                var unitValue=String.format("%1$-10s %2$20s ", "${tv_unit_txt.text.toString()+" le:"}", "       ${tv_unit.text.toString()}")
+
+                mUsbThermalPrinter.addString(unitValue+"\n");
+
+                mUsbThermalPrinter.setAlgin(UsbThermalPrinter.ALGIN_MIDDLE);
+                mUsbThermalPrinter.setTextSize(20);
+                mUsbThermalPrinter.setBold(false);
+                mUsbThermalPrinter.setLeftIndent(10);
+                mUsbThermalPrinter.setLineSpace(4);
+                //mUsbThermalPrinter.setTextSize(40);
+                mUsbThermalPrinter.addString("********************");
+                mUsbThermalPrinter.setTextSize(40);
+
+                mUsbThermalPrinter.addString("${tv_token.text.toString()}");
+                mUsbThermalPrinter.setTextSize(20);
+
+                mUsbThermalPrinter.addString("********************\n");
+                mUsbThermalPrinter.setBold(false);
+                mUsbThermalPrinter.setAlgin(UsbThermalPrinter.ALGIN_LEFT);
+                mUsbThermalPrinter.setTextSize(15);
+                mUsbThermalPrinter.setLeftIndent(leftDistance);
+                mUsbThermalPrinter.setLineSpace(1);
+                mUsbThermalPrinter.addString("${"EDSA Serial #:" + " " + tv_serial.text.toString()+"          "+tv_vtech_txt.text.toString() + "" + tv_transaction_id.text.toString()}");
+                // mUsbThermalPrinter.addString("${tv_vtech_txt.text.toString() + "  " + tv_transaction_id.text.toString()}");
+                mUsbThermalPrinter.addString("${tv_web_text.text.toString()+"              "+tv_phone_no.text.toString()}\n\n");
+                // mUsbThermalPrinter.addString("${tv_phone_no.text.toString()}");
+
+                // mUsbThermalPrinter.addSringOneLine(mUsbThermalPrinter.addSringOneLine())
+
+                mUsbThermalPrinter.setAlgin(UsbThermalPrinter.ALGIN_MIDDLE);
+                val bitmap = CreateCode(tv_bar_code_no.text.toString(), BarcodeFormat.CODE_39, 300, 30)
+                if (bitmap != null) {
+                    mUsbThermalPrinter.printLogo(bitmap,true);
+                }
+                mUsbThermalPrinter.setTextSize(20);
+                mUsbThermalPrinter.addString(tv_bar_code_no.text.toString());
+                mUsbThermalPrinter.printString();
+                mUsbThermalPrinter.walkPaper(35);
+
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
-                Result = e.toString();
+                Result = e.toString()
+                if (Result == "com.telpo.tps550.api.printer.NoPaperException") {
+                    nopaper = true
+                } else if (Result == "com.telpo.tps550.api.printer.OverHeatException") {
+                    handler!!.sendMessage(handler!!.obtainMessage(OVERHEAT, 1, 0, null))
+                } else {
+                    handler!!.sendMessage(handler!!.obtainMessage(PRINTERR, 1, 0, null))
+                }
+            } finally {
+                handler!!.sendMessage(handler!!.obtainMessage(CANCELPROMPT, 1, 0, null));
+                if (nopaper) {
+                    handler!!.sendMessage(handler!!.obtainMessage(NOPAPER, 1, 0, null))
+                    nopaper = false
+                    return
+                }
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        if (progressDialog != null && !this@PrintScreenActivity.isFinishing()) {
+            progressDialog!!.dismiss()
+            progressDialog = null
+        }
+        unregisterReceiver(printReceive)
+        try {
+            mUsbThermalPrinter.stop();
+        }catch (exception:java.lang.Exception){
+
+        }
+        super.onDestroy()
+    }
+
+    private inner class paperWalkPrintThread : Thread() {
+        override fun run() {
+            super.run()
+            try {
+                mUsbThermalPrinter.reset()
+                mUsbThermalPrinter.walkPaper(paperWalk)
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+                Result = e.toString()
                 if (Result == "com.telpo.tps550.api.printer.NoPaperException") {
                     nopaper = true
                 } else if (Result == "com.telpo.tps550.api.printer.OverHeatException") {
@@ -146,20 +383,54 @@ class PrintScreenActivity : AppCompatActivity() {
                     nopaper = false
                     return
                 }
-                ThermalPrinter.stop(this@PrintScreenActivity)
             }
         }
     }
 
-   @Throws(WriterException::class)
-   fun CreateCode(str: String?, type: BarcodeFormat?, bmpWidth: Int, bmpHeight: Int): Bitmap? {
+    private inner class qrcodePrintThread : Thread() {
+        override fun run() {
+            super.run()
+            try {
+                mUsbThermalPrinter.reset()
+                mUsbThermalPrinter.setGray(printGray)
+                val bitmap: Bitmap? = CreateCode(qrcodeStr, BarcodeFormat.QR_CODE, 256, 256)
+                if (bitmap != null) {
+                    mUsbThermalPrinter.printLogo(bitmap, true)
+                }
+                mUsbThermalPrinter.addString(qrcodeStr)
+                mUsbThermalPrinter.printString()
+                mUsbThermalPrinter.walkPaper(20)
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+                Result = e.toString()
+                if (Result == "com.telpo.tps550.api.printer.NoPaperException") {
+                    nopaper = true
+                } else if (Result == "com.telpo.tps550.api.printer.OverHeatException") {
+                    handler!!.sendMessage(handler!!.obtainMessage(OVERHEAT, 1, 0, null))
+                } else {
+                    handler!!.sendMessage(handler!!.obtainMessage(PRINTERR, 1, 0, null))
+                }
+            } finally {
+                handler!!.sendMessage(handler!!.obtainMessage(CANCELPROMPT, 1, 0, null))
+                if (nopaper) {
+                    handler!!.sendMessage(handler!!.obtainMessage(NOPAPER, 1, 0, null))
+                    nopaper = false
+                    return
+                }
+            }
+        }
+    }
+
+
+    @Throws(WriterException::class)
+    fun CreateCode(str: String?, type: BarcodeFormat?, bmpWidth: Int, bmpHeight: Int): Bitmap? {
         val mHashtable = Hashtable<EncodeHintType, String?>()
         mHashtable[EncodeHintType.CHARACTER_SET] = "UTF-8"
-        // Generate a two-dimensional matrix, specify the size when encoding, do not zoom after the image is generated, to prevent blurring and cause recognition
+        // 生成二维矩阵,编码时要指定大小,不要生成了图片以后再进行缩放,以防模糊导致识别失败
         val matrix = MultiFormatWriter().encode(str, type, bmpWidth, bmpHeight, mHashtable)
         val width = matrix.width
         val height = matrix.height
-        // Convert a two-dimensional matrix to a one-dimensional pixel array (row horizontally all the time)
+        // 二维矩阵转为一维像素数组（一直横着排）
         val pixels = IntArray(width * height)
         for (y in 0 until height) {
             for (x in 0 until width) {
@@ -171,25 +442,24 @@ class PrintScreenActivity : AppCompatActivity() {
             }
         }
         val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-        // Generate bitmap through pixel array, refer to api for details api
+        // 通过像素数组生成bitmap,具体参考api
         bitmap.setPixels(pixels, 0, width, 0, 0, width, height)
         return bitmap
     }
 
-   inner  private class barcodePrintThread : Thread() {
+    private  inner class barcodePrintThread : Thread() {
         override fun run() {
             super.run()
             try {
-                ThermalPrinter.start(this@PrintScreenActivity)
-                ThermalPrinter.reset()
-                ThermalPrinter.setGray(printGray)
-                val bitmap = CreateCode(barcodeStr, BarcodeFormat.CODE_128, 320, 176)
+                mUsbThermalPrinter.reset()
+                mUsbThermalPrinter.setGray(printGray)
+                val bitmap: Bitmap? = CreateCode(barcodeStr, BarcodeFormat.CODE_128, 320, 176)
                 if (bitmap != null) {
-                    ThermalPrinter.printLogo(bitmap)
+                    mUsbThermalPrinter.printLogo(bitmap, true)
                 }
-                ThermalPrinter.addString(barcodeStr)
-                ThermalPrinter.printString()
-                ThermalPrinter.walkPaper(100)
+                mUsbThermalPrinter.addString(barcodeStr)
+                mUsbThermalPrinter.printString()
+                mUsbThermalPrinter.walkPaper(20)
             } catch (e: Exception) {
                 e.printStackTrace()
                 Result = e.toString()
@@ -207,252 +477,93 @@ class PrintScreenActivity : AppCompatActivity() {
                     nopaper = false
                     return
                 }
-                ThermalPrinter.stop(this@PrintScreenActivity)
             }
         }
-   }
-
-   inner private class qrcodePrintThread : Thread() {
-        override fun run() {
-            super.run()
-            try {
-                ThermalPrinter.start(this@PrintScreenActivity)
-                ThermalPrinter.reset()
-                ThermalPrinter.setGray(printGray)
-                val bitmap = CreateCode(qrcodeStr, BarcodeFormat.QR_CODE, 256, 256)
-                if (bitmap != null) {
-                    ThermalPrinter.printLogo(bitmap)
-                }
-                ThermalPrinter.addString(qrcodeStr)
-                ThermalPrinter.printString()
-                ThermalPrinter.walkPaper(100)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                Result = e.toString()
-                if (Result == "com.telpo.tps550.api.printer.NoPaperException") {
-                    nopaper = true
-                } else if (Result == "com.telpo.tps550.api.printer.OverHeatException") {
-                    handler!!.sendMessage(handler!!.obtainMessage(OVERHEAT, 1, 0, null))
-                } else {
-                    handler!!.sendMessage(handler!!.obtainMessage(PRINTERR, 1, 0, null))
-                }
-            } finally {
-                handler!!.sendMessage(handler!!.obtainMessage(CANCELPROMPT, 1, 0, null))
-                if (nopaper) {
-                    handler!!.sendMessage(handler!!.obtainMessage(NOPAPER, 1, 0, null))
-                    nopaper = false
-                    return
-                }
-                ThermalPrinter.stop(this@PrintScreenActivity)
-            }
-        }
-   }
-
-   inner private class contentPrintThread : Thread() {
-        override fun run() {
-            super.run()
-            try {
-                ThermalPrinter.start(this@PrintScreenActivity)
-                ThermalPrinter.reset()
-                ThermalPrinter.setAlgin(ThermalPrinter.ALGIN_MIDDLE)
-                ThermalPrinter.setLeftIndent(leftDistance)
-                ThermalPrinter.setLineSpace(lineDistance)
-                if (wordFont == 4) {
-                    ThermalPrinter.setFontSize(2)
-                    ThermalPrinter.enlargeFontSize(2, 2)
-                } else if (wordFont == 3) {
-                    ThermalPrinter.setFontSize(1)
-                    ThermalPrinter.enlargeFontSize(2, 2)
-                } else if (wordFont == 2) {
-                    ThermalPrinter.setFontSize(2)
-                } else if (wordFont == 1) {
-                    ThermalPrinter.setFontSize(1)
-                }
-                ThermalPrinter.setGray(printGray)
-                //ThermalPrinter.addString(printContent)
-                ThermalPrinter.addString(printContent)
-
-                val bitmap = CreateCode(tv_bar_code_no.text.toString(), BarcodeFormat.CODE_39, 320, 176)
-                if (bitmap != null) {
-                    ThermalPrinter.printLogo(bitmap)
-                }
-
-                ThermalPrinter.addString(tv_bar_code_no.text.toString());
-
-                ThermalPrinter.printString()
-                ThermalPrinter.walkPaper(100);
-            } catch (e: Exception) {
-                e.printStackTrace()
-                Result = e.toString()
-                if (Result == "com.telpo.tps550.api.printer.NoPaperException") {
-                    nopaper = true
-                } else if (Result == "com.telpo.tps550.api.printer.OverHeatException") {
-                    handler!!.sendMessage(handler!!.obtainMessage(OVERHEAT, 1, 0, null))
-                } else {
-                    handler!!.sendMessage(handler!!.obtainMessage(PRINTERR, 1, 0, null))
-                }
-            } finally {
-                handler!!.sendMessage(handler!!.obtainMessage(CANCELPROMPT, 1, 0, null))
-                if (nopaper) {
-                    handler!!.sendMessage(handler!!.obtainMessage(NOPAPER, 1, 0, null))
-                    nopaper = false
-                    return
-                }
-                ThermalPrinter.stop(this@PrintScreenActivity)
-            }
-        }
-   }
-
-   inner private class MakerThread : Thread() {
-        override fun run() {
-            super.run()
-            try {
-                ThermalPrinter.start(this@PrintScreenActivity)
-                ThermalPrinter.reset()
-                ThermalPrinter.searchMark(200, 50)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                Result = e.toString()
-                if (Result == "com.telpo.tps550.api.printer.NoPaperException") {
-                    nopaper = true
-                } else if (Result == "com.telpo.tps550.api.printer.OverHeatException") {
-                    handler!!.sendMessage(handler!!.obtainMessage(OVERHEAT, 1, 0, null))
-                } else {
-                    handler!!.sendMessage(handler!!.obtainMessage(PRINTERR, 1, 0, null))
-                }
-            } finally {
-                handler!!.sendMessage(handler!!.obtainMessage(CANCELPROMPT, 1, 0, null))
-                if (nopaper) {
-                    handler!!.sendMessage(handler!!.obtainMessage(NOPAPER, 1, 0, null))
-                    nopaper = false
-                    return
-                }
-                ThermalPrinter.stop(this@PrintScreenActivity)
-            }
-        }
-    }
-
-    /* inner private class executeCommand : Thread() {
-        override fun run() {
-            super.run()
-            try {
-                ThermalPrinter.start(this@PrintScreenActivity)
-                ThermalPrinter.reset()
-                ThermalPrinter.sendCommand(edittext_input_command.getText().toString())
-            } catch (e: java.lang.Exception) {
-                e.printStackTrace()
-                Result = e.toString()
-                if (Result == "com.telpo.tps550.api.printer.NoPaperException") {
-                    nopaper = true
-                } else if (Result == "com.telpo.tps550.api.printer.OverHeatException") {
-                    handler!!.sendMessage(handler!!.obtainMessage(OVERHEAT, 1, 0, null))
-                } else {
-                    handler!!.sendMessage(handler!!.obtainMessage(PRINTERR, 1, 0, null))
-                }
-            } finally {
-                try {
-                    sleep(3000)
-                } catch (e: InterruptedException) {
-                    e.printStackTrace()
-                }
-                handler.sendMessage(handler.obtainMessage(CANCELPROMPT, 1, 0, null))
-                if (nopaper) {
-                    handler.sendMessage(handler.obtainMessage(NOPAPER, 1, 0, null))
-                    nopaper = false
-                    return
-                }
-                ThermalPrinter.stop(this@PrinterActivity)
-            }
-        }
-    }
-*/
-
-    private fun noPaperDlg() {
-        val dlg = AlertDialog.Builder(this)
-        dlg.setTitle(getString(R.string.noPaper))
-        dlg.setMessage(getString(R.string.noPaperNotice))
-        dlg.setCancelable(false)
-        dlg.setPositiveButton(R.string.sure, DialogInterface.OnClickListener { dialogInterface, i -> ThermalPrinter.stop(this) })
-        dlg.show()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.print_screen_layout)
 
-        if (intent.extras!=null){
-            rechargeTransactionDetailResult= intent.getSerializableExtra(Constants.DATA) as RechargeMeterModel?;
+        if (intent.extras != null) {
+            rechargeTransactionDetailResult = intent.getSerializableExtra(Constants.DATA) as RechargeMeterModel?;
         }
 
-        handler = MyHandler()
+        handler = MyHandler();
 
         setData(rechargeTransactionDetailResult!!);
 
-        val pIntentFilter = IntentFilter()
-        pIntentFilter.addAction(Intent.ACTION_BATTERY_CHANGED)
-        pIntentFilter.addAction("android.intent.action.BATTERY_CAPACITY_EVENT")
+        val pIntentFilter = IntentFilter();
+        pIntentFilter.addAction(Intent.ACTION_BATTERY_CHANGED);
+        pIntentFilter.addAction("android.intent.action.BATTERY_CAPACITY_EVENT");
         registerReceiver(printReceive, pIntentFilter);
 
-        tv_sms.setOnClickListener{
-                showdialog();
+        if (SystemUtil.getDeviceType() == StringUtil.DeviceModelEnum.TPS900.ordinal) {
+            // editTextPrintGray.setText("5")
+            //printGray=2
+            printGray=7
         }
+
+        tv_sms.setOnClickListener {
+            showdialog();
+        }
+
+
         imgBack.setOnClickListener {
-            var intent=Intent();
+            var intent = Intent();
             setResult(Activity.RESULT_OK);
             finish();
         }
         img_close.setOnClickListener {
-            var intent=Intent();
+            var intent = Intent();
             setResult(Activity.RESULT_OK);
             finish();
         }
         tv_print.setOnClickListener {
-               // mPdfPrinter!!.print(PRINT_PDF, mDirectory!!, mFilename!!);
+            // mPdfPrinter!!.print(PRINT_PDF, mDirectory!!, mFilename!!);
 
-               printContent="${tv_vendtech_name.text.toString()}\n" +
+            printContent = "${tv_vendtech_name.text.toString()}\n" +
                     "${tv_edsa.text.toString()}\n" +
                     "--------------------------------------------------------------\n" +
-                    "${tv_date_txt.text.toString() +" "+tv_date.text.toString()}\n" +
-                    "${tv_vendor_txt.text.toString() +" "+tv_vendor_name.text.toString()}\n" +
-                    "${tv_pos_id_txt.text.toString() +" "+tv_pos_id.text.toString()}\n" +
-                    "------${tv_custInfo.text.toString()+"------"}\n" +
-                    "${tv_customer_txt.text.toString() +" "+tv_cus_name.text.toString()}\n" +
-                    "${tv_account_txt.text.toString() +" "+tv_account.text.toString()}\n" +
-                    "${tv_meter_txt.text.toString() +" "+tv_meter_number.text.toString()}\n" +
-                    "${tv_amt_tend_txt.text.toString() +" "+tv_amount_tendered.text.toString()}\n" +
-                    "------${tv_deduct.text.toString()+"------"}\n" +
-                    "${tv_service_charge_txt.text.toString() +" "+tv_service_charge.text.toString()}\n" +
-                    "${tv_debit_recovery_txt.text.toString() +" "+tv_debit_recovery.text.toString()}\n" +
-                    "------${tv_tottext.text.toString()+"------"}\n" +
-                    "${tv_cost_of_unit_txt.text.toString() +" "+tv_cost_of_unit.text.toString()}\n" +
-                    "${tv_unit_txt.text.toString() +" "+tv_unit.text.toString()}\n" +
+                    "${tv_date_txt.text.toString() + " " + tv_date.text.toString()}\n" +
+                    "${tv_vendor_txt.text.toString() + " " + tv_vendor_name.text.toString()}\n" +
+                    "${tv_pos_id_txt.text.toString() + " " + tv_pos_id.text.toString()}\n" +
+                    "------${tv_custInfo.text.toString() + "------"}\n" +
+                    "${tv_customer_txt.text.toString() + " " + tv_cus_name.text.toString()}\n" +
+                    "${tv_account_txt.text.toString() + " " + tv_account.text.toString()}\n" +
+                    "${tv_meter_txt.text.toString() + " " + tv_meter_number.text.toString()}\n" +
+                    "${tv_amt_tend_txt.text.toString() + " " + tv_amount_tendered.text.toString()}\n" +
+                    "------${tv_deduct.text.toString() + "------"}\n" +
+                    "${tv_service_charge_txt.text.toString() + " " + tv_service_charge.text.toString()}\n" +
+                    "${tv_debit_recovery_txt.text.toString() + " " + tv_debit_recovery.text.toString()}\n" +
+                    "------${tv_tottext.text.toString() + "------"}\n" +
+                    "${tv_cost_of_unit_txt.text.toString() + " " + tv_cost_of_unit.text.toString()}\n" +
+                    "${tv_unit_txt.text.toString() + " " + tv_unit.text.toString()}\n" +
                     "${tv_token.text.toString()}\n" +
-                    "${tv_vtech_txt.text.toString() +" "+tv_transaction_id.text.toString()}\n" +
+                    "${tv_vtech_txt.text.toString() + " " + tv_transaction_id.text.toString()}\n" +
                     "${tv_web_text.text.toString()}\n" +
                     "${tv_phone_no.text.toString()}\n";
 
-                     //Toast.makeText(this,""+printContent,Toast.LENGTH_LONG).show();
+            //Toast.makeText(this,""+printContent,Toast.LENGTH_LONG).show();
 
-                    if (printContent==null || printContent!!.length==0){
-                        Utilities.longToast(getString(R.string.empty),this)
-                         return@setOnClickListener
-                    }
-                    if (LowBattery==true){
-                        handler!!.sendMessage(handler!!.obtainMessage(LOWBATTERY, 1, 0, null))
-                    }else{
-                        if (!nopaper) {
-                            progressDialog = ProgressDialog.show(this, getString(R.string.bl_dy), getString(R.string.printing_wait))
-                            handler!!.sendMessage(handler!!.obtainMessage(PRINTCONTENT, 1, 0, null));
-                        } else {
-                            //Toast.makeText(this, , Toast.LENGTH_LONG).show()
-                            Utilities.longToast(getString(R.string.ptintInit),applicationContext);
-                        }
+            if (printContent == null || printContent!!.length == 0) {
+                Utilities.longToast(getString(R.string.empty), this)
+                return@setOnClickListener
+            }
 
-                    }
+            if (LowBattery == true) {
+                handler!!.sendMessage(handler!!.obtainMessage(LOWBATTERY, 1, 0, null))
+            } else {
+                if (!nopaper) {
+                    progressDialog = ProgressDialog.show(this@PrintScreenActivity, getString(R.string.bl_dy), getString(R.string.printing_wait))
+                    handler!!.sendMessage(handler!!.obtainMessage(PRINTCONTENT, 1, 0, null))
+                } else {
+                    Toast.makeText(this@PrintScreenActivity, getString(R.string.ptintInit), Toast.LENGTH_LONG).show()
+                }
+            }
 
         }
     }
-
     private val printReceive: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             val action = intent.action
@@ -461,125 +572,44 @@ class PrintScreenActivity : AppCompatActivity() {
                 val level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0)
                 val scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, 0)
                 //TPS390 can not print,while in low battery,whether is charging or not charging
-                if (SystemUtil.getDeviceType() == StringUtil.DeviceModelEnum.TPS390.ordinal) {
+                LowBattery = if (SystemUtil.getDeviceType() == StringUtil.DeviceModelEnum.TPS390.ordinal) {
                     if (level * 5 <= scale) {
-                        LowBattery = true
+                        true
                     } else {
-                        LowBattery = false
+                        false
                     }
                 } else {
                     if (status != BatteryManager.BATTERY_STATUS_CHARGING) {
                         if (level * 5 <= scale) {
-                            LowBattery = true
+                            true
                         } else {
-                            LowBattery = false
+                            false
                         }
                     } else {
-                        LowBattery = false
+                        false
                     }
                 }
             } else if (action == "android.intent.action.BATTERY_CAPACITY_EVENT") {
                 val status = intent.getIntExtra("action", 0)
                 val level = intent.getIntExtra("level", 0)
-                if (status == 0) {
+                LowBattery = if (status == 0) {
                     if (level < 1) {
-                        LowBattery = true
+                        true
                     } else {
-                        LowBattery = false
+                        false
                     }
                 } else {
-                    LowBattery = false
+                    false
                 }
             }
         }
     }
-
     override fun onBackPressed() {
         //super.onBackPressed()
         var intent=Intent();
         setResult(Activity.RESULT_OK);
         finish();
     }
-
-    private fun setBarCode(barCodeNo:String){
-
-        var bitmap: Bitmap? = null
-        try {
-            bitmap = CreateImage(barCodeNo)
-            //myBitmap = bitmap
-        } catch (we: WriterException) {
-            we.printStackTrace()
-        }
-
-        if (bitmap != null) {
-            img_bar_code.setImageBitmap(bitmap);
-        }
-
-    }
-
-    private fun setData(rechargeMeterModel: RechargeMeterModel){
-
-        if (rechargeMeterModel.result==null){
-            return;
-        }
-
-        tv_date.setText(rechargeMeterModel.result.transactionDate)
-        tv_vendor_name.setText(rechargeMeterModel.result.vendorId)
-        tv_pos_id.setText(rechargeMeterModel.result.pos)
-        tv_cus_name.setText(rechargeMeterModel.result.customerName)
-        tv_account.setText(rechargeMeterModel.result.accountNo)
-        tv_address.setText(rechargeMeterModel.result.address)
-        tv_meter_number.setText(rechargeMeterModel.result.deviceNumber)
-        //tv_terrif.setText(rechargeMeterModel.result.tarrif)
-
-        //var longval:Long=meterListModels[position].amount.toLong();
-
-        //tv_gst.setText("le:"+rechargeMeterModel.result.tax);
-
-
-        var formatter: DecimalFormat = NumberFormat.getInstance(Locale.US) as DecimalFormat
-        formatter.applyPattern("#,###,###,###");
-
-        var formatterFloat: DecimalFormat = NumberFormat.getInstance(Locale.US) as DecimalFormat
-        formatterFloat.applyPattern("#,###,###,###.##");
-
-        //val  amoundDouble:Double=rechargeMeterModel.result.amount.toDouble();
-        val  chargesDouble:Double=rechargeMeterModel.result.charges.toDouble();
-        val  debitRecoveryDouble:Double=rechargeMeterModel.result.debitRecovery.toDouble();
-        val  tarrifDouble:Double=rechargeMeterModel.result.tarrif.toDouble();
-        //val  unitCostDouble:Double=rechargeMeterModel.result.unitCost.toDouble();
-        val  unitCostDouble:Double=rechargeMeterModel.result.unitCost.replace(",","").toDouble();
-        val  taxDouble:Double=rechargeMeterModel.result.tax.toDouble();
-
-        // var formattedAmount = formatter.format(amoundDouble);
-        var formattedServiceCharge = formatter.format(chargesDouble);
-        var formattedRecovery = formatter.format(debitRecoveryDouble);
-        var formattedTarrif = formatter.format(tarrifDouble);
-
-        var formattedUnitCost=formatterFloat.format(unitCostDouble);
-        var formattedTax=formatterFloat.format(taxDouble);
-
-        tv_gst.setText("le:"+formattedTax);
-
-        tv_terrif.setText(formattedTarrif);
-
-        tv_amount_tendered.setText(rechargeMeterModel.result.amount);
-        tv_service_charge.setText("le:"+formattedServiceCharge);
-        tv_debit_recovery.setText("le:"+formattedRecovery);
-        tv_debit_recovery.setText("le:"+formattedRecovery);
-
-        tv_cost_of_unit.setText("le:"+formattedUnitCost)
-
-        tv_unit.setText(rechargeMeterModel.result.unit)
-        tv_token.setText(rechargeMeterModel.result.pin1)
-        tv_serial.setText(rechargeMeterModel.result.serialNo)
-        tv_transaction_id.setText(rechargeMeterModel.result.vtechSerial)
-
-        tv_bar_code_no.setText(rechargeMeterModel.result.deviceNumber)
-        setBarCode(rechargeMeterModel.result.deviceNumber);
-
-    }
-
     @Throws(WriterException::class)
     fun CreateImage(message: String?): Bitmap? {
         var bitMatrix: BitMatrix? = null
@@ -600,6 +630,91 @@ class PrintScreenActivity : AppCompatActivity() {
         val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         bitmap.setPixels(pixels, 0, width, 0, 0, width, height)
         return bitmap
+    }
+    private fun setBarCode(barCodeNo:String){
+
+        var bitmap: Bitmap? = null
+        try {
+            bitmap = CreateImage(barCodeNo)
+            //myBitmap = bitmap
+        } catch (we: WriterException) {
+            we.printStackTrace()
+        }
+
+        if (bitmap != null) {
+            img_bar_code.setImageBitmap(bitmap);
+        }
+
+    }
+    private fun setData(rechargeMeterModel: RechargeMeterModel){
+
+        if (rechargeMeterModel.result==null){
+            return;
+        }
+
+        this.rechargeMeterModel=rechargeMeterModel;
+
+        tv_date.setText(rechargeMeterModel.result.transactionDate);
+        tv_vendor_name.setText(rechargeMeterModel.result.vendorId);
+        tv_pos_id.setText(rechargeMeterModel.result.pos);
+        tv_cus_name.setText(rechargeMeterModel.result.customerName);
+        tv_account.setText(rechargeMeterModel.result.accountNo);
+        tv_address.setText(rechargeMeterModel.result.address);
+        tv_meter_number.setText(rechargeMeterModel.result.deviceNumber);
+        //tv_terrif.setText(rechargeMeterModel.result.tarrif)
+
+        //var longval:Long=meterListModels[position].amount.toLong();
+
+        //tv_gst.setText("le:"+rechargeMeterModel.result.tax);
+
+
+        var formatter: DecimalFormat = NumberFormat.getInstance(Locale.US) as DecimalFormat;
+        formatter.applyPattern("#,###,###,###");
+
+        var formatterFloat: DecimalFormat = NumberFormat.getInstance(Locale.US) as DecimalFormat;
+        formatterFloat.applyPattern("#,###,###,###.##");
+
+        //val  amoundDouble:Double=rechargeMeterModel.result.amount.toDouble();
+        //val chargesTemp=rechargeMeterModel.result.charges.replace(",","");
+
+        val  chargesDouble:Double=rechargeMeterModel.result.charges.replace(",","").toDouble();
+        val  debitRecoveryDouble:Double=rechargeMeterModel.result.debitRecovery.toDouble();
+        val  tarrifDouble:Double=rechargeMeterModel.result.tarrif.toDouble();
+        //val  unitCostDouble:Double=rechargeMeterModel.result.unitCost.toDouble();
+        val  unitCostDouble:Double=rechargeMeterModel.result.unitCost.replace(",","").toDouble();
+        //val  taxDouble:Double=rechargeMeterModel.result.tax.toDouble();
+
+        // var formattedAmount = formatter.format(amoundDouble);
+
+        var formattedServiceCharge = formatter.format(chargesDouble);
+        var formattedRecovery = formatter.format(debitRecoveryDouble);
+        var formattedTarrif = formatter.format(tarrifDouble);
+
+        var formattedUnitCost=formatterFloat.format(unitCostDouble);
+        // var formattedTax=formatterFloat.format(taxDouble);
+        //tv_gst.setText("le:"+formattedTax);
+
+        tv_gst.setText("le:"+rechargeMeterModel.result.tax);
+
+
+        tv_terrif.setText(formattedTarrif);
+
+        tv_amount_tendered.setText(rechargeMeterModel.result.amount);
+
+        tv_service_charge.setText("le:"+formattedServiceCharge);
+        tv_debit_recovery.setText("le:"+formattedRecovery);
+        tv_debit_recovery.setText("le:"+formattedRecovery);
+
+        tv_cost_of_unit.setText("le:"+formattedUnitCost)
+
+        tv_unit.setText(rechargeMeterModel.result.unit);
+        tv_token.setText(rechargeMeterModel.result.pin1);
+        tv_serial.setText(rechargeMeterModel.result.serialNo);
+        tv_transaction_id.setText(rechargeMeterModel.result.vtechSerial);
+
+        tv_bar_code_no.setText(rechargeMeterModel.result.deviceNumber);
+        setBarCode(rechargeMeterModel.result.deviceNumber);
+
     }
 
     private fun showdialog() {
@@ -632,16 +747,9 @@ class PrintScreenActivity : AppCompatActivity() {
 
         tv_send.setOnClickListener { adDialog.cancel() }
         adDialog.show();
+
+
     }
 
-    override fun onDestroy() {
-        if (progressDialog != null && !this.isFinishing()) {
-            progressDialog!!.dismiss()
-            progressDialog = null
-        }
-        unregisterReceiver(printReceive)
-        ThermalPrinter.stop()
-        super.onDestroy()
-    }
 
 }

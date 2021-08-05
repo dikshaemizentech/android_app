@@ -69,6 +69,7 @@ class DepositReportAdapter(internal var depositListModels: MutableList<DepositTr
         holder.rootView.setOnClickListener(View.OnClickListener {
             val i = Intent(context, DepositTransactionDetails::class.java)
             i.putExtra("depositId",depositListModels[position].depositId)
+            i.putExtra("type","")
             context.startActivity(i)
             activity.overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         });

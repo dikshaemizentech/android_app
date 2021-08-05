@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin8"
-                android:padding="@dimen/_8sdp"
+                android:padding="@dimen/_10sdp"
                 android:src="@drawable/left_arrow" />
 
 
@@ -60,7 +60,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/round_chips_home"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/_20sdp">
 
 
                     <ImageView
@@ -111,7 +112,7 @@
                             android:id="@+id/transID"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="1.1"
                             android:gravity="end"
                             android:text=""
                             android:textColor="@color/colorYellow"
@@ -145,7 +146,7 @@
                             android:id="@+id/meternoTrans"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="1.1"
                             android:gravity="end"
                             android:text=""
                             android:textColor="@color/colorYellow"
@@ -178,7 +179,7 @@
                             android:id="@+id/amntTrans"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="1.1"
                             android:gravity="end"
                             android:text=""
                             android:textColor="@color/colorYellow"
@@ -211,7 +212,7 @@
                             android:id="@+id/dateTrans"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="1.1"
                             android:gravity="end"
                             android:text=""
                             android:textColor="@color/colorWhite"
@@ -245,7 +246,7 @@
                             android:id="@+id/timeTrans"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="1.1"
                             android:gravity="end"
                             android:text=""
                             android:textColor="@color/colorWhite"
@@ -278,7 +279,7 @@
                             android:id="@+id/statusTrans"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="1.1"
                             android:gravity="end"
                             android:text=""
                             android:textColor="@color/colorgreen"
@@ -312,7 +313,7 @@
                             android:id="@+id/paymodeTrans"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="1.1"
                             android:gravity="end"
                             android:text=""
                             android:textColor="@color/colorWhite"
@@ -346,7 +347,7 @@
                             android:id="@+id/vendorIdTrans"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="1.1"
                             android:gravity="end"
                             android:text=""
                             android:textColor="@color/colorWhite"
@@ -379,13 +380,14 @@
                             android:id="@+id/vendornameTrans"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="1.1"
                             android:gravity="end"
                             android:text=""
                             android:textColor="@color/colorWhite"
                             android:textSize="13sp" />
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:id="@+id/vendorNameLL"
                         android:layout_width="match_parent"
@@ -395,7 +397,8 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="20dp"
                         android:layout_marginRight="20dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:weightSum="2">
 
 
                         <TextView
@@ -405,19 +408,18 @@
                             android:text="Token:"
                             android:textColor="@color/colorlightgrey"
                             android:textSize="13sp"
-                            android:textAllCaps="true"/>
+                            android:textAllCaps="true"
+                            android:layout_marginRight="@dimen/_8sdp"/>
 
                         <TextView
                             android:id="@+id/tv_token_no"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:gravity="end"
                             android:text=""
                             android:textColor="@color/colorWhite"
                             android:textSize="13sp"
-                            android:layout_marginLeft="@dimen/_5sdp"
-                            android:layout_marginRight="@dimen/_25sdp"/>
+                            android:layout_marginRight="@dimen/_9sdp"/>
 
                     </LinearLayout>
 
@@ -430,7 +432,6 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="20dp"
                         android:layout_marginRight="20dp"
-                        android:layout_marginBottom="@dimen/_20"
                         android:orientation="horizontal"
                         android:weightSum="2">
 
@@ -448,14 +449,13 @@
                             android:id="@+id/checknoTrans"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="1.1"
                             android:gravity="end"
                             android:text=""
                             android:textColor="@color/colorWhite"
                             android:textSize="13sp" />
 
                     </LinearLayout>
-
                     <LinearLayout
                         android:id="@+id/commentBoxLL"
                         android:layout_width="match_parent"
@@ -465,7 +465,6 @@
                         android:layout_marginTop="20dp"
                         android:layout_marginEnd="20dp"
                         android:layout_marginRight="20dp"
-                        android:layout_marginBottom="@dimen/_20"
                         android:background="@drawable/dashed_border"
                         android:orientation="vertical"
                         android:visibility="gone">
@@ -498,9 +497,6 @@
 
 
                     </LinearLayout>
-
-
-
                     <TextView
                         android:id="@+id/transctinDetailReprint"
                         android:layout_width="match_parent"
@@ -517,7 +513,6 @@
                         android:textColor="@color/colorWhite"
                         android:background="@drawable/corner_yello"
                         android:layout_height="wrap_content"/>
-
                     <LinearLayout
                         android:id="@+id/downloadInvoice"
                         android:layout_width="wrap_content"

@@ -31,10 +31,7 @@ import com.vendtech.app.ui.activity.profile.EditProfileActivity
 import com.vendtech.app.ui.activity.profile.NotificationsListActivity
 import com.vendtech.app.ui.activity.termspolicies.ContactUsActivity
 import com.vendtech.app.ui.activity.termspolicies.TermsPoliciesActivity
-import com.vendtech.app.ui.fragment.DashboardFragment
-import com.vendtech.app.ui.fragment.PosListFragment
-import com.vendtech.app.ui.fragment.ReportsFragment
-import com.vendtech.app.ui.fragment.WalletFragment
+import com.vendtech.app.ui.fragment.*
 import com.vendtech.app.utils.Constants
 import com.vendtech.app.utils.CustomDialog
 import com.vendtech.app.utils.Utilities
@@ -45,7 +42,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragment.NotificationCount {
+class HomeActivity : AppCompatActivity(), View.OnClickListener, DashBoardFragment.NotificationCount {
 
 
     lateinit var imgNav: ImageView
@@ -77,7 +74,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
     lateinit var editUserProfile: ImageView
     lateinit var notificationCountTV: TextView
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -96,10 +92,9 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
                 drawerLayout!!.openDrawer(Gravity.START)
         }
 
-        LoadDashboardFragment();
-
+        //LoadBillPaymentFragment();
+         loadDashBoardFragment();
     }
-
 
     fun findViews() {
 
@@ -131,9 +126,8 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
 
             }
         }
+
     }
-
-
 
     fun findNavView(navigationView: View) {
 
@@ -183,7 +177,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
 
     }
 
-
     fun SetUpProfile() {
         usernameTV.setText(SharedHelper.getString(this, Constants.USER_FNAME) + " " + SharedHelper.getString(this, Constants.USER_LNAME))
         Glide.with(this).load(SharedHelper.getString(this, Constants.USER_AVATAR)).asBitmap().error(R.drawable.dummyuser).into(userpic)
@@ -226,13 +219,13 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
             R.id.dashboardLL -> {
                 if (drawerLayout!!.isDrawerOpen(Gravity.START))
                     drawerLayout!!.closeDrawer(Gravity.START)
-                Handler().postDelayed({ LoadDashboardFragment() }, 400)
+                Handler().postDelayed({ loadDashBoardFragment() }, 400)
             }
             R.id.dashboard_add_bill_payment -> {
                 if (drawerLayout!!.isDrawerOpen(Gravity.START))
                     drawerLayout!!.closeDrawer(Gravity.START)
 
-                Handler().postDelayed({ LoadDashboardFragment() }, 400)
+                Handler().postDelayed({ LoadBillPaymentFragment() }, 400)
             }
             R.id.posLL -> {
                 if (drawerLayout!!.isDrawerOpen(Gravity.START))
@@ -349,11 +342,10 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
 
             if (resultCode== Activity.RESULT_OK) {
                 var data: MeterListResults = data!!.getSerializableExtra("data") as MeterListResults
-                Handler().postDelayed({ LoadDashboardFragment(data) }, 400)
+                Handler().postDelayed({ LoadBillPaymentFragment(data) }, 400)
             }
         }
     }
-
 
     fun GenerateRefferalCode() {
 
@@ -372,9 +364,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
                 var data = response.body()
                 if (data != null) {
                     if (data.status.equals("true")) {
-
                         ShareAppLink(data.result.code)
-
                     } else {
                         Utilities.CheckSessionValid(data.message, this@HomeActivity, this@HomeActivity)
                     }
@@ -446,8 +436,17 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
         headerTitle.visibility = View.VISIBLE
     }
 
+    private fun loadDashBoardFragment(){
+        ShowLogo()
+        val fragment = DashBoardFragment.newInstance();
+      //  fragment.setArguments(bundle);
 
-    fun LoadDashboardFragment(data:MeterListResults?=null) {
+        val ft = supportFragmentManager.beginTransaction()
+        ft.replace(R.id.fragment_frame, fragment)
+        ft.commit()
+    }
+
+    fun LoadBillPaymentFragment(data:MeterListResults?=null) {
 
         val bundle = Bundle();
         if (data!=null){
@@ -456,14 +455,13 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
         ShowLogo()
 
 
-        val fragment = DashboardFragment.newInstance();
+        val fragment = BillPaymentFragment.newInstance();
         fragment.setArguments(bundle);
 
         val ft = supportFragmentManager.beginTransaction()
         ft.replace(R.id.fragment_frame, fragment)
         ft.commit()
     }
-
 
     fun LoadWalletFragment() {
 
@@ -562,4 +560,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, DashboardFragmen
         })
 
     }
+
+
 }

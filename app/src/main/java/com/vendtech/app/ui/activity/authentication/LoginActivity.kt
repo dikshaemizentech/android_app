@@ -51,7 +51,7 @@ class LoginActivity : BaseActivity() {
             //val intent = Intent(this@LoginActivity, SignUpActivityUsername::class.java)
             val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
             startActivity(intent)
-            finish()
+            //finish()
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
         }
 

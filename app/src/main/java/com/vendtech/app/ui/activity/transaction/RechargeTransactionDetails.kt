@@ -64,6 +64,8 @@ class RechargeTransactionDetails : Activity(){
     internal var INVOICE_URL = ""
 
     private var rechargePin="";
+    private var type=""
+
 
     private var result:RechargeTransactionDetailResult?=null;
 
@@ -74,11 +76,17 @@ class RechargeTransactionDetails : Activity(){
         StrictMode.setVmPolicy(builder.build());
         downloadInvoicePDF=findViewById(R.id.downloadInvoice)
         rechargeID=intent.getIntExtra("rechargeId",0).toString()
+        type=intent.getStringExtra("type")
+
         transctinDetailReprint.visibility=VISIBLE
+
+
+        if (type.equals("notification")){
+            transctinDetailReprint.visibility=View.GONE
+        }
         Log.v("DEPOSITID","Activity rechargeId: "+rechargeID)
 
         GetRechargeDetail()
-
 
         imgBack.setOnClickListener(View.OnClickListener {
             finish();
@@ -95,6 +103,8 @@ class RechargeTransactionDetails : Activity(){
 
         }
     }
+
+
     fun getPrintData(token: String) {
 
         var customDialog: CustomDialog;
@@ -123,7 +133,6 @@ class RechargeTransactionDetails : Activity(){
                     }
                 }
             }
-
             override fun onFailure(call: Call<RechargeMeterModel>, t: Throwable) {
                 val gs = Gson()
                 gs.toJson(t.localizedMessage)
@@ -135,7 +144,6 @@ class RechargeTransactionDetails : Activity(){
             }
         })
     }
-
 
     fun SetData(result: RechargeTransactionDetailResult) {
         this.result=result;
@@ -191,10 +199,9 @@ class RechargeTransactionDetails : Activity(){
 
     fun GetRechargeDetail(){
 
-
-        var customDialog:CustomDialog
-        customDialog=CustomDialog(this)
-        customDialog.show()
+        var customDialog:CustomDialog;
+        customDialog=CustomDialog(this);
+        customDialog.show();
 
         val call: Call<RechargeTransactionDetails> = Uten.FetchServerData().get_rechargedetail(SharedHelper.getString(this, Constants.TOKEN),rechargeID)
         call.enqueue(object : Callback<RechargeTransactionDetails> {
@@ -220,7 +227,9 @@ class RechargeTransactionDetails : Activity(){
 
                         amountTrans=data.result.amount
                        // dateTransaction=Utilities.changeDateFormat(/*this@RechargeTransactionDetails,*/data.result.createdAt)
-                        dateTransaction=data.result.createdAt;
+                       // dateTransaction=data.result.createdAt;
+                        dateTransaction=Utilities.changeDateFormatWithAmPm(this@RechargeTransactionDetails,data.result.createdAt)
+
                         timeTransaction=Utilities.changeTimeFormat(this@RechargeTransactionDetails,data.result.createdAt)
                         statusTransaction=data.result.status
                         meterNo=data.result.meterNumber;
@@ -429,7 +438,7 @@ class RechargeTransactionDetails : Activity(){
          target.setDataAndType(Uri.fromFile(file),"application/pdf");
          target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
          var intent = Intent.createChooser(target, "Open File");
-    try {
+     try {
         startActivity(intent);
         } catch ( e : ActivityNotFoundException) {
     // Instruct the user to install a PDF reader here, or something

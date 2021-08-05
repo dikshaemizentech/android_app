@@ -2,14 +2,19 @@ package com.vendtech.app.adapter.profile
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import com.vendtech.app.R
 import com.vendtech.app.models.profile.NotificationListResult
+import com.vendtech.app.ui.activity.transaction.DepositTransactionDetails
+import com.vendtech.app.ui.activity.transaction.RechargeTransactionDetails
+import java.lang.Exception
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -35,6 +40,7 @@ class NotificationListAdapter (internal var context: Context, internal var servi
             //meter recharge
             holder.tv_notification_type.setText(context.resources.getString(R.string.meter_recharge_notifications));
             holder.tv_pos_id.setText(context.resources.getString(R.string.pos_id)+": "+data.posId);
+            //holder.tv_date.setText(data.valueDate);
             holder.tv_date.setText(data.createdAt);
             holder.tv_deposite.setText(context.resources.getString(R.string.meter2)+""+data.meterNumber);
             //holder.tv_amount.setText(context.resources.getString(R.string.amount2)+""+data.amount);
@@ -62,27 +68,50 @@ class NotificationListAdapter (internal var context: Context, internal var servi
         }
 
 
-        /*  holder.notificationMessage.text=serviceList.get(position).message
-            holder.notificationTitle.text=serviceList.get(position).title
-            holder.dateNotificationTV.text=Utilities.DateFormatNotificationList(serviceList.get(position).sentOn)
+        Log.d("CreatedAtDate","--"+holder.tv_date.text.toString());
 
+        holder.itemView.setOnClickListener(View.OnClickListener {
+            if (data.rechargePin == null) {
+                try {
+                    val i = Intent(context, DepositTransactionDetails::class.java)
+                    i.putExtra("depositId", data.depositId.toInt())
+                    i.putExtra("type", "notification")
+                    context.startActivity(i)
+                }catch (exceptin:Exception){
+                }
+            }else{
+                try {
+                    val i = Intent(context, RechargeTransactionDetails::class.java)
+                    i.putExtra("rechargeId",data.meterRechargeId.toInt())
+                    i.putExtra("type","notification")
+                    context.startActivity(i)
+                }catch (exce:Exception){
+
+                }
+            }
+        })
+
+       /*  holder.notificationMessage.text=serviceList.get(position).message
+              holder.notificationTitle.text=serviceList.get(position).title
+            holder.dateNotificationTV.text=Utilities.DateFormatNotificationList(serviceList.get(position).sentOn)
 
             holder.listItem.setOnClickListener(View.OnClickListener {
               if(serviceList.get(position).type.equals("1")){
-
                 var intent=Intent(context, RechargeTransactionDetails::class.java)
                 intent.putExtra("rechargeId",serviceList.get(position).id.toString().toInt())
                 context.startActivity(intent)
-
             }else if(serviceList.get(position).type.equals("2")){
 
             var intent=Intent(context, DepositTransactionDetails::class.java)
             intent.putExtra("depositId",serviceList.get(position).id.toInt())
             context.startActivity(intent)
           }
-          })*/
+        })*/
+
+
 
     }
+
     
     override fun getItemCount(): Int {
         return serviceList.size

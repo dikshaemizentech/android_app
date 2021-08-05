@@ -105,13 +105,22 @@
                         android:textStyle="bold"
                         android:textColor="@color/colorWhite"/>
 
-                    <ImageView
+                  <!--  <ImageView
                         android:id="@+id/showListmeterIV"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_arrow_drop_down_black_24dp"
-                        android:visibility="visible" />
+                        android:visibility="visible" />-->
+                    <ImageView
+                        android:id="@+id/showListmeterIV"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_arrow_drop_down_black_24dp"
+                        android:visibility="visible"
+                        android:padding="@dimen/_4sdp"/>
+
                 </LinearLayout>
 
 
