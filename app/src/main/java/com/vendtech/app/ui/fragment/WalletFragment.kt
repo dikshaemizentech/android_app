@@ -1,8 +1,8 @@
 package com.vendtech.app.ui.fragment
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.os.Handler
-import androidx.recyclerview.widget.RecyclerView
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
@@ -17,6 +17,7 @@ import android.widget.AdapterView.OnItemSelectedListener
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.vendtech.app.R
 import com.vendtech.app.adapter.transactions.DepositTransactionAdapter
@@ -34,13 +35,13 @@ import kotlinx.android.synthetic.main.fragment_wallet.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.text.DecimalFormat
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-class WalletFragment : Fragment(), View.OnClickListener {
+class WalletFragment : Fragment(), View.OnClickListener, DatePickerDialog.OnDateSetListener {
 
 
     lateinit var addBalanceTV: TextView
@@ -61,7 +62,7 @@ class WalletFragment : Fragment(), View.OnClickListener {
     lateinit var rechargeText: TextView
     lateinit var linerecharge: View
     lateinit var rechargeTRL: RelativeLayout
-    lateinit var et_date: EditText
+    lateinit var et_date: TextView
 
 
     //ANIMATION
@@ -95,6 +96,9 @@ class WalletFragment : Fragment(), View.OnClickListener {
     lateinit var tvWalletBalance: TextView
     lateinit var commissionPercent: TextView
     lateinit var chequeLayout: LinearLayout
+    lateinit var tv_value_date: TextView
+
+
 
     //  lateinit var bankName: EditText
     lateinit var chequeName: EditText
@@ -229,6 +233,7 @@ class WalletFragment : Fragment(), View.OnClickListener {
         slide_up = AnimationUtils.loadAnimation(activity, R.anim.slide_up)
         tvWalletBalance = view.findViewById(R.id.walletBalance);
         commissionPercent = view.findViewById(R.id.commissionPercentTV)
+        tv_value_date = view.findViewById(R.id.tv_value_date)
 
         //ADD BALANCE LAYOUT
         addBalanceLayout = view.findViewById<View>(R.id.layoutAddBalance) as ScrollView
@@ -241,7 +246,7 @@ class WalletFragment : Fragment(), View.OnClickListener {
         linerecharge = view.findViewById<View>(R.id.linerecharge) as View
         depositTRL = view.findViewById<View>(R.id.deposItTRL) as RelativeLayout
         rechargeTRL = view.findViewById<View>(R.id.rechargeTRL) as RelativeLayout
-        et_date = view.findViewById<View>(R.id.et_date) as EditText
+        et_date = view.findViewById<View>(R.id.et_date) as TextView
 
         rechargeTRL.setOnClickListener(this)
         depositTRL.setOnClickListener(this)
@@ -285,6 +290,18 @@ class WalletFragment : Fragment(), View.OnClickListener {
         selectPaytype.setOnClickListener(this)
 
 
+
+        val sdf = SimpleDateFormat("dd/MM/yyyy")
+        val currentDateandTime: String = sdf.format(Date())
+        et_date.setText(currentDateandTime)
+
+
+
+
+
+
+
+
     }
 
 
@@ -301,7 +318,7 @@ class WalletFragment : Fragment(), View.OnClickListener {
                      Utilities.shortToast("Enter your bank name", requireActivity())
                  }
                  else*/ if (TextUtils.isEmpty(chequeName.text.toString())) {
-                    Utilities.shortToast("Enter the name on Cheque", requireActivity())
+                         Utilities.shortToast("Enter the name on Cheque", requireActivity())
 
                 }
 
@@ -386,9 +403,7 @@ if(p0?.length!!>0){
         return NumberFormat.getNumberInstance(Locale.US).format(number)
     }
 
-
     fun DoDeposit() {
-
         var customDialog: CustomDialog
         customDialog = CustomDialog(requireActivity())
         customDialog.show()
@@ -419,7 +434,8 @@ if(p0?.length!!>0){
         } else {
             plusPercentAmount = plusPercentET.text.toString().trim()
         }
-        val call: Call<DepositRequestModel> = Uten.FetchServerData().deposit_request(SharedHelper.getString(requireActivity(),
+       // Toast.makeText(activity, ""+et_date.text.toString(), Toast.LENGTH_SHORT).show();
+      val call: Call<DepositRequestModel> = Uten.FetchServerData().deposit_request(SharedHelper.getString(requireActivity(),
             Constants.TOKEN),
             posId,
             bankAccountId,
@@ -428,7 +444,7 @@ if(p0?.length!!>0){
             bankname,
             nameOnCheque,
             depositAmount,
-            plusPercentAmount)
+            plusPercentAmount,et_date.text.toString())
         call.enqueue(object : Callback<DepositRequestModel> {
             override fun onResponse(call: Call<DepositRequestModel>, response: Response<DepositRequestModel>) {
 
@@ -513,12 +529,26 @@ if(p0?.length!!>0){
                 if (position == 0) {
                     transactionMode = 1
                     chequeLayout.visibility = View.GONE
+                    val sdf = SimpleDateFormat("dd/MM/yyyy")
+                    val currentDateandTime: String = sdf.format(Date())
+                    et_date.setText(currentDateandTime);
+
+                    ll_date.visibility=View.INVISIBLE
+                    tv_value_date.visibility=View.GONE
+
                 } else if (position==1) {
                     transactionMode = 2
-                    chequeLayout.visibility = View.VISIBLE
+                    chequeLayout.visibility = View.VISIBLE;
+                    ll_date.visibility=View.VISIBLE
+                    tv_value_date.visibility=View.VISIBLE
                 }else if (position==2){
                     transactionMode=3;
                     chequeLayout.visibility = View.GONE
+                    val sdf = SimpleDateFormat("dd/MM/yyyy")
+                    val currentDateandTime: String = sdf.format(Date())
+                    et_date.setText(currentDateandTime);
+                    ll_date.visibility=View.INVISIBLE;
+                    tv_value_date.visibility=View.GONE;
                 }
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -544,7 +574,7 @@ if(p0?.length!!>0){
         if (addBalanceLayout.visibility == View.GONE) {
             addBalanceLayout.startAnimation(slide_in)
         }
-        addBalanceLayout.visibility = View.VISIBLE
+            addBalanceLayout.visibility = View.VISIBLE
 
 
         //   addBalanceLayout.setVisibility(View.VISIBLE);
@@ -662,7 +692,14 @@ if(p0?.length!!>0){
                 SelectRechargeTrans()
 
             R.id.et_date->{
-                Toast.makeText(activity!!,"Date",Toast.LENGTH_LONG).show();
+
+                if (transactionMode==2) {
+                    val now = Calendar.getInstance()
+                    var datePickerDialog = DatePickerDialog(context, this, now.get(Calendar.YEAR),
+                            now.get(Calendar.MONTH), // Initial month selection
+                            now.get(Calendar.DAY_OF_MONTH));
+                    datePickerDialog.show();
+                }
             }
             R.id.deposItTRL ->
                 SelectDepositTrans()
@@ -1044,4 +1081,11 @@ if(p0?.length!!>0){
         })
 
     }
+
+    override fun onDateSet(view: DatePicker?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
+        val date =  dayOfMonth.toString() + "/" + (monthOfYear + 1).toString() + "/" + year
+        et_date.setText(date)
+    }
+
+
 }

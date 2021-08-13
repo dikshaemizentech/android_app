@@ -240,15 +240,14 @@ class PrintScreenActivity : AppCompatActivity() {
                 var gstVale=String.format("%1$-10s %2$20s ", "${"GST: le:"}", "      ${rechargeMeterModel!!.result.tax}")
                 mUsbThermalPrinter.addString(gstVale);
                 // var rightALignServiceCharge= StringAlignUtils(tv_service_charge.text.toString().length, StringAlignUtils.Alignment.RIGHT);
-
                 //mUsbThermalPrinter.addString("${"GST:" + "              " + rightALignServiceCharge.format(tv_service_charge.text.toString())}");
 
                 var formatter: DecimalFormat = NumberFormat.getInstance(Locale.US) as DecimalFormat;
                 formatter.applyPattern("#,###,###,###");
-                val  chargesDouble:Double=rechargeMeterModel!!.result.charges.toDouble();
+                // val  chargesDouble:Double=rechargeMeterModel!!.result.charges.toDouble();
+                val  chargesDouble:Double=rechargeMeterModel!!.result.charges.replace(",","").toDouble();
+
                 var formattedServiceCharge = formatter.format(chargesDouble);
-
-
                 //mUsbThermalPrinter.addString("${tv_service_charge_txt.text.toString() + "                       " + tv_service_charge.text.toString()}");
                 var serviceChargeValue=String.format("%1$-10s %2$20s ", "${tv_service_charge_txt.text.toString()+" le:"}", "    ${formattedServiceCharge.toString()}")
 
@@ -676,31 +675,22 @@ class PrintScreenActivity : AppCompatActivity() {
 
         //val  amoundDouble:Double=rechargeMeterModel.result.amount.toDouble();
         //val chargesTemp=rechargeMeterModel.result.charges.replace(",","");
-
         val  chargesDouble:Double=rechargeMeterModel.result.charges.replace(",","").toDouble();
-        val  debitRecoveryDouble:Double=rechargeMeterModel.result.debitRecovery.toDouble();
-        val  tarrifDouble:Double=rechargeMeterModel.result.tarrif.toDouble();
+        val  debitRecoveryDouble:Double=rechargeMeterModel.result.debitRecovery.replace(",","").toDouble();
+        val  tarrifDouble:Double=rechargeMeterModel.result.tarrif.replace(",","").toDouble();
         //val  unitCostDouble:Double=rechargeMeterModel.result.unitCost.toDouble();
         val  unitCostDouble:Double=rechargeMeterModel.result.unitCost.replace(",","").toDouble();
         //val  taxDouble:Double=rechargeMeterModel.result.tax.toDouble();
-
         // var formattedAmount = formatter.format(amoundDouble);
-
         var formattedServiceCharge = formatter.format(chargesDouble);
         var formattedRecovery = formatter.format(debitRecoveryDouble);
         var formattedTarrif = formatter.format(tarrifDouble);
-
         var formattedUnitCost=formatterFloat.format(unitCostDouble);
         // var formattedTax=formatterFloat.format(taxDouble);
         //tv_gst.setText("le:"+formattedTax);
-
         tv_gst.setText("le:"+rechargeMeterModel.result.tax);
-
-
         tv_terrif.setText(formattedTarrif);
-
         tv_amount_tendered.setText(rechargeMeterModel.result.amount);
-
         tv_service_charge.setText("le:"+formattedServiceCharge);
         tv_debit_recovery.setText("le:"+formattedRecovery);
         tv_debit_recovery.setText("le:"+formattedRecovery);

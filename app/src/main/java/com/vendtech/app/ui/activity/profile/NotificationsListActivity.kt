@@ -159,19 +159,8 @@ class NotificationsListActivity :Activity(){
                                 notificationList.sortByDescending { it.date }
                                 notificationListAdapter.notifyDataSetChanged();
                             }
-
                             //new code for sorting
-
-
-
-
                             //---------------
-
-
-
-
-
-
                             nodataTV.visibility=View.GONE;
                             recyclerView.visibility=View.VISIBLE;
                         }else{

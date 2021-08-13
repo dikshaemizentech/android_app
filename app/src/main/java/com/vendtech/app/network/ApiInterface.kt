@@ -124,9 +124,10 @@ interface ApiInterface {
 
     @FormUrlEncoded
     @POST("Deposit/SaveDepositRequest")
-    fun deposit_request(@Header("token") Token: String, @Field("PosId") posId: Int, @Field("BankAccountId") bankAccountId: String, @Field("DepositType") depositType: String, @Field("ChkOrSlipNo") ChkOrSlipNo: String, @Field("ChkBankName") bankName: String?, @Field("NameOnCheque") nameOnCheque: String?, @Field("Amount") amount: String, @Field("TotalAmountWithPercentage") totalAmountWithPercentage: String): Call<DepositRequestModel>
+    fun deposit_request(@Header("token") Token: String, @Field("PosId") posId: Int, @Field("BankAccountId") bankAccountId: String, @Field("DepositType") depositType: String, @Field("ChkOrSlipNo") ChkOrSlipNo: String, @Field("ChkBankName") bankName: String?, @Field("NameOnCheque") nameOnCheque: String?, @Field("Amount") amount: String, @Field("TotalAmountWithPercentage") totalAmountWithPercentage: String,@Field("ValueDate") ValueDate:String): Call<DepositRequestModel>
+    //fun deposit_request(@Header("token") Token: String, @Field("PosId") posId: Int, @Field("BankAccountId") bankAccountId: String, @Field("DepositType") depositType: String, @Field("ChkOrSlipNo") ChkOrSlipNo: String, @Field("ChkBankName") bankName: String?, @Field("NameOnCheque") nameOnCheque: String?, @Field("Amount") amount: String, @Field("TotalAmountWithPercentage") totalAmountWithPercentage: String): Call<DepositRequestModel>
 
-   /* @FormUrlEncoded
+    /* @FormUrlEncoded
     @POST("Meter/RechargeMeter")
     fun recharge_meter(@Header("token") Token: String, @Field("MeterId") MeterId: String?, @Field("Amount") Amount: String, @Field("MeterNumber") MeterNumber: String?, @Field("POSId") posId: Int,@Field("passCode") passCode: String): Call<RechargeMeterModel>*/
 

@@ -249,7 +249,8 @@ class SignUpActivity : AppCompatActivity() {
             companyName=""
         }
 
-        USER_TYPE_ID="AppUser"
+        //USER_TYPE_ID="AppUser"
+        USER_TYPE_ID="Vendor"
           var  DeviceType="ABC"
           var  AppType=Constants.DEVICE_TYPE
         customDialog.show()

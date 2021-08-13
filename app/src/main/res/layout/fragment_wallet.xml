@@ -428,7 +428,8 @@
                         android:fontFamily="@font/roboto_regular"
                         android:text="VALUE DATE"
                         android:textColor="@color/colorlightgrey"
-                        android:textSize="@dimen/_8sdp" />
+                        android:textSize="@dimen/_8sdp"
+                        android:id="@+id/tv_value_date"/>
 
 
                 </LinearLayout>
@@ -483,15 +484,12 @@
                          android:gravity="start"
                          android:textSize="15sp">
 
-                         <EditText
+                         <TextView
                              android:id="@+id/et_date"
                              android:layout_width="match_parent"
                              android:layout_height="wrap_content"
                              android:drawablePadding="3dp"
                              android:fontFamily="@font/roboto_bold"
-                             android:gravity="start"
-                             android:imeOptions="actionNone"
-                             android:inputType="text"
                              android:maxLines="1"
                              android:paddingStart="13dp"
                              android:paddingLeft="13dp"
@@ -504,7 +502,8 @@
                              android:textColorHint="@color/colorlightgrey"
                              android:textSize="15sp"
                              android:layout_weight="1"
-                             android:background="@null"/>
+                             android:background="@null"
+                             android:text=""/>
 
                          <ImageView
                              android:layout_width="wrap_content"
