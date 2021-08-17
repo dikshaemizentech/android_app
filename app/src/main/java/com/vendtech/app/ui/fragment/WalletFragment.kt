@@ -337,7 +337,8 @@ class WalletFragment : Fragment(), View.OnClickListener, DatePickerDialog.OnDate
             } /*else if (TextUtils.isEmpty(commentET.text.toString().trim())) {
                 Utilities.shortToast("Please type some comment", requireActivity())
             }*/ else {
-                DoDeposit()
+                DoDeposit();
+               // Utilities.shortToast(""+et_date.text.toString(), requireActivity())
             }
         })
 
@@ -782,8 +783,6 @@ if(p0?.length!!>0){
                             }
 
                         } else {
-
-
                             if (rechargeListModel.size < 1) {
                                 nodataDeposit.visibility = View.GONE
                                 nodataRecharge.visibility = View.VISIBLE
@@ -794,7 +793,6 @@ if(p0?.length!!>0){
                         }
                     } else {
                         Utilities.CheckSessionValid(data.message, requireContext(), requireActivity())
-
                     }
                 }
 

@@ -577,7 +577,7 @@ class BillPaymentFragment : Fragment(), View.OnClickListener, MeterListDialogAda
                 var data = response.body()
                 if (data != null) {
                     if (data.status.equals("true")) {
-                        if (data.result.size > 0) {
+                       /* if (data.result.size > 0) {
                             ShowPayLayout()
                             //   meterListModels.clear()
                             if (meterListModels.size > 0) {
@@ -587,7 +587,14 @@ class BillPaymentFragment : Fragment(), View.OnClickListener, MeterListDialogAda
                             //SetAutoCompleteData();
                         } else {
                             Utilities.shortToast("No meter found", requireActivity());
+                        }*/
+
+                        ShowPayLayout()
+                        //   meterListModels.clear()
+                        if (meterListModels.size > 0) {
+                            meterListModels.clear()
                         }
+                        meterListModels.addAll(data.result);
                     } else {
                         Utilities.CheckSessionValid(data.message, requireContext(), requireActivity())
                     }
